@@ -245,9 +245,9 @@ namespace CSharp_Demo
         private void GETHISDATA_Click(object sender, EventArgs e)
         {
             int CurSel = this.HISDATA.SelectedIndex;
-            /// 获取17年4月1号到10号的历史数据
+            /// 获取17年5月8号到119号的历史数据
             ITradeRecord StockRecord = m_StockTrade.QueryHisTradeData(m_StockTrade.CurTradeID, 
-                (EZMHisOrderType)(CurSel + 1), "20170401", "20170410");
+                (EZMHisOrderType)(CurSel + 1), "20170508", "20170519");
             if (null != StockRecord)
             {
                 /// 遍历获取的数据

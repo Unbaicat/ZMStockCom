@@ -677,7 +677,8 @@ ITradeRecordPtr CMainDlg::GetHisData(EZMHisOrderType eCategoryType)
 	}
 	if(FAILED(hRet))
 		return spiRecord;/// 通信不正常
-	CComBSTR bstrStartDay(L"20170415"),bstrEndDay(L"20170421");
+	/// 指定时间范围
+	CComBSTR bstrStartDay(L"20170508"),bstrEndDay(L"20170519");
 	hRet = m_spiTrade[0]->QueryHisTradeData(nTradeID,eCategoryType,bstrStartDay,bstrEndDay,&spiRecord);
 	if(NULL == spiRecord)
 	{
