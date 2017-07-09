@@ -98,6 +98,9 @@ namespace CSharp_Demo
             m_StockTrade.AutoKeepConn = true;
             /// 模拟测试
             m_StockTrade.BrokerType = EZMBrokerType.BROKERTYPE_MNCS;
+            /// 模拟账号
+            m_StockTrade.AccountType = EZMLoginAccountType.LOGINIACCOUNTTYPE_MNCS;
+
             /// 设置登录服务器
             m_StockTrade.CurServerHost = this.SERVERADDR.Text;
             m_StockTrade.CurServerPort = ushort.Parse(this.SERVERPORT.Text);
