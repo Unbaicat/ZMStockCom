@@ -832,12 +832,13 @@ LRESULT CMainDlg::OnBnClickedBuy(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWnd
 	CComVariant varVal;
 	/// 取卖一价格主动买入
 	HRESULT hRet(E_FAIL);
+	EZMExchangeType eExchangeType = EXCHANGETYPE_UNKNOWN;
 	/// 根据序号获取可能存在的问题：需要适配券商，券商不同，可能返回的字段顺序不一样
 //	hRet = spiRecord->GetValue(0,16,&varVal);
 	/// 或者用字段标题获取
 	hRet = spiRecord->GetValueByName(0,CComBSTR(L"买五价"),&varVal);
 	ULONG nReqID1 = 0;/// 返回唯一标识的委托ID，组件会以事件方式通知结果，如果您需要跟踪每个委托的结果通知，需要记录下来，和事件通知的ID进行匹配
-	m_spiTrade[0]->AddOrder(STOCKORDERTYPE_BUY,ORDERPRICETYPE_LIMIT,bstrStockCode,varVal.fltVal,500,&nReqID1);
+	m_spiTrade[0]->AddOrder(STOCKORDERTYPE_BUY,ORDERPRICETYPE_LIMIT,bstrStockCode,varVal.fltVal,500,&eExchangeType,&nReqID1);
 	varVal.Clear();
 	/// 取当前价买入
 //	hRet = spiRecord->GetValue(0,5,&varVal);
@@ -985,8 +986,12 @@ LRESULT CMainDlg::OnBnClickedSell(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 		if(NULL == spiSell)
 		{
 			/// 提交失败，获取错误描述
-			CComBSTR bstrErrInfo;
-			m_spiTrade[0]->get_LastErrDesc(&bstrErrInfo);
+			EZMTradeErrType nErrCode = TRADEERRTYPE_SUCCESS;
+			CComBSTR bstrErrDesc;
+			m_spiTrade[0]->get_LastErrType(&nErrCode);
+			m_spiTrade[0]->get_LastErrDesc(&bstrErrDesc);
+			this->MessageBox(bstrErrDesc.m_str);
+			bstrErrDesc.Empty();
 			continue;
 		}
 		ULONG nSellRecord = 0;

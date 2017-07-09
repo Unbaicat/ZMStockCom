@@ -290,11 +290,11 @@ namespace CSharp_Demo
 
             /// 取当前价
             var vBuy4 = StockRecord.GetValueFloat(0, 5);
+            EZMExchangeType eExchangeType = EZMExchangeType.EXCHANGETYPE_UNKNOWN;
 #if SYNC_OPT
             /// 同步提交委托，知道返回结果
-            EZMExchangeType eExchangeType = EZMExchangeType.EXCHANGETYPE_UNKNOWN;
             ITradeRecord OrderRecord = m_StockTrade.SyncCommitOrder(true, EZMStockOrderType.STOCKORDERTYPE_BUY,
-                EZMOrderPriceType.ORDERPRICETYPE_LIMIT, this.STOCKCODE.Text, vBuy4, 500, out eExchangeType);
+                EZMOrderPriceType.ORDERPRICETYPE_LIMIT, this.STOCKCODE.Text, vBuy4, 500,ref eExchangeType);
             if (null != OrderRecord)
             {
                 if (OrderRecord.RecordCount > 0)
@@ -311,8 +311,8 @@ namespace CSharp_Demo
             /// 下面演示批量买入操作，通过AddOrder重复调用可以实现提交多条委托，然后调用CommitOrder一次性提交到服务器
             var vBuy5 = StockRecord.GetValueByName(0, "买五价");
             /// 限价买
-            uint nReq1 = m_StockTrade.AddOrder(EZMStockOrderType.STOCKORDERTYPE_BUY, EZMOrderPriceType.ORDERPRICETYPE_LIMIT, this.STOCKCODE.Text, (float)vBuy5, 500);
-            uint nReq2 = m_StockTrade.AddOrder(EZMStockOrderType.STOCKORDERTYPE_BUY, EZMOrderPriceType.ORDERPRICETYPE_LIMIT, this.STOCKCODE.Text, vBuy4, 500);
+            uint nReq1 = m_StockTrade.AddOrder(EZMStockOrderType.STOCKORDERTYPE_BUY, EZMOrderPriceType.ORDERPRICETYPE_LIMIT, this.STOCKCODE.Text,(float)vBuy5, 500,ref eExchangeType);
+            uint nReq2 = m_StockTrade.AddOrder(EZMStockOrderType.STOCKORDERTYPE_BUY, EZMOrderPriceType.ORDERPRICETYPE_LIMIT, this.STOCKCODE.Text, (float)vBuy4, 500,ref eExchangeType);
             /// 真正提交委托操作，每个委托结果通过事件来通知，通过AddOrder返回的请求ID标识
             m_StockTrade.CommitOrder(m_StockTrade.CurTradeID, true, EZMRunPriType.RUNPRITYPE_NORMAL);
 #endif
@@ -362,11 +362,11 @@ namespace CSharp_Demo
 
                 varVal = QuoteRecord.GetValueByName(0, "卖一价");
                 float fSell = (float)varVal;
+                EZMExchangeType eExchangeType = EZMExchangeType.EXCHANGETYPE_UNKNOWN;
 #if SYNC_OPT
                 /// 同步操作，直到提交委托服务器返回结果
-                EZMExchangeType eExchangeType = EZMExchangeType.EXCHANGETYPE_UNKNOWN;
                 ITradeRecord SellRecord = m_StockTrade.SyncCommitOrder(true, EZMStockOrderType.STOCKORDERTYPE_SALE,
-                    EZMOrderPriceType.ORDERPRICETYPE_LIMIT, strStockCode, fSell, nCount, out eExchangeType);
+                    EZMOrderPriceType.ORDERPRICETYPE_LIMIT, strStockCode, fSell, nCount, ref eExchangeType);
                 if (null == SellRecord)
                 {
                     /// 提交失败，取错误描述
@@ -392,7 +392,7 @@ namespace CSharp_Demo
 #else
                 /// 返回的请求ID，会由事件通知的时候传回，从而知道每个委托的实际结果
                 uint nReqID = m_StockTrade.AddOrder(EZMStockOrderType.STOCKORDERTYPE_SALE,
-                    EZMOrderPriceType.ORDERPRICETYPE_LIMIT, strStockCode, fSell, nCount);
+                    EZMOrderPriceType.ORDERPRICETYPE_LIMIT, strStockCode, fSell, nCount,ref eExchangeType);
 #endif
                 QuoteRecord.Clear();
                 QuoteRecord = null;
