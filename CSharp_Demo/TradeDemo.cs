@@ -81,7 +81,7 @@ namespace CSharp_Demo
 
                 /// 设置通讯版本(请查看自己券商的TDX版本)，初始化结果异步通过事件通知
                 /// 设置最大连接数，默认传1(最好跟调用登录前设置的服务器主机数量一致)
-                m_StockTrade.Init("6.4", 1);
+                m_StockTrade.Init("8.03", 1);
             }
             else
             {
@@ -96,7 +96,7 @@ namespace CSharp_Demo
             m_StockTrade.EnableLog = true;
             /// 自动保持连接
             m_StockTrade.AutoKeepConn = true;
-            /// 模拟测试
+            /// 模拟测试，通达信服务器的问题
             m_StockTrade.BrokerType = EZMBrokerType.BROKERTYPE_MNCS;
             /// 模拟账号
             m_StockTrade.AccountType = EZMLoginAccountType.LOGINIACCOUNTTYPE_MNCS;

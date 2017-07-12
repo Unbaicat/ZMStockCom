@@ -112,7 +112,7 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 		hRet = m_spiTrade[0]->put_EnableLog(VARIANT_TRUE);
 		/// 初始化使用环境，单个实例只需要调用一次，根据客户端版本号，最大连接数(默认为1)，最好和设置的服务器数量匹配
 		/// 为提高执行效率，实现为异步操作，需要接收事件通知得到初始化结果
-		m_spiTrade[0]->Init(CComBSTR(L"6.4"),1);
+		m_spiTrade[0]->Init(CComBSTR(L"8.03"),1);
 	}
 
 #ifdef ZM_BROKER_HFZQ
