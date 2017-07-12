@@ -1,1 +1,1 @@
-ZMStockCom.exe /RegServerPerUser
+D:\ZM\ZMStockCom\Bin\ZMStockCom.exe /RegServerPerUser
