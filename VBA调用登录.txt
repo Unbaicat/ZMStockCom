@@ -20,4 +20,21 @@
 
     boolLogin = StockTrade.LogIn(False)
     
-    MsgBox (boolLogin)
+    If boolLogin Then
+                       
+	Set StockRecord = StockTrade.GetStockQuote(StockTrade.CurTradeID, "000001")
+
+	application.MsgOut (StockRecord.GetValueString(0,1))                    
+	application.MsgOut (StockRecord.GetJsonString())
+	        
+	Set StockRecord = Nothing
+        
+    Else
+            
+	application.MsgOut (StockTrade.LastErrDesc)
+        
+    End If
+
+        
+
+    Set StockTrade = Nothing
