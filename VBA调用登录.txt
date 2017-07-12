@@ -5,7 +5,7 @@
     StockTrade.EnableLog = 1
     StockTrade.AutoKeepConn = 1
     
-    Call StockTrade.Init("6.40", 1)
+    Call StockTrade.Init("8.03", 1)
 
     StockTrade.BrokerType = 117
     StockTrade.AccountType = 50
@@ -16,7 +16,7 @@
     StockTrade.TradePassword = "实际密码"          
     StockTrade.CommPassword = "实际密码"           
     StockTrade.LoginID = "1852983998@qq.com"
-    StockTrade.DepartmentID = "9000"
+    StockTrade.DepartmentID = 9000
 
     boolLogin = StockTrade.LogIn(False)
     

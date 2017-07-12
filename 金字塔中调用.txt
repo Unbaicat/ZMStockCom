@@ -16,7 +16,7 @@ StockTrade.AutoKeepConn = 1
 
         
 
-Call StockTrade.Init("6.40", 1)
+Call StockTrade.Init("8.03", 1)
 
         
 
