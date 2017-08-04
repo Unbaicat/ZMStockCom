@@ -227,4 +227,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="CPlusPlus_Demo.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

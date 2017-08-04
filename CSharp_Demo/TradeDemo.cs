@@ -306,8 +306,7 @@ namespace CSharp_Demo
                     MessageBox.Show(OrderRecord.GetJsonString());
 
                     /// 取消委托，需要获取前面委托成功的ID
-                    uint nOrderID = (uint)OrderRecord.GetValueInt(0, 0);
-                    m_StockTrade.CancelOrder(eExchangeType, nOrderID);
+                    m_StockTrade.CancelOrder(eExchangeType, OrderRecord.GetValueString(0,0));
                 }
             }
 #else
@@ -389,9 +388,8 @@ namespace CSharp_Demo
                 MessageBox.Show(SellRecord.GetJsonString());
 
                 /// 得到交易服务器返回的委托编号ID
-                varVal = SellRecord.GetValue(0, 0);
                 /// 方便测试，马上取消委托卖出 
-                m_StockTrade.CancelOrder(eExchangeType, (uint)varVal);
+                m_StockTrade.CancelOrder(eExchangeType, SellRecord.GetValueString(0,0));
 #else
                 /// 返回的请求ID，会由事件通知的时候传回，从而知道每个委托的实际结果
                 uint nReqID = m_StockTrade.AddOrder(EZMStockOrderType.STOCKORDERTYPE_SALE,
@@ -494,7 +492,7 @@ namespace CSharp_Demo
                         MessageBox.Show(TradeRecord.GetJsonString());
 
                         /// 测试马上取消委托
-                        ITradeRecord CancelRecord = m_spiTrade.CancelOrder(eExchangeType, (uint)TradeRecord.GetValueInt(0, 0));
+                        ITradeRecord CancelRecord = m_spiTrade.CancelOrder(eExchangeType, TradeRecord.GetValueString(0,0));
                         if (null != CancelRecord)
                         {
                             /// 弹出JSON格式数据包

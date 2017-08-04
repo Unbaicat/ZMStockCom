@@ -11,14 +11,6 @@
 #define	ZM_TDXSERVER_SYNC
 #endif
 
-/// 定义模拟盘
-#define	ZM_TDXSERVER_DEMO
-
-/// 华福证券版
-//#define	ZM_BROKER_HFZQ
-/// 中信证券版
-//#define	ZM_BROKER_ZXZQ
-
 void CMainDlg::AdviseTradeClient(int nIndex)
 {
 	if(NULL != m_spiTradeClientEvent[nIndex])
@@ -115,29 +107,11 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 		m_spiTrade[0]->Init(CComBSTR(L"8.03"),1);
 	}
 
-#ifdef ZM_BROKER_HFZQ
-	this->GetDlgItem(IDC_EDIT_TRADESERVERADDR).SetWindowText(L"tdxwt.hfzq.com.cn");
-	this->GetDlgItem(IDC_EDIT_TRADESERVERPORT).SetWindowText(L"8081");
-	this->GetDlgItem(IDC_EDIT_YYBID).SetWindowText(L"1");
-	/// 设置实际的登录账号和交易账号
-	this->GetDlgItem(IDC_EDIT_LOGINACCOUNTNO).SetWindowText(L"");
-	this->GetDlgItem(IDC_EDIT_TRADEACCOUNT).SetWindowText(L"");
-#endif
-#ifdef ZM_BROKER_ZXZQ
-	this->GetDlgItem(IDC_EDIT_TRADESERVERADDR).SetWindowText(L"180.153.18.180");
-	this->GetDlgItem(IDC_EDIT_TRADESERVERPORT).SetWindowText(L"7708");
-	this->GetDlgItem(IDC_EDIT_YYBID).SetWindowText(L"1");
-	/// 设置实际的登录账号和交易账号
-	this->GetDlgItem(IDC_EDIT_LOGINACCOUNTNO).SetWindowText(L"");
-	this->GetDlgItem(IDC_EDIT_TRADEACCOUNT).SetWindowText(L"");
-#endif
-#ifdef ZM_TDXSERVER_DEMO
 	this->GetDlgItem(IDC_EDIT_TRADESERVERADDR).SetWindowText(L"mock.tdx.com.cn");
 	this->GetDlgItem(IDC_EDIT_TRADESERVERPORT).SetWindowText(L"7708");
 	this->GetDlgItem(IDC_EDIT_YYBID).SetWindowText(L"9000");
 	this->GetDlgItem(IDC_EDIT_LOGINACCOUNTNO).SetWindowText(L"1852983998@qq.com");
 	this->GetDlgItem(IDC_EDIT_TRADEACCOUNT).SetWindowText(L"001001001020115");
-#endif
 
 	this->GetDlgItem(IDC_EDIT_TRADEPASSWORD).SetWindowText(L"");
 	this->GetDlgItem(IDC_EDIT_COMMPASSWORD).SetWindowText(L"");
@@ -262,12 +236,13 @@ LRESULT CMainDlg::OnOrderOK(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& /
 	this->MessageBox(bstrJsonVal.m_str);
 	bstrJsonVal.Empty();
 	/// 获取到委托序号，正常业务流程需要记录请求ReqID和成功回报OrderID的对应关系，便于后面进行撤单
-	LONG nOrderID = 0;
-	spiRecord->GetValueInt(0,0,&nOrderID);
+	CComBSTR bstrOrder;
+	spiRecord->GetValueString(0,0,&bstrOrder);
 	spiRecord->Clear();
 	spiRecord = NULL;
 	/// 执行取消委托，需要传入市场类型，由委托成功时通知返回，也可以自己计算，上海交易所2，深圳交易所为1
-	m_spiTrade[lParam]->CancelOrder((EZMExchangeType)wParam,nOrderID,&spiRecord);
+	m_spiTrade[lParam]->CancelOrder((EZMExchangeType)wParam,bstrOrder.m_str,&spiRecord);
+	bstrOrder.Empty();
 	return 0;
 }
 
@@ -445,48 +420,14 @@ LRESULT CMainDlg::OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 		this->MessageBox(L"还没有设置交易密码，无法登录服务器！");
 		return 0;
 	}
-
-#ifdef ZM_TDXSERVER_DEMO
+	/// 设置券商类型和账号类型
 	m_spiTrade[0]->put_BrokerType(BROKERTYPE_MNCS);
-#else
-#ifdef ZM_BROKER_HFZQ
-	m_spiTrade[0]->put_BrokerType(BROKERTYPE_HFZQ);
-#endif
-#ifdef ZM_BROKER_ZXZQ
-	m_spiTrade[0]->put_BrokerType(BROKERTYPE_ZXZQ);
-#endif
-#endif
-
-#ifdef ZM_TDXSERVER_DEMO
 	m_spiTrade[0]->put_AccountType(LOGINIACCOUNTTYPE_MNCS);
-#endif
-#ifdef ZM_BROKER_HFZQ
-	m_spiTrade[0]->put_AccountType(LOGINIACCOUNTTYPE_CUSTOMER);
-#endif
-#ifdef ZM_BROKER_ZXZQ
-	m_spiTrade[0]->put_AccountType(LOGINIACCOUNTTYPE_CAPITAL);
-#endif
 
-#ifndef ZM_ADV_VERSION
 	/// 设置交易服务器地址
 	m_spiTrade[0]->put_CurServerHost(bstrServerAddr);
 	/// 设置交易服务器端口
 	m_spiTrade[0]->put_CurServerPort((USHORT)StrToNum(bstrServerPort.m_str));
-#else
-
-#ifdef ZM_TDXSERVER_DEMO
-	/// 设置交易服务器地址
-	m_spiTrade[0]->put_CurServerHost(bstrServerAddr);
-	/// 设置交易服务器端口
-	m_spiTrade[0]->put_CurServerPort((USHORT)StrToNum(bstrServerPort.m_str));
-#else
-	/// 高级版，通过JSON传入多个服务器地址，底层支持同时多个连接，一旦发现某个服务器操作故障，可以随时切换使用
-	CString strJsonServer;
-	/// 主机IP，端口，main表示主要使用使用，其他为备用，设置5个服务器地址，第一个主用
-	strJsonServer = L"[{\"host\":\"202.108.253.186\",\"port\":7708,\"main\":1},{\"host\":\"202.108.253.141\",\"port\":7708,\"main\":0},{\"host\":\"27.221.115.134\",\"port\":7708,\"main\":0},{\"host\":\"124.160.88.188\",\"port\":7708,\"main\":0},{\"host\":\"124.160.88.188\",\"port\":7708,\"main\":0}]";
-	m_spiTrade[0]->put_ServerConfig(CComBSTR(strJsonServer));
-#endif
-#endif
 
 	/// 设置营业部ID
 	m_spiTrade[0]->put_DepartmentID((USHORT)StrToNum(bstrYybID.m_str));
@@ -1005,9 +946,9 @@ LRESULT CMainDlg::OnBnClickedSell(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 
 			/// 获得交易服务器上返回的委托回报编号ID，通过此ID可以进行撤单操作
 			spiSell->GetValue(0,0,&varVal);
-			varVal.ChangeType(VT_I4);
+			varVal.ChangeType(VT_BSTR);
 			ITradeRecordPtr spiCancle = NULL;
-			m_spiTrade[0]->CancelOrder(eExchangeType,varVal.lVal,&spiCancle);
+			m_spiTrade[0]->CancelOrder(eExchangeType,varVal.bstrVal,&spiCancle);
 			/// 通过提取spiCancle里的返回值得知撤单结果
 			spiCancle = NULL;
 			varVal.Clear();
