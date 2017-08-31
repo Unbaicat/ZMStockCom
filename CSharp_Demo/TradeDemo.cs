@@ -138,12 +138,12 @@ namespace CSharp_Demo
                     /// 弹出JSON格式数据包
                     MessageBox.Show(TradeRecord.GetJsonString());
 
-                    for (int i = 0; i < nRecordCount; i++)
+                    for (uint i = 0; i < nRecordCount; i++)
                     {
                         /// 根据列字段名直接取数据，获取股东代码
                         var StockCode = TradeRecord.GetValueByName(i, "股东代码");
                         /// 遍历数据集合
-                        for (int j = 0; j < nFieldCount; j++)
+                        for (uint j = 0; j < nFieldCount; j++)
                         {
                             /// 获取指定行和列的数据
                             var temVal = TradeRecord.GetValue(i, j);
@@ -293,11 +293,13 @@ namespace CSharp_Demo
 
             /// 取当前价
             var vBuy4 = StockRecord.GetValueFloat(0, 5);
-            EZMExchangeType eExchangeType = EZMExchangeType.EXCHANGETYPE_UNKNOWN;
+            EZMExchangeType eExchangeType = EZMExchangeType.EXCHANGETYPE_SH;
+            if ("0" == this.STOCKCODE.Text.Substring(0, 1) || "1" == this.STOCKCODE.Text.Substring(0, 1) || "3" == this.STOCKCODE.Text.Substring(0, 1))
+                eExchangeType = EZMExchangeType.EXCHANGETYPE_SZ;
 #if SYNC_OPT
             /// 同步提交委托，知道返回结果
             ITradeRecord OrderRecord = m_StockTrade.SyncCommitOrder(true, EZMStockOrderType.STOCKORDERTYPE_BUY,
-                EZMOrderPriceType.ORDERPRICETYPE_LIMIT, this.STOCKCODE.Text, vBuy4, 500,ref eExchangeType);
+                EZMOrderPriceType.ORDERPRICETYPE_LIMIT, this.STOCKCODE.Text, vBuy4, 500,eExchangeType);
             if (null != OrderRecord)
             {
                 if (OrderRecord.RecordCount > 0)
@@ -306,15 +308,20 @@ namespace CSharp_Demo
                     MessageBox.Show(OrderRecord.GetJsonString());
 
                     /// 取消委托，需要获取前面委托成功的ID
-                    m_StockTrade.CancelOrder(eExchangeType, OrderRecord.GetValueString(0,0));
+                    string strOrderID = OrderRecord.GetValueByName(0,"委托编号").ToString();
+                    m_StockTrade.CancelOrder(eExchangeType, strOrderID);
                 }
+            }
+            else
+            {
+                MessageBox.Show(m_StockTrade.LastErrDesc);
             }
 #else
             /// 下面演示批量买入操作，通过AddOrder重复调用可以实现提交多条委托，然后调用CommitOrder一次性提交到服务器
             var vBuy5 = StockRecord.GetValueByName(0, "买五价");
             /// 限价买
-            uint nReq1 = m_StockTrade.AddOrder(EZMStockOrderType.STOCKORDERTYPE_BUY, EZMOrderPriceType.ORDERPRICETYPE_LIMIT, this.STOCKCODE.Text,(float)vBuy5, 500,ref eExchangeType);
-            uint nReq2 = m_StockTrade.AddOrder(EZMStockOrderType.STOCKORDERTYPE_BUY, EZMOrderPriceType.ORDERPRICETYPE_LIMIT, this.STOCKCODE.Text, (float)vBuy4, 500,ref eExchangeType);
+            uint nReq1 = m_StockTrade.AddOrder(EZMStockOrderType.STOCKORDERTYPE_BUY, EZMOrderPriceType.ORDERPRICETYPE_LIMIT, this.STOCKCODE.Text,(float)vBuy5, 500,eExchangeType);
+            uint nReq2 = m_StockTrade.AddOrder(EZMStockOrderType.STOCKORDERTYPE_BUY, EZMOrderPriceType.ORDERPRICETYPE_LIMIT, this.STOCKCODE.Text, (float)vBuy4, 500,eExchangeType);
             /// 真正提交委托操作，每个委托结果通过事件来通知，通过AddOrder返回的请求ID标识
             m_StockTrade.CommitOrder(m_StockTrade.CurTradeID, true, EZMRunPriType.RUNPRITYPE_NORMAL);
 #endif
@@ -339,7 +346,7 @@ namespace CSharp_Demo
             /// 弹出JSON格式数据包
             MessageBox.Show(StockRecord.GetJsonString());
 
-            for (int nIndex = 0; nIndex < nRecordCount; nIndex++)
+            for (uint nIndex = 0; nIndex < nRecordCount; nIndex++)
             {
                 var varVal = StockRecord.GetValueByName(nIndex, "可用股份");
                 uint nCount = (uint)varVal;
@@ -368,7 +375,7 @@ namespace CSharp_Demo
 #if SYNC_OPT
                 /// 同步操作，直到提交委托服务器返回结果
                 ITradeRecord SellRecord = m_StockTrade.SyncCommitOrder(true, EZMStockOrderType.STOCKORDERTYPE_SALE,
-                    EZMOrderPriceType.ORDERPRICETYPE_LIMIT, strStockCode, fSell, nCount, ref eExchangeType);
+                    EZMOrderPriceType.ORDERPRICETYPE_LIMIT, strStockCode, fSell, nCount, eExchangeType);
                 if (null == SellRecord)
                 {
                     /// 提交失败，取错误描述
@@ -389,11 +396,12 @@ namespace CSharp_Demo
 
                 /// 得到交易服务器返回的委托编号ID
                 /// 方便测试，马上取消委托卖出 
-                m_StockTrade.CancelOrder(eExchangeType, SellRecord.GetValueString(0,0));
+                string strOrderID = SellRecord.GetValueByName(0,"委托编号").ToString();
+                m_StockTrade.CancelOrder(eExchangeType, strOrderID);
 #else
                 /// 返回的请求ID，会由事件通知的时候传回，从而知道每个委托的实际结果
                 uint nReqID = m_StockTrade.AddOrder(EZMStockOrderType.STOCKORDERTYPE_SALE,
-                    EZMOrderPriceType.ORDERPRICETYPE_LIMIT, strStockCode, fSell, nCount,ref eExchangeType);
+                    EZMOrderPriceType.ORDERPRICETYPE_LIMIT, strStockCode, fSell, nCount,eExchangeType);
 #endif
                 QuoteRecord.Clear();
                 QuoteRecord = null;
@@ -491,8 +499,9 @@ namespace CSharp_Demo
                         /// 弹出JSON格式数据包
                         MessageBox.Show(TradeRecord.GetJsonString());
 
-                        /// 测试马上取消委托
-                        ITradeRecord CancelRecord = m_spiTrade.CancelOrder(eExchangeType, TradeRecord.GetValueString(0,0));
+                        /// 这儿测试马上取消委托，注意有些券商返回的委托成功记录第一个不是委托编号，需要调用GetValueByName来获取委托编号
+                        string strOrderID = TradeRecord.GetValueByName(0,"委托编号").ToString();
+                        ITradeRecord CancelRecord = m_spiTrade.CancelOrder(eExchangeType, strOrderID);
                         if (null != CancelRecord)
                         {
                             /// 弹出JSON格式数据包
@@ -510,12 +519,13 @@ namespace CSharp_Demo
             }
 
             /// <summary>
-            /// 委托交易成交通知，当日提交的委托，成交后发送结果通知，不是特别及时，暂未实现
+            /// 委托交易成交通知，当日提交的委托，实际成交后发送的结果通知
             /// </summary>
             /// <param name="nExchangeID" Desc="服务器上委托的订单ID标识"></param>
             /// <param name="strSuccessJson" Desc="成功的JSON数据包"></param>
             public void OrderSuccessEvent(uint nExchangeID, string strSuccessJson)
             {
+                MessageBox.Show(strSuccessJson);
             }
 
             /// <summary>
@@ -545,10 +555,10 @@ namespace CSharp_Demo
                     /// 弹出JSON格式数据包
                     MessageBox.Show(TradeRecord.GetJsonString());
 
-                    for (int i = 0; i < nRecordCount; i++)
+                    for (uint i = 0; i < nRecordCount; i++)
                     {
                         /// 遍历数据集合
-                        for (int j = 0; j < nFieldCount; j++)
+                        for (uint j = 0; j < nFieldCount; j++)
                         {
                             /// 获取指定行和列的数据
                             var temVal = TradeRecord.GetValue(i, j);

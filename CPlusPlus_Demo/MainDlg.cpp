@@ -236,13 +236,14 @@ LRESULT CMainDlg::OnOrderOK(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& /
 	this->MessageBox(bstrJsonVal.m_str);
 	bstrJsonVal.Empty();
 	/// 获取到委托序号，正常业务流程需要记录请求ReqID和成功回报OrderID的对应关系，便于后面进行撤单
-	CComBSTR bstrOrder;
-	spiRecord->GetValueString(0,0,&bstrOrder);
+	CComVariant varOrderID;
+	spiRecord->GetValueByName(0,CComBSTR(L"委托编号"),&varOrderID);
+	varOrderID.ChangeType(VT_BSTR);
 	spiRecord->Clear();
 	spiRecord = NULL;
 	/// 执行取消委托，需要传入市场类型，由委托成功时通知返回，也可以自己计算，上海交易所2，深圳交易所为1
-	m_spiTrade[lParam]->CancelOrder((EZMExchangeType)wParam,bstrOrder.m_str,&spiRecord);
-	bstrOrder.Empty();
+	m_spiTrade[lParam]->CancelOrder((EZMExchangeType)wParam,varOrderID.bstrVal,&spiRecord);
+	varOrderID.Clear();
 	return 0;
 }
 
@@ -250,7 +251,7 @@ LRESULT CMainDlg::OnOrderSuccess(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BO
 {
 	if(NULL == m_spiTradeClientEvent[lParam] || NULL == m_spiTrade[lParam])
 		return 0;/// 对象已经释放
-	/// 委托成功通知,编号在wParam
+	/// 委托成交成功通知,编号在wParam
 	return 0;
 }
 
@@ -779,13 +780,13 @@ LRESULT CMainDlg::OnBnClickedBuy(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWnd
 	/// 或者用字段标题获取
 	hRet = spiRecord->GetValueByName(0,CComBSTR(L"买五价"),&varVal);
 	ULONG nReqID1 = 0;/// 返回唯一标识的委托ID，组件会以事件方式通知结果，如果您需要跟踪每个委托的结果通知，需要记录下来，和事件通知的ID进行匹配
-	m_spiTrade[0]->AddOrder(STOCKORDERTYPE_BUY,ORDERPRICETYPE_LIMIT,bstrStockCode,varVal.fltVal,500,&eExchangeType,&nReqID1);
+	m_spiTrade[0]->AddOrder(STOCKORDERTYPE_BUY,ORDERPRICETYPE_LIMIT,bstrStockCode,varVal.fltVal,500,eExchangeType,&nReqID1);
 	varVal.Clear();
 	/// 取当前价买入
 //	hRet = spiRecord->GetValue(0,5,&varVal);
 	hRet = spiRecord->GetValueByName(0,CComBSTR(L"买四价"),&varVal);
 	ULONG nReqID2 = 0;/// 返回唯一标识的委托ID，组件会以事件方式通知结果
-//	hRet = m_spiTrade[0]->AddOrder(STOCKORDERTYPE_BUY,ORDERPRICETYPE_LIMIT,bstrStockCode,varVal.fltVal,500,&nReqID2);
+//	hRet = m_spiTrade[0]->AddOrder(STOCKORDERTYPE_BUY,ORDERPRICETYPE_LIMIT,bstrStockCode,varVal.fltVal,500,eExchangeType,&nReqID2);
 	bstrStockCode.Empty();
 
 	/// 提交委托，第一个参数如果为VARIANT_TRUE,底层会自动检查当前通信状态，不正常的时候会自动登录一次再提交委托
@@ -923,7 +924,7 @@ LRESULT CMainDlg::OnBnClickedSell(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 		EZMExchangeType eExchangeType = EXCHANGETYPE_UNKNOWN;
 		ITradeRecordPtr spiSell = NULL;
 		m_spiTrade[0]->SyncCommitOrder(VARIANT_TRUE,STOCKORDERTYPE_SALE,ORDERPRICETYPE_LIMIT,\
-			CComBSTR(strStockCode),fSell,nSellCount,&eExchangeType,&spiSell);
+			CComBSTR(strStockCode),fSell,nSellCount,eExchangeType,&spiSell);
 		if(NULL == spiSell)
 		{
 			/// 提交失败，获取错误描述
@@ -945,7 +946,7 @@ LRESULT CMainDlg::OnBnClickedSell(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 			bstrJsonVal.Empty();
 
 			/// 获得交易服务器上返回的委托回报编号ID，通过此ID可以进行撤单操作
-			spiSell->GetValue(0,0,&varVal);
+			spiSell->GetValueByName(0,CComBSTR(L"委托编号"),&varVal);
 			varVal.ChangeType(VT_BSTR);
 			ITradeRecordPtr spiCancle = NULL;
 			m_spiTrade[0]->CancelOrder(eExchangeType,varVal.bstrVal,&spiCancle);

@@ -379,15 +379,12 @@ STDMETHODIMP CStockComEvent::OrderSuccessEvent(ULONG nOrderID,BSTR bstrJson)
 	HRESULT hRet(E_FAIL);
 	if(0 == nOrderID)
 		return hRet;
+#ifdef _DEBUG
+	::MessageBox(NULL,bstrJson,L"佐罗金股票交易COM组件演示",MB_OK);
+#endif
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
 		::PostMessage(m_hParentWnd,WM_TRADEEVENT_ORDERSUCCESS,nOrderID,(LPARAM)m_nTradeIndex);
-	}
-	else
-	{
-#ifdef _DEBUG
-		::MessageBox(NULL,bstrJson,L"佐罗金股票交易COM组件演示",MB_OK);
-#endif
 	}
 	return hRet;
 }
