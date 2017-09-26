@@ -52,11 +52,17 @@
             this.SERVERADDR = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SELLALL = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.BROKERTYPE = new System.Windows.Forms.ComboBox();
+            this.ACCOUNTTYPE = new System.Windows.Forms.ComboBox();
+            this.GetQuote = new System.Windows.Forms.Button();
+            this.NewIPO = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // GETHISDATA
             // 
-            this.GETHISDATA.Location = new System.Drawing.Point(257, 222);
+            this.GETHISDATA.Location = new System.Drawing.Point(257, 277);
             this.GETHISDATA.Name = "GETHISDATA";
             this.GETHISDATA.Size = new System.Drawing.Size(75, 24);
             this.GETHISDATA.TabIndex = 45;
@@ -68,7 +74,7 @@
             // 
             this.HISDATA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.HISDATA.FormattingEnabled = true;
-            this.HISDATA.Location = new System.Drawing.Point(131, 222);
+            this.HISDATA.Location = new System.Drawing.Point(131, 277);
             this.HISDATA.Name = "HISDATA";
             this.HISDATA.Size = new System.Drawing.Size(110, 20);
             this.HISDATA.TabIndex = 44;
@@ -76,7 +82,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(17, 222);
+            this.label9.Location = new System.Drawing.Point(17, 277);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(89, 12);
             this.label9.TabIndex = 43;
@@ -84,7 +90,7 @@
             // 
             // GETTRADEDATA
             // 
-            this.GETTRADEDATA.Location = new System.Drawing.Point(257, 172);
+            this.GETTRADEDATA.Location = new System.Drawing.Point(257, 227);
             this.GETTRADEDATA.Name = "GETTRADEDATA";
             this.GETTRADEDATA.Size = new System.Drawing.Size(75, 24);
             this.GETTRADEDATA.TabIndex = 42;
@@ -95,7 +101,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(20, 178);
+            this.label8.Location = new System.Drawing.Point(20, 233);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(89, 12);
             this.label8.TabIndex = 41;
@@ -105,34 +111,34 @@
             // 
             this.TRADEDATA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TRADEDATA.FormattingEnabled = true;
-            this.TRADEDATA.Location = new System.Drawing.Point(131, 175);
+            this.TRADEDATA.Location = new System.Drawing.Point(131, 230);
             this.TRADEDATA.Name = "TRADEDATA";
             this.TRADEDATA.Size = new System.Drawing.Size(110, 20);
             this.TRADEDATA.TabIndex = 40;
             // 
             // STOCKCODE
             // 
-            this.STOCKCODE.Location = new System.Drawing.Point(431, 139);
+            this.STOCKCODE.Location = new System.Drawing.Point(431, 190);
             this.STOCKCODE.Name = "STOCKCODE";
-            this.STOCKCODE.Size = new System.Drawing.Size(107, 21);
+            this.STOCKCODE.Size = new System.Drawing.Size(136, 21);
             this.STOCKCODE.TabIndex = 39;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(317, 139);
+            this.label7.Location = new System.Drawing.Point(317, 190);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(41, 12);
+            this.label7.Size = new System.Drawing.Size(65, 12);
             this.label7.TabIndex = 38;
-            this.label7.Text = "股票：";
+            this.label7.Text = "股票代码：";
             // 
             // BUYBUT
             // 
-            this.BUYBUT.Location = new System.Drawing.Point(463, 172);
+            this.BUYBUT.Location = new System.Drawing.Point(490, 227);
             this.BUYBUT.Name = "BUYBUT";
             this.BUYBUT.Size = new System.Drawing.Size(75, 24);
             this.BUYBUT.TabIndex = 37;
-            this.BUYBUT.Text = "买入";
+            this.BUYBUT.Text = "委托买入";
             this.BUYBUT.UseVisualStyleBackColor = true;
             this.BUYBUT.Click += new System.EventHandler(this.BUYBUT_Click);
             // 
@@ -140,7 +146,8 @@
             // 
             this.LOGINPW.Location = new System.Drawing.Point(431, 100);
             this.LOGINPW.Name = "LOGINPW";
-            this.LOGINPW.Size = new System.Drawing.Size(107, 21);
+            this.LOGINPW.PasswordChar = '*';
+            this.LOGINPW.Size = new System.Drawing.Size(136, 21);
             this.LOGINPW.TabIndex = 36;
             // 
             // DEPID
@@ -157,7 +164,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 12);
             this.label6.TabIndex = 34;
-            this.label6.Text = "登录密码：";
+            this.label6.Text = "交易密码：";
             // 
             // label5
             // 
@@ -202,7 +209,7 @@
             // 
             // RELASE_BTN
             // 
-            this.RELASE_BTN.Location = new System.Drawing.Point(212, 134);
+            this.RELASE_BTN.Location = new System.Drawing.Point(212, 181);
             this.RELASE_BTN.Name = "RELASE_BTN";
             this.RELASE_BTN.Size = new System.Drawing.Size(75, 24);
             this.RELASE_BTN.TabIndex = 28;
@@ -212,7 +219,7 @@
             // 
             // CONNECT_BTN
             // 
-            this.CONNECT_BTN.Location = new System.Drawing.Point(131, 134);
+            this.CONNECT_BTN.Location = new System.Drawing.Point(131, 181);
             this.CONNECT_BTN.Name = "CONNECT_BTN";
             this.CONNECT_BTN.Size = new System.Drawing.Size(75, 24);
             this.CONNECT_BTN.TabIndex = 27;
@@ -254,7 +261,7 @@
             // 
             // SELLALL
             // 
-            this.SELLALL.Location = new System.Drawing.Point(463, 211);
+            this.SELLALL.Location = new System.Drawing.Point(490, 266);
             this.SELLALL.Name = "SELLALL";
             this.SELLALL.Size = new System.Drawing.Size(75, 24);
             this.SELLALL.TabIndex = 46;
@@ -262,11 +269,73 @@
             this.SELLALL.UseVisualStyleBackColor = true;
             this.SELLALL.Click += new System.EventHandler(this.SELL_Click);
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(20, 142);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(65, 12);
+            this.label10.TabIndex = 47;
+            this.label10.Text = "券商类型：";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(317, 142);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(65, 12);
+            this.label11.TabIndex = 48;
+            this.label11.Text = "账号类型：";
+            // 
+            // BROKERTYPE
+            // 
+            this.BROKERTYPE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.BROKERTYPE.FormattingEnabled = true;
+            this.BROKERTYPE.Location = new System.Drawing.Point(131, 139);
+            this.BROKERTYPE.Name = "BROKERTYPE";
+            this.BROKERTYPE.Size = new System.Drawing.Size(154, 20);
+            this.BROKERTYPE.TabIndex = 49;
+            // 
+            // ACCOUNTTYPE
+            // 
+            this.ACCOUNTTYPE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ACCOUNTTYPE.FormattingEnabled = true;
+            this.ACCOUNTTYPE.Location = new System.Drawing.Point(431, 139);
+            this.ACCOUNTTYPE.Name = "ACCOUNTTYPE";
+            this.ACCOUNTTYPE.Size = new System.Drawing.Size(136, 20);
+            this.ACCOUNTTYPE.TabIndex = 50;
+            // 
+            // GetQuote
+            // 
+            this.GetQuote.Location = new System.Drawing.Point(406, 228);
+            this.GetQuote.Name = "GetQuote";
+            this.GetQuote.Size = new System.Drawing.Size(75, 23);
+            this.GetQuote.TabIndex = 51;
+            this.GetQuote.Text = "查询行情";
+            this.GetQuote.UseVisualStyleBackColor = true;
+            this.GetQuote.Click += new System.EventHandler(this.GetQuote_Click);
+            // 
+            // NewIPO
+            // 
+            this.NewIPO.Location = new System.Drawing.Point(406, 268);
+            this.NewIPO.Name = "NewIPO";
+            this.NewIPO.Size = new System.Drawing.Size(73, 23);
+            this.NewIPO.TabIndex = 52;
+            this.NewIPO.Text = "一键打新";
+            this.NewIPO.UseVisualStyleBackColor = true;
+            this.NewIPO.Click += new System.EventHandler(this.NewIPO_Click);
+            // 
             // TradeDemo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(557, 270);
+            this.ClientSize = new System.Drawing.Size(579, 334);
+            this.Controls.Add(this.NewIPO);
+            this.Controls.Add(this.GetQuote);
+            this.Controls.Add(this.ACCOUNTTYPE);
+            this.Controls.Add(this.BROKERTYPE);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.SELLALL);
             this.Controls.Add(this.GETHISDATA);
             this.Controls.Add(this.HISDATA);
@@ -293,6 +362,7 @@
             this.Controls.Add(this.label1);
             this.Name = "TradeDemo";
             this.Text = "佐罗金股票交易COM组件C#调用功能演示";
+            this.Closed += new System.EventHandler(this.TradeDemo_Closed);
             this.Load += new System.EventHandler(this.TradeDemo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -325,6 +395,12 @@
         private System.Windows.Forms.TextBox SERVERADDR;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button SELLALL;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox BROKERTYPE;
+        private System.Windows.Forms.ComboBox ACCOUNTTYPE;
+        private System.Windows.Forms.Button GetQuote;
+        private System.Windows.Forms.Button NewIPO;
     }
 }
 

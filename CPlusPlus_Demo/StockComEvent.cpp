@@ -156,7 +156,7 @@ STDMETHODIMP CStockComEvent::Invoke( DISPID dispIdMember,REFIID riid,LCID lcid,W
 			hRet = VariantChangeTypeEx( &varJson,&(pDispParams->rgvarg[0]),lcid,0,VT_BSTR);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
-			hRet=OrderSuccessEvent(varOrderID.ulVal,varJson.bstrVal);
+			hRet = OrderSuccessEvent(varOrderID.ulVal,varJson.bstrVal);
 			VariantClear(&varOrderID);
 			VariantClear(&varOrderID);
 			break;
@@ -164,18 +164,23 @@ STDMETHODIMP CStockComEvent::Invoke( DISPID dispIdMember,REFIID riid,LCID lcid,W
 
 		case 0x00000008:
 		{
-			if ( pDispParams->cArgs != 1 )
+			if ( pDispParams->cArgs != 2 )
 				return DISP_E_BADPARAMCOUNT;
 			if ( pDispParams->cNamedArgs )
 				return DISP_E_NONAMEDARGS;
 
-			CComVariant varTradeID;
+			CComVariant varTradeID,varReqID;
 			VariantInit(&varTradeID);
-			hRet = VariantChangeTypeEx( &varTradeID,&(pDispParams->rgvarg[0]),lcid,0,VT_UI2);
+			VariantInit(&varReqID);
+			hRet = VariantChangeTypeEx( &varTradeID,&(pDispParams->rgvarg[1]),lcid,0,VT_UI2);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
-			hRet=ServerErrEvent(varTradeID.uiVal);
+			hRet = VariantChangeTypeEx( &varReqID,&(pDispParams->rgvarg[0]),lcid,0,VT_UI4);
+			if FAILED(hRet)
+				return DISP_E_BADVARTYPE;
+			hRet = ServerErrEvent(varTradeID.uiVal,varReqID.ulVal);
 			VariantClear(&varTradeID);
+			VariantClear(&varReqID);
 			break;
 		}
 		case 0x00000009:
@@ -307,7 +312,7 @@ STDMETHODIMP CStockComEvent::LoginEvent(IDispatch* piTrade,USHORT nTradeID,BSTR 
 	return hRet;
 }
 
-STDMETHODIMP CStockComEvent::ServerErrEvent(USHORT nTradeID)
+STDMETHODIMP CStockComEvent::ServerErrEvent(USHORT nTradeID,ULONG nReqID)
 {
 	HRESULT hRet(E_FAIL);
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))

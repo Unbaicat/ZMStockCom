@@ -85,6 +85,204 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 	m_wndHistoryList.SetItemData(nItemIndex,HISORDERTYPE_DELIVERYORDER);
 	m_wndHistoryList.SetCurSel(0);
 
+	m_wndAccountType.Attach(GetDlgItem(IDC_COMBO_ACCOUNTTYPE).m_hWnd);
+	nItemIndex = m_wndAccountType.AddString(L"资金账号");
+	m_wndAccountType.SetItemData(nItemIndex,LOGINIACCOUNTTYPE_CAPITAL);
+	nItemIndex = m_wndAccountType.AddString(L"客户号");
+	m_wndAccountType.SetItemData(nItemIndex,LOGINIACCOUNTTYPE_CUSTOMER);
+	nItemIndex = m_wndAccountType.AddString(L"深Ａ股东");
+	m_wndAccountType.SetItemData(nItemIndex,LOGINIACCOUNTTYPE_SZA);
+	nItemIndex = m_wndAccountType.AddString(L"沪Ａ股东");
+	m_wndAccountType.SetItemData(nItemIndex,LOGINIACCOUNTTYPE_SHA);
+	m_wndAccountType.SetCurSel(0);
+
+	m_wndBrokerType.Attach(GetDlgItem(IDC_COMBO_BROKETYPE).m_hWnd);
+	nItemIndex = m_wndBrokerType.AddString(L"模拟测试");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_MNCS);
+	nItemIndex = m_wndBrokerType.AddString(L"长江证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_CJZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"第一创业");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_DYCY);
+	nItemIndex = m_wndBrokerType.AddString(L"东莞证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_DGZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"国信证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_GXZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"华泰联合证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_LHZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"平安证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_PAZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"广发证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_GFZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"大通证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_DTZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"华西证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HXZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"兴业证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_XYZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"招商证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZSZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"金元证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_JYDT);
+	nItemIndex = m_wndBrokerType.AddString(L"中信建投");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZXJT);
+	nItemIndex = m_wndBrokerType.AddString(L"红塔证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_YNHT);
+	nItemIndex = m_wndBrokerType.AddString(L"长城证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_CCZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"宏源证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HYZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"国泰君安");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_GTJA);
+	nItemIndex = m_wndBrokerType.AddString(L"世纪证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_SJZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"安信证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_AXZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"财富证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_CFZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"东兴证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_DXZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"银河证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_YHZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"光大证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_GDZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"英大证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_YDZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"德邦证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_DBZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"南京证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_NJZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"中信证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZXZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"上海证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_SHZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"华宝证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HBZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"爱建证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_AJZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"中泰证券(齐鲁证券)");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_QLZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"中银国际");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZYGJ);
+	nItemIndex = m_wndBrokerType.AddString(L"民族证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_MZZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"湘财证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_XCZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"国金证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_GJZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"首创证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_SCZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"国联证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_GLZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"华林证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HLZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"华福证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HFZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"国元证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_GYZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"广州证券(岭南创富)");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_GZZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"方正证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_FZZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"渤海证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_BHZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"西南证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_XNZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"新时代证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_XSDZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"中投证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZTZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"华融证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HRZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"申万宏源");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_SYWG);
+	nItemIndex = m_wndBrokerType.AddString(L"华鑫证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HXZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"东北证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_JLDB);
+	nItemIndex = m_wndBrokerType.AddString(L"民生证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_MSZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"大同证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_SXDT);
+	nItemIndex = m_wndBrokerType.AddString(L"联储证券(众成证券)");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZCZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"长城国瑞证券(厦门证券)");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_XMZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"东方证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_DFZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"银泰证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_YTZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"中航证券(江南证券)");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_JLDT);
+	nItemIndex = m_wndBrokerType.AddString(L"万和证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_WHZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"国开证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_GKZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"青岛证券(中信万通)");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZXWT);
+	nItemIndex = m_wndBrokerType.AddString(L"信达证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_XDZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"五矿证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_WKZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"江海证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_JHZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"华创证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HCZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"太平洋证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_TPYZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"国海证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_GHZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"东海证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_DHZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"西部证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_XBZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"山西证券(汇通启富)");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_SXZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"开源证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_KYZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"华安证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HAHX);
+	nItemIndex = m_wndBrokerType.AddString(L"国盛证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_GSZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"宏信证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_SCHX);
+	nItemIndex = m_wndBrokerType.AddString(L"万联证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_WLZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"中天证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_LNZT);
+	nItemIndex = m_wndBrokerType.AddString(L"恒泰证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_NMHT);
+	nItemIndex = m_wndBrokerType.AddString(L"天风证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_TFZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"华龙证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_GSHL);
+	nItemIndex = m_wndBrokerType.AddString(L"国融证券(日信证券)");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_RXZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"中航证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZHZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"财通证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_CTZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"海通证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HTZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"东吴证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_DWZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"浙商证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZJZS);
+	nItemIndex = m_wndBrokerType.AddString(L"联讯证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_LXZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"上海华信");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_SHHX);
+	nItemIndex = m_wndBrokerType.AddString(L"东方财富");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_XZTX);
+	nItemIndex = m_wndBrokerType.AddString(L"中原证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZYZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"国都证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_BJGD);
+	nItemIndex = m_wndBrokerType.AddString(L"中金证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZJZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"中邮证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_SXZY);
+	m_wndBrokerType.SetCurSel(0);
+
 	m_nTradeEventCookie[0] = 0;
 	m_spiTradeClientEvent[0] = NULL;
 	m_nTradeEventCookie[1] = 0;
@@ -424,10 +622,14 @@ LRESULT CMainDlg::OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 		return 0;
 	}
 	/// 设置券商类型和账号类型
-	m_spiTrade[0]->put_BrokerType(BROKERTYPE_MNCS);
-	m_spiTrade[0]->put_AccountType(LOGINIACCOUNTTYPE_MNCS);
-	//m_spiTrade[0]->put_BrokerType(BROKERTYPE_LHZQ);
-	//m_spiTrade[0]->put_AccountType(LOGINIACCOUNTTYPE_CUSTOMER);
+	EZMLoginAccountType eAccountType = LOGINIACCOUNTTYPE_CAPITAL;
+	if(m_wndAccountType.GetCurSel())
+		eAccountType = (EZMLoginAccountType )m_wndAccountType.GetItemData(m_wndAccountType.GetCurSel());
+	EZMBrokerType eBrokerType = BROKERTYPE_MNCS;
+	if(m_wndBrokerType.GetCurSel())
+		eBrokerType = (EZMBrokerType)m_wndBrokerType.GetItemData(m_wndBrokerType.GetCurSel());
+	m_spiTrade[0]->put_BrokerType(eBrokerType);
+	m_spiTrade[0]->put_AccountType(eAccountType);
 	//m_spiTrade[0]->put_CreditAccount(VARIANT_TRUE);/// 设置是否信用账号
 
 	/// 设置交易服务器地址
@@ -787,12 +989,26 @@ LRESULT CMainDlg::OnBnClickedBuy(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWnd
 	ULONG nReqID1 = 0;/// 返回唯一标识的委托ID，组件会以事件方式通知结果，如果您需要跟踪每个委托的结果通知，需要记录下来，和事件通知的ID进行匹配
 	m_spiTrade[0]->AddOrder(STOCKORDERTYPE_BUY,ORDERPRICETYPE_LIMIT,bstrStockCode,varVal.fltVal,500,eExchangeType,&nReqID1);
 	varVal.Clear();
+	ATLASSERT(nReqID1);
+	if(!nReqID1)
+	{
+		/// 添加委托失败，查询错误原因
+		CComBSTR bstrErrDesc;
+		m_spiTrade[0]->get_LastErrDesc(&bstrErrDesc);
+	}
 	/// 取当前价买入
 //	hRet = spiRecord->GetValue(0,5,&varVal);
 	hRet = spiRecord->GetValueByName(0,CComBSTR(L"买四价"),&varVal);
 	ULONG nReqID2 = 0;/// 返回唯一标识的委托ID，组件会以事件方式通知结果
-//	hRet = m_spiTrade[0]->AddOrder(STOCKORDERTYPE_BUY,ORDERPRICETYPE_LIMIT,bstrStockCode,varVal.fltVal,500,eExchangeType,&nReqID2);
+	hRet = m_spiTrade[0]->AddOrder(STOCKORDERTYPE_BUY,ORDERPRICETYPE_LIMIT,bstrStockCode,varVal.fltVal,500,eExchangeType,&nReqID2);
 	bstrStockCode.Empty();
+	ATLASSERT(nReqID1);
+	if(!nReqID2)
+	{
+		/// 添加委托失败，查询错误原因
+		CComBSTR bstrErrDesc;
+		m_spiTrade[0]->get_LastErrDesc(&bstrErrDesc);
+	}
 
 	/// 提交委托，第一个参数如果为VARIANT_TRUE,底层会自动检查当前通信状态，不正常的时候会自动登录一次再提交委托
 	VARIANT_BOOL bCommitRet = VARIANT_FALSE;
@@ -968,5 +1184,12 @@ LRESULT CMainDlg::OnBnClickedSell(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 	VARIANT_BOOL bCommitRet = VARIANT_FALSE;
 	m_spiTrade[0]->CommitOrder(nTradeID,VARIANT_TRUE,RUNPRITYPE_NORMAL,&bCommitRet);
 #endif
+	return 0;
+}
+
+LRESULT CMainDlg::OnBnClickedIPO(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+{
+	// TODO: 在此添加控件通知处理程序代码
+	m_spiTrade[0]->BuyIPO(NULL);
 	return 0;
 }

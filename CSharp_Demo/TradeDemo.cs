@@ -1,5 +1,6 @@
 ﻿/// 定义是否演示同步操作，包括同步登录和同步委托
-//define SYNC_OPT
+
+#define SYNC_OPT
 
 using System;
 using System.Collections.Generic;
@@ -29,8 +30,12 @@ namespace CSharp_Demo
         /// </summary>
         TradeEventSink m_TradeEvent = null;
 
+        Dictionary<int, EZMBrokerType> BrokerMap;
+
         public TradeDemo()
         {
+            BrokerMap = new Dictionary<int, EZMBrokerType>();
+
             InitializeComponent();
         }
 
@@ -71,8 +76,192 @@ namespace CSharp_Demo
             this.LOGINID.Text = "";         ///你的登录账号
             this.LOGINPW.Text = "";
             this.DEPID.Text = "9000";
- 
-            int nAddItem = this.TRADEDATA.Items.Add("资金");
+
+            int nAddItem = this.ACCOUNTTYPE.Items.Add("模拟");
+            nAddItem = this.ACCOUNTTYPE.Items.Add("资金账号");
+            nAddItem = this.ACCOUNTTYPE.Items.Add("客户号");
+
+            nAddItem = BROKERTYPE.Items.Add("模拟测试");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_MNCS);
+            nAddItem = BROKERTYPE.Items.Add("长江证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_CJZQ);
+            nAddItem = BROKERTYPE.Items.Add("第一创业");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_DYCY);
+            nAddItem = BROKERTYPE.Items.Add("东莞证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_DGZQ);
+            nAddItem = BROKERTYPE.Items.Add("国信证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GXZQ);
+            nAddItem = BROKERTYPE.Items.Add("华泰联合证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_LHZQ);
+            nAddItem = BROKERTYPE.Items.Add("平安证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_PAZQ);
+            nAddItem = BROKERTYPE.Items.Add("广发证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GFZQ);
+            nAddItem = BROKERTYPE.Items.Add("大通证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_DTZQ);
+            nAddItem = BROKERTYPE.Items.Add("华西证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_HXZQ);
+            nAddItem = BROKERTYPE.Items.Add("兴业证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_XYZQ);
+            nAddItem = BROKERTYPE.Items.Add("招商证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_ZSZQ);
+            nAddItem = BROKERTYPE.Items.Add("金元证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_JYDT);
+            nAddItem = BROKERTYPE.Items.Add("中信建投");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_ZXJT);
+            nAddItem = BROKERTYPE.Items.Add("红塔证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_YNHT);
+            nAddItem = BROKERTYPE.Items.Add("长城证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_CCZQ);
+            nAddItem = BROKERTYPE.Items.Add("宏源证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_HYZQ);
+            nAddItem = BROKERTYPE.Items.Add("国泰君安");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GTJA);
+            nAddItem = BROKERTYPE.Items.Add("世纪证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SJZQ);
+            nAddItem = BROKERTYPE.Items.Add("安信证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_AXZQ);
+            nAddItem = BROKERTYPE.Items.Add("财富证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_CFZQ);
+            nAddItem = BROKERTYPE.Items.Add("东兴证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_DXZQ);
+            nAddItem = BROKERTYPE.Items.Add("银河证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_YHZQ);
+            nAddItem = BROKERTYPE.Items.Add("光大证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GDZQ);
+            nAddItem = BROKERTYPE.Items.Add("英大证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_YDZQ);
+            nAddItem = BROKERTYPE.Items.Add("德邦证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_DBZQ);
+            nAddItem = BROKERTYPE.Items.Add("南京证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_NJZQ);
+            nAddItem = BROKERTYPE.Items.Add("中信证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_ZXZQ);
+            nAddItem = BROKERTYPE.Items.Add("上海证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SHZQ);
+            nAddItem = BROKERTYPE.Items.Add("华宝证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_HBZQ);
+            nAddItem = BROKERTYPE.Items.Add("爱建证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_AJZQ);
+            nAddItem = BROKERTYPE.Items.Add("齐鲁证券(中泰证券)");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_QLZQ);
+            nAddItem = BROKERTYPE.Items.Add("中银国际");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_ZYGJ);
+            nAddItem = BROKERTYPE.Items.Add("民族证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_MZZQ);
+            nAddItem = BROKERTYPE.Items.Add("湘财证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_XCZQ);
+            nAddItem = BROKERTYPE.Items.Add("国金证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GJZQ);
+            nAddItem = BROKERTYPE.Items.Add("首创证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SCZQ);
+            nAddItem = BROKERTYPE.Items.Add("国联证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GLZQ);
+            nAddItem = BROKERTYPE.Items.Add("华林证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_HLZQ);
+            nAddItem = BROKERTYPE.Items.Add("华福证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_HFZQ);
+            nAddItem = BROKERTYPE.Items.Add("国元证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GYZQ);
+            nAddItem = BROKERTYPE.Items.Add("广州证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GZZQ);
+            nAddItem = BROKERTYPE.Items.Add("方正证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_FZZQ);
+            nAddItem = BROKERTYPE.Items.Add("渤海证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_BHZQ);
+            nAddItem = BROKERTYPE.Items.Add("西南证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_XNZQ);
+            nAddItem = BROKERTYPE.Items.Add("新时代证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_XSDZQ);
+            nAddItem = BROKERTYPE.Items.Add("中投证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_ZTZQ);
+            nAddItem = BROKERTYPE.Items.Add("华融证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_HRZQ);
+            nAddItem = BROKERTYPE.Items.Add("申万宏源");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SYWG);
+            nAddItem = BROKERTYPE.Items.Add("华鑫证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SHXZQ);
+            nAddItem = BROKERTYPE.Items.Add("东北证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_JLDB);
+            nAddItem = BROKERTYPE.Items.Add("民生证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_MSZQ);
+            nAddItem = BROKERTYPE.Items.Add("大同证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SXDT);
+            nAddItem = BROKERTYPE.Items.Add("联储证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_ZCZQ);
+            nAddItem = BROKERTYPE.Items.Add("厦门证券(长城国瑞证券)");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_XMZQ);
+            nAddItem = BROKERTYPE.Items.Add("东方证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_DFZQ);
+            nAddItem = BROKERTYPE.Items.Add("银泰证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_YTZQ);
+            nAddItem = BROKERTYPE.Items.Add("江南证券(中航证券)");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_JLDT);
+            nAddItem = BROKERTYPE.Items.Add("万和证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_WHZQ);
+            nAddItem = BROKERTYPE.Items.Add("国开证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GKZQ);
+            nAddItem = BROKERTYPE.Items.Add("中信万通(青岛证券)");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_ZXWT);
+            nAddItem = BROKERTYPE.Items.Add("信达证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_XDZQ);
+            nAddItem = BROKERTYPE.Items.Add("五矿证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_WKZQ);
+            nAddItem = BROKERTYPE.Items.Add("江海证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_JHZQ);
+            nAddItem = BROKERTYPE.Items.Add("华创证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_HCZQ);
+            nAddItem = BROKERTYPE.Items.Add("太平洋证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_TPYZQ);
+            nAddItem = BROKERTYPE.Items.Add("国海证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GHZQ);
+            nAddItem = BROKERTYPE.Items.Add("东海证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_DHZQ);
+            nAddItem = BROKERTYPE.Items.Add("西部证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_XBZQ);
+            nAddItem = BROKERTYPE.Items.Add("山西证券(汇通启富)");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SXZQ);
+            nAddItem = BROKERTYPE.Items.Add("华安证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_HAHX);
+            nAddItem = BROKERTYPE.Items.Add("国盛证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GSZQ);
+            nAddItem = BROKERTYPE.Items.Add("宏信证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SCHX);
+            nAddItem = BROKERTYPE.Items.Add("万联证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_WLZQ);
+            nAddItem = BROKERTYPE.Items.Add("中天证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_LNZT);
+            nAddItem = BROKERTYPE.Items.Add("恒泰证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_NMHT);
+            nAddItem = BROKERTYPE.Items.Add("天风证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_TFZQ);
+            nAddItem = BROKERTYPE.Items.Add("华龙证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GSHL);
+            nAddItem = BROKERTYPE.Items.Add("日信证券(国融证券)");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_RXZQ);
+            nAddItem = BROKERTYPE.Items.Add("财通证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_CTZQ);
+            nAddItem = BROKERTYPE.Items.Add("海通证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_HTZQ);
+            nAddItem = BROKERTYPE.Items.Add("东吴证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_DWZQ);
+            nAddItem = BROKERTYPE.Items.Add("浙商证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_ZJZS);
+            nAddItem = BROKERTYPE.Items.Add("联讯证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_LXZQ);
+            nAddItem = BROKERTYPE.Items.Add("上海华信");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SHHX);
+            nAddItem = BROKERTYPE.Items.Add("东方财富");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_XZTX);
+            nAddItem = BROKERTYPE.Items.Add("中原证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_ZYZQ);
+            nAddItem = BROKERTYPE.Items.Add("国都证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_BJGD);
+            nAddItem = BROKERTYPE.Items.Add("中邮证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SXZY);
+            this.BROKERTYPE.SelectedIndex = 0;
+
+            nAddItem = this.TRADEDATA.Items.Add("资金");
             nAddItem = this.TRADEDATA.Items.Add("股份");
             nAddItem = this.TRADEDATA.Items.Add("当日委托");
             nAddItem = this.TRADEDATA.Items.Add("当日成交");
@@ -85,12 +274,12 @@ namespace CSharp_Demo
             nAddItem = this.TRADEDATA.Items.Add("新股申购额度");
             nAddItem = this.TRADEDATA.Items.Add("配号");
             nAddItem = this.TRADEDATA.Items.Add("中签");
-            nAddItem = this.TRADEDATA.SelectedIndex = 0;
+            this.TRADEDATA.SelectedIndex = 0;
 
             nAddItem = this.HISDATA.Items.Add("历史委托");
             nAddItem = this.HISDATA.Items.Add("历史成交");
             nAddItem = this.HISDATA.Items.Add("交割单");
-            nAddItem = this.HISDATA.SelectedIndex = 0;
+            this.HISDATA.SelectedIndex = 0;
 
             /// 创建对象并初始化
             m_StockTrade = new StockTradeClass();
@@ -139,14 +328,19 @@ namespace CSharp_Demo
             m_StockTrade.AutoKeepConn = true;
             /// 设置为普通账号
             m_StockTrade.CreditAccount = false;
-            /// 模拟测试，通达信服务器
-            m_StockTrade.BrokerType = EZMBrokerType.BROKERTYPE_MNCS;
-            /// 模拟账号
-            m_StockTrade.AccountType = EZMLoginAccountType.LOGINIACCOUNTTYPE_MNCS;
-            /// 实际测试时，请修改上述代码，指定为你实际的券商类型和账号类型
-            //m_StockTrade.BrokerType = EZMBrokerType.BROKERTYPE_LHZQ;
-            //m_StockTrade.AccountType = EZMLoginAccountType.LOGINIACCOUNTTYPE_CUSTOMER;
 
+            /// 设置券商类型和账号类型
+            int CurSel = this.BROKERTYPE.SelectedIndex;
+            m_StockTrade.BrokerType = BrokerMap[CurSel];
+
+            EZMLoginAccountType eAccountType = EZMLoginAccountType.LOGINIACCOUNTTYPE_MNCS;
+            CurSel = this.ACCOUNTTYPE.SelectedIndex;
+            if (1 == CurSel)
+                eAccountType = EZMLoginAccountType.LOGINIACCOUNTTYPE_CAPITAL;
+            else if (2 == CurSel)
+                eAccountType = EZMLoginAccountType.LOGINIACCOUNTTYPE_CUSTOMER;
+            m_StockTrade.AccountType = eAccountType;
+  
             /// 设置登录服务器
             m_StockTrade.CurServerHost = this.SERVERADDR.Text;
             m_StockTrade.CurServerPort = ushort.Parse(this.SERVERPORT.Text);
@@ -215,6 +409,38 @@ namespace CSharp_Demo
         {
             if (m_StockTrade.CurTradeID > 0)
                 m_StockTrade.LogOut(m_StockTrade.CurTradeID);
+        }
+
+        private void GetQuote_Click(object sender, EventArgs e)
+        {
+            if (this.STOCKCODE.Text.Length < 6)
+            {
+                MessageBox.Show("查询股票代码应该是6位！");
+                return;/// 代码错误
+            }
+            if (0 == m_StockTrade.CurTradeID)
+            {
+                MessageBox.Show("请先登录服务器再操作！");
+                return;/// 没有登录
+            }
+            ITradeRecord StockRecord = m_StockTrade.GetStockQuote(m_StockTrade.CurTradeID, this.STOCKCODE.Text);
+            if (null == StockRecord)
+            {
+                MessageBox.Show("获取指定股票实时5档行情失败！");
+                return;/// 获取指定股票实时5档行情失败
+            }
+            if (0 == StockRecord.RecordCount)
+            {
+                MessageBox.Show("获取指定股票实时5档行情数据无记录！");
+                return;/// 没有记录
+            }
+            /// 弹出JSON格式数据包
+            MessageBox.Show(StockRecord.GetJsonString());
+        }
+
+        private void NewIPO_Click(object sender, EventArgs e)
+        {
+            m_StockTrade.BuyIPO();
         }
 
         private void GETTRADEDATA_Click(object sender, EventArgs e)
@@ -609,7 +835,8 @@ namespace CSharp_Demo
             ///  服务器产生错误通知
             /// </summary>
             /// <param name="nTradeID" Desc="交易ID标识"></param>
-            public void ServerErrEvent(ushort nTradeID)
+            /// <param name="nReqID" Desc="请求ID标识"></param>
+            public void ServerErrEvent(ushort nTradeID, uint nReqID)
             {
             }
 

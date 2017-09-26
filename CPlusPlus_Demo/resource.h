@@ -21,7 +21,10 @@
 #define IDC_BUTTON_BUY                  1013
 #define IDC_BUTTON_HISDATA              1014
 #define IDC_COMBO_HISLIST               1015
+#define IDC_COMBO_ACCOUNTTYPE           1022
 #define IDC_BUTTON_SELL                 1027
+#define IDC_COMBO_BROKETYPE             1035
+#define IDC_BUTTON_NEWSTOCK             1037
 
 // Next default values for new objects
 // 

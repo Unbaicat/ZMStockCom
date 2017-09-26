@@ -16,6 +16,10 @@ protected:
 	CComboBox		m_wndTradeList;
 	/// 历史数据类型
 	CComboBox		m_wndHistoryList;
+	/// 券商类型
+	CComboBox		m_wndBrokerType;
+	/// 账号类型
+	CComboBox		m_wndAccountType;
 
 	/// 交易接口事件COOKIE数组
 	DWORD							m_nTradeEventCookie[2];
@@ -63,6 +67,7 @@ public:
 		COMMAND_HANDLER(IDC_BUTTON_BUY, BN_CLICKED, OnBnClickedBuy)
 		COMMAND_HANDLER(IDC_BUTTON_SELL, BN_CLICKED, OnBnClickedSell)
 
+		COMMAND_HANDLER(IDC_BUTTON_NEWSTOCK, BN_CLICKED, OnBnClickedIPO)
 	END_MSG_MAP()
 
 // Handler prototypes (uncomment arguments if needed):
@@ -90,4 +95,5 @@ public:
 	LRESULT OnBnClickedSell(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 
 	LRESULT OnBnClickedUnInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
+	LRESULT OnBnClickedIPO(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 };

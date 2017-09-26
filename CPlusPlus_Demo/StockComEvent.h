@@ -100,7 +100,7 @@ public:
 	STDMETHOD(OrderSuccessEvent)(ULONG nOrderID,BSTR bstrJson);
 
 	/// 服务器错误通知
-	STDMETHOD(ServerErrEvent)(USHORT nTradeID);
+	STDMETHOD(ServerErrEvent)(USHORT nTradeID,ULONG nReqID);
 	/// 服务器切换通知，多服务器才有
 	STDMETHOD(ServerChangedEvent)(USHORT nPreTradeID,USHORT nCurTradeID);
 };
