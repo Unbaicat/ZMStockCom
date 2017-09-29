@@ -91,7 +91,7 @@ public:
 	/// 登录服务器结果通知
 	STDMETHOD(LoginEvent)(IDispatch* piTrade,USHORT nTradeID,BSTR bstrHost,USHORT nPort,VARIANT_BOOL bOK);
 	/// 交易委托成功回报
-	STDMETHOD(OrderOKEvent)(ULONG nReqID,EZMExchangeType eExchangeType,IDispatch* piRecordInfo);
+	STDMETHOD(OrderOKEvent)(ULONG OrderOKEvent,EZMExchangeType eExchangeType,IDispatch* piRecordInfo);
 	/// 交易委托失败回报
 	STDMETHOD(OrderErrEvent)(ULONG nReqID,BSTR bstrErrInfo);
 	/// 查询指定股票实时5档行情回报

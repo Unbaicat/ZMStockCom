@@ -449,9 +449,8 @@ LRESULT CMainDlg::OnOrderOK(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& /
 
 LRESULT CMainDlg::OnOrderSuccess(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& /*bHandled*/)
 {
-	if(NULL == m_spiTradeClientEvent[lParam] || NULL == m_spiTrade[lParam])
-		return 0;/// 对象已经释放
-	/// 委托成交成功通知,编号在wParam
+	ULONG nOrderID = (ULONG)wParam;
+	this->MessageBox((BSTR)lParam);
 	return 0;
 }
 
