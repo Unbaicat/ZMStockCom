@@ -1,0 +1,66 @@
+说明：
+1、只能用金字塔32位版本程序来调用；
+2、调用前请先注册ZMTradeCom.dll，注册方法：请先修改RegDllCom.bat文件里ZMTradeCom.dll实际的路径保存，然后管理员权限运行；
+3、把下面的代码放入金字塔模块的宏Macro里，比如定义一个宏Test，然后放入Sub Test() 函数里，然后在金字塔里可点击运行宏即可。
+
+Dim StockTrade
+        
+Dim StockRecord
+        
+Dim boolLogin
+
+        
+
+Set StockTrade = CreateObject("ZMTradeCom.StockTrade")
+
+        
+
+StockTrade.EnableLog = 1
+        
+StockTrade.AutoKeepConn = 1
+
+        
+
+Call StockTrade.Init("8.05", 1)
+
+        
+
+StockTrade.CurServerHost = "mock.tdx.com.cn"
+
+        
+StockTrade.CurServerPort = 7708                    
+StockTrade.LoginID = "登录账号"
+        
+StockTrade.CommPassword = "实际密码"             
+StockTrade.TradeAccount = "交易账号"          
+StockTrade.TradePassword = "实际密码"          
+        
+StockTrade.DepartmentID = 9000
+        
+StockTrade.BrokerType = 117
+        
+StockTrade.AccountType = 50
+
+        
+
+boolLogin = StockTrade.LogIn(False)
+        
+
+If boolLogin Then
+                       
+	Set StockRecord = StockTrade.GetStockQuote(StockTrade.CurTradeID, "000001")
+
+	application.MsgOut (StockRecord.GetValueString(0,1))                    
+	application.MsgOut (StockRecord.GetJsonString())
+	        
+	Set StockRecord = Nothing
+        
+Else
+            
+	application.MsgOut (StockTrade.LastErrDesc)
+        
+End If
+
+        
+
+Set StockTrade = Nothing

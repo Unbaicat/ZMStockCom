@@ -1,0 +1,40 @@
+    Dim StockTrade
+
+    Set StockTrade = CreateObject("ZMStockCom.StockTrade")
+    
+    StockTrade.EnableLog = 1
+    StockTrade.AutoKeepConn = 1
+    
+    Call StockTrade.Init("8.05", 1)
+
+    StockTrade.BrokerType = 117
+    StockTrade.AccountType = 50
+
+    StockTrade.CurServerHost = "mock.tdx.com.cn"
+    StockTrade.CurServerPort = 7708             
+    StockTrade.TradeAccount = "交易账号"  
+    StockTrade.TradePassword = "实际密码"          
+    StockTrade.CommPassword = "实际密码"           
+    StockTrade.LoginID = "登录账号"
+    StockTrade.DepartmentID = 9000
+
+    boolLogin = StockTrade.LogIn(False)
+    
+    If boolLogin Then
+                       
+	Set StockRecord = StockTrade.GetStockQuote(StockTrade.CurTradeID, "000001")
+
+	application.MsgOut (StockRecord.GetValueString(0,1))                    
+	application.MsgOut (StockRecord.GetJsonString())
+	        
+	Set StockRecord = Nothing
+        
+    Else
+            
+	application.MsgOut (StockTrade.LastErrDesc)
+        
+    End If
+
+        
+
+    Set StockTrade = Nothing
