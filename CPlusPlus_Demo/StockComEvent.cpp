@@ -31,7 +31,7 @@ STDMETHODIMP CStockComEvent::Invoke( DISPID dispIdMember,REFIID riid,LCID lcid,W
 			hRet = VariantChangeTypeEx( &varConnRet,&(pDispParams->rgvarg[0]),lcid,0,VT_BOOL);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
-			hRet=InitEvent(varTradeConn.pdispVal,varConnRet.boolVal);
+			hRet = InitEvent(varTradeConn.pdispVal,varConnRet.boolVal);
 			VariantClear(&varConnRet);
 			VariantClear(&varTradeConn);
 			break;
@@ -57,7 +57,7 @@ STDMETHODIMP CStockComEvent::Invoke( DISPID dispIdMember,REFIID riid,LCID lcid,W
 			hRet = VariantChangeTypeEx( &varConnRet,&(pDispParams->rgvarg[0]),lcid,0,VT_BOOL);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
-			hRet=LoginEvent(varTradeConn.pdispVal,varTrade.uiVal,varHost.bstrVal,varPort.uiVal,varConnRet.boolVal);
+			hRet = LoginEvent(varTradeConn.pdispVal,varTrade.uiVal,varHost.bstrVal,varPort.uiVal,varConnRet.boolVal);
 			VariantClear(&varConnRet);
 			VariantClear(&varTrade);
 			VariantClear(&varHost);

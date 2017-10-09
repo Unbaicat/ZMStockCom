@@ -337,7 +337,6 @@ LRESULT CMainDlg::OnInitReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL
 		if(m_spiTrade[0] == spiTrade)
 		{
 			this->MessageBox(L"对象1初始化接口成功！");
-
 		}
 		else if(m_spiTrade[1] == spiTrade)
 			this->MessageBox(L"对象2初始化接口成功！");
@@ -348,10 +347,8 @@ LRESULT CMainDlg::OnInitReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL
 		/// 连接失败，弹出错误描述
 		CComBSTR bstrErrInfo;
 		spiTrade->get_LastErrDesc(&bstrErrInfo);
-#ifdef _DEBUG
 		/// 事件通知中尽量避免弹窗MessageBox等阻塞操作，弹窗等仅限于调试程序方便
 		this->MessageBox(bstrErrInfo.m_str);
-#endif
 		bstrErrInfo.Empty();
 	}
 
