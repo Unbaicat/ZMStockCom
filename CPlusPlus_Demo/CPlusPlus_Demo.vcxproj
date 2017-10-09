@@ -20,6 +20,12 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{97946F70-91DB-45B3-B786-A724BBC3A166}</ProjectGuid>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -204,6 +210,12 @@
   <ItemGroup>
     <ClCompile Include="CPlusPlus_Demo.cpp" />
     <ClCompile Include="MainDlg.cpp" />
+    <ClCompile Include="MarketDlg.cpp" />
+    <ClCompile Include="MarketEvent.cpp" />
+    <ClCompile Include="MarketExDlg.cpp" />
+    <ClCompile Include="MarketExEvent.cpp" />
+    <ClCompile Include="MarketL2Event.cpp" />
+    <ClCompile Include="MarketLevel2Dlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -214,6 +226,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainDlg.h" />
+    <ClInclude Include="MarketDlg.h" />
+    <ClInclude Include="MarketEvent.h" />
+    <ClInclude Include="MarketExDlg.h" />
+    <ClInclude Include="MarketExEvent.h" />
+    <ClInclude Include="MarketL2Event.h" />
+    <ClInclude Include="MarketLevel2Dlg.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StockComEvent.h" />

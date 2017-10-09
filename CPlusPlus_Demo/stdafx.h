@@ -36,3 +36,6 @@ extern CAppModule _Module;
 #endif
 
 #import "..\\Bin\\ZMStockCom.exe" no_namespace, raw_interfaces_only, raw_native_types, named_guids
+
+/// 行情最大连接数量
+#define	ZM_ACCOUNT_CONNMAXCOUNT	32

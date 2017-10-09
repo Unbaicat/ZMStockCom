@@ -1192,3 +1192,24 @@ LRESULT CMainDlg::OnBnClickedIPO(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWnd
 	m_spiTrade[0]->BuyIPO(NULL);
 	return 0;
 }
+
+LRESULT CMainDlg::OnBnClickedMarket(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	return 0;
+}
+
+LRESULT CMainDlg::OnBnClickedMarketEx(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	return 0;
+}
+
+LRESULT CMainDlg::OnBnClickedMarketL2(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	return 0;
+}

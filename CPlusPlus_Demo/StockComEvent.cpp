@@ -344,7 +344,7 @@ STDMETHODIMP CStockComEvent::OrderOKEvent(ULONG nRequestID,EZMExchangeType eExch
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
 		/// 提前缓存了记录对象，所以用PostMessage
-		::PostMessage(m_hParentWnd,WM_TRADEEVENT_ORDEROK,eExchangeType,(LPARAM)m_nTradeIndex);
+		::PostMessage(m_hParentWnd,WM_TRADEEVENT_SENDORDER,eExchangeType,(LPARAM)m_nTradeIndex);
 	}
 	else
 	{

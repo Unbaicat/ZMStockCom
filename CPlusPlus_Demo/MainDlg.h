@@ -50,7 +50,7 @@ public:
 
 		MESSAGE_HANDLER(WM_TRADEEVENT_INITRETURN, OnInitReturn)
 		MESSAGE_HANDLER(WM_TRADEEVENT_LOGINRETURN, OnLoginReturn)
-		MESSAGE_HANDLER(WM_TRADEEVENT_ORDEROK, OnOrderOK)
+		MESSAGE_HANDLER(WM_TRADEEVENT_SENDORDER, OnOrderOK)
 		MESSAGE_HANDLER(WM_TRADEEVENT_ORDERERROR, OnOrderError)
 		MESSAGE_HANDLER(WM_TRADEEVENT_STOCKQUOTE, OnStockQuote)
 		MESSAGE_HANDLER(WM_TRADEEVENT_CHANGESERVER, OnChangeServer)
@@ -68,6 +68,9 @@ public:
 		COMMAND_HANDLER(IDC_BUTTON_SELL, BN_CLICKED, OnBnClickedSell)
 
 		COMMAND_HANDLER(IDC_BUTTON_NEWSTOCK, BN_CLICKED, OnBnClickedIPO)
+		COMMAND_HANDLER(IDC_BUTTON_MARKET, BN_CLICKED, OnBnClickedMarket)
+		COMMAND_HANDLER(IDC_BUTTON_MARKETEX, BN_CLICKED, OnBnClickedMarketEx)
+		COMMAND_HANDLER(IDC_BUTTON_MARKETL2, BN_CLICKED, OnBnClickedMarketL2)
 	END_MSG_MAP()
 
 // Handler prototypes (uncomment arguments if needed):
@@ -96,4 +99,7 @@ public:
 
 	LRESULT OnBnClickedUnInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 	LRESULT OnBnClickedIPO(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
+	LRESULT OnBnClickedMarket(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
+	LRESULT OnBnClickedMarketEx(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
+	LRESULT OnBnClickedMarketL2(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 };
