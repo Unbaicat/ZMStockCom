@@ -71,7 +71,7 @@ LRESULT CMarketDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lPar
 //	this->GetDlgItem(IDC_EDIT_MARKETSERVERADDR).SetWindowText(L"北京联通主站Z1");
 	this->GetDlgItem(IDC_EDIT_MARKETSERVERPORT).SetWindowText(L"7709");
 
-	this->GetDlgItem(IDC_EDIT_CODE).SetWindowText(L"000001;600000");
+	this->GetDlgItem(IDC_EDIT_CODE).SetWindowText(L"000001");
 
 	return TRUE;
 }
@@ -185,7 +185,7 @@ LRESULT CMarketDlg::OnConnReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BO
 #ifdef ZM_TDXSERVER_SYNC
 		/// 同步请求某只股票的实时5档行情
 		ITradeRecordPtr spiRecord = NULL;
-		hRet = spiMarket->GetQuote(nConnID,CComBSTR(L"000001"),&spiRecord);
+		hRet = spiMarket->GetQuote(nConnID,CComBSTR(L"600000"),&spiRecord);
 		if(NULL != spiRecord)
 		{
 			ULONG nFieldCount = 0,nRecordCount = 0,nIndex = 0;
@@ -491,43 +491,22 @@ LRESULT CMarketDlg::OnBnClickedConnect(WORD /*wNotifyCode*/, WORD /*wID*/, HWND 
 	ATLASSERT(bstrServerAddr.Length());
 	ATLASSERT(bstrServerPort.Length());
 
-	IConnCfgMgrPtr	spiConnCfgMgr = NULL;
-	HRESULT hRet = spiConnCfgMgr.CreateInstance(__uuidof(ConnCfgMgr));
-	ATLASSERT(spiConnCfgMgr);
-	if(NULL == spiConnCfgMgr)
+	HRESULT hRet = m_spiMarket[0].CreateInstance(__uuidof(Market));
+	ATLASSERT(m_spiMarket[0]);
+	if(NULL == m_spiMarket[0])
 	{
-		hRet = m_spiMarket[0].CreateInstance(__uuidof(Market));
-		ATLASSERT(m_spiMarket[0]);
-
-		/// 启用调试日志输出
-		hRet = m_spiMarket[0]->put_EnableLog(VARIANT_TRUE);
-		/// 设置行情服务器地址
-		m_spiMarket[0]->put_CurServerHost(bstrServerAddr);
-		/// 设置行情服务器端口
-		m_spiMarket[0]->put_CurServerPort((USHORT)StrToNum(bstrServerPort.m_str));
-
-		hRet = this->AdviseMarketCom(0);
+		this->MessageBox(L"创建普通行情接口失败，请检查是否已经成功注册COM组件！");
+		return 0;
 	}
-	else
-	{
-		spiConnCfgMgr->put_EnableLog(VARIANT_TRUE);
-		spiConnCfgMgr->put_ServerType(SERVERTYPE_MARKET);
-		spiConnCfgMgr->put_NetConnType(NETCONNTYPE_UNICOM);
-		USHORT nCount = 0;
-		spiConnCfgMgr->get_Count(&nCount);
-		ATLASSERT(nCount);
-		if(nCount)
-		{
-			USHORT nPID = 0;
-			hRet = spiConnCfgMgr->Get(::rand()%nCount,&nPID,(IDispatch **)&m_spiMarket[0]);
-			if(NULL == m_spiMarket[0])
-			{
-				ATLASSERT(0);
-				return 0;
-			}
-			this->AdviseMarketCom(0);
-		}
-	}
+	/// 启用调试日志输出
+	hRet = m_spiMarket[0]->put_EnableLog(VARIANT_TRUE);
+	/// 设置行情服务器地址
+	m_spiMarket[0]->put_CurServerHost(bstrServerAddr);
+	/// 设置行情服务器端口
+	m_spiMarket[0]->put_CurServerPort((USHORT)StrToNum(bstrServerPort.m_str));
+
+	hRet = this->AdviseMarketCom(0);
+
 	ATLASSERT(NULL != m_spiMarket[0]);
 	if(NULL != m_spiMarket[0])
 	{
