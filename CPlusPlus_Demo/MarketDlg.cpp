@@ -240,14 +240,14 @@ LRESULT CMarketDlg::OnStockQuote(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BO
 	ITradeRecordPtr spiRecord = m_spiMarketEvent[lParam]->GetReqData();
 	if(NULL == spiRecord)
 		return 0;
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	/// 获取JSON编码的数据内容
 	CComBSTR bstrJsonVal;
 	spiRecord->GetJsonString(&bstrJsonVal);
 	if(bstrJsonVal.Length())
 		MessageBox(bstrJsonVal.m_str);
 	bstrJsonVal.Empty();
-#endif
+//#endif
 	/// 根据接口方法遍历数据
 	ULONG nFieldCount = 0,nRecordCount = 0,nIndex = 0;
 	HRESULT hRet = spiRecord->get_FieldCount(&nFieldCount);
@@ -289,14 +289,14 @@ LRESULT CMarketDlg::OnStockMintue(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, B
 	ITradeRecordPtr spiRecord = m_spiMarketEvent[lParam]->GetReqData();
 	if(NULL == spiRecord)
 		return 0;
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	/// 获取JSON编码的数据内容
 	CComBSTR bstrJsonVal;
 	spiRecord->GetJsonString(&bstrJsonVal);
 	if(bstrJsonVal.Length())
 		MessageBox(bstrJsonVal.m_str);
 	bstrJsonVal.Empty();
-#endif
+//#endif
 	/// 根据接口方法遍历数据
 	ULONG nFieldCount = 0,nRecordCount = 0,nIndex = 0;
 	HRESULT hRet = spiRecord->get_FieldCount(&nFieldCount);
@@ -338,14 +338,14 @@ LRESULT CMarketDlg::OnStockTrans(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BO
 	ITradeRecordPtr spiRecord = m_spiMarketEvent[lParam]->GetReqData();
 	if(NULL == spiRecord)
 		return 0;
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	/// 获取JSON编码的数据内容
 	CComBSTR bstrJsonVal;
 	spiRecord->GetJsonString(&bstrJsonVal);
 	if(bstrJsonVal.Length())
 		MessageBox(bstrJsonVal.m_str);
 	bstrJsonVal.Empty();
-#endif
+//#endif
 	/// 根据接口方法遍历数据
 	ULONG nFieldCount = 0,nRecordCount = 0,nIndex = 0;
 	HRESULT hRet = spiRecord->get_FieldCount(&nFieldCount);
@@ -387,14 +387,14 @@ LRESULT CMarketDlg::OnStockBars(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOO
 	ITradeRecordPtr spiRecord = m_spiMarketEvent[lParam]->GetReqData();
 	if(NULL == spiRecord)
 		return 0;
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	/// 获取JSON编码的数据内容
 	CComBSTR bstrJsonVal;
 	spiRecord->GetJsonString(&bstrJsonVal);
 	if(bstrJsonVal.Length())
 		MessageBox(bstrJsonVal.m_str);
 	bstrJsonVal.Empty();
-#endif
+//#endif
 	/// 根据接口方法遍历数据
 	ULONG nFieldCount = 0,nRecordCount = 0,nIndex = 0;
 	HRESULT hRet = spiRecord->get_FieldCount(&nFieldCount);
