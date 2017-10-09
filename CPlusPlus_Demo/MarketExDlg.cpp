@@ -65,7 +65,13 @@ LRESULT CMarketExDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lP
 	m_nMarketEventCookie[1] = 0;
 	m_spiMarketEvent[1] = NULL;
 
-	this->GetDlgItem(IDC_EDIT_CODE).SetWindowText(L"IH1709");
+	this->GetDlgItem(IDC_EDIT_CODE).SetWindowText(L"IH1710");
+
+	/// 北京联通主站Z1
+	this->GetDlgItem(IDC_EDIT_MARKETSERVERADDR).SetWindowText(L"202.108.253.154");
+	/// 上海电信主站Z1
+//	this->GetDlgItem(IDC_EDIT_MARKETSERVERADDR).SetWindowText(L"180.153.18.176");
+	this->GetDlgItem(IDC_EDIT_MARKETSERVERPORT).SetWindowText(L"7721");
 
 	return TRUE;
 }
@@ -84,7 +90,7 @@ LRESULT CMarketExDlg::OnInitReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, 
 #ifdef ZM_TDXSERVER_SYNC
 		HRESULT hRet = spiMarket->Connect(VARIANT_FALSE,&bRet);
 #else
-		HRESULT hRet = spiMarket->Connect(VARIANT_FALSE,&bRet);
+		HRESULT hRet = spiMarket->Connect(VARIANT_TRUE,&bRet);
 #endif
 		if(VARIANT_FALSE == bRet)
 		{
@@ -173,23 +179,6 @@ LRESULT CMarketExDlg::OnConnReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, 
 		spiMarket->get_ConnSpeed(&nSpeed);/// 返回连接服务器时间
 
 		this->MessageBox(L"异步连接服务器成功！");
-
-#ifdef ZM_TDXSERVER_SYNC
-		/// 同步请求某只股票的实时5档行情
-		ITradeRecordPtr spiRecord = NULL;
-		spiMarket->GetBreedQuote(nConnID,MARKETTYPE_CFFEXO,CComBSTR(L"IH09"),&spiRecord);
-		ATLASSERT(spiRecord);
-		if(NULL != spiRecord)
-		{
-			ULONG nFieldCount = 0,nRecordCount = 0,nIndex = 0;
-			hRet = spiRecord->get_FieldCount(&nFieldCount);
-			hRet = spiRecord->get_RecordCount(&nRecordCount);
-		}
-#else
-		/// 异步请求多只股票的实时5档行情，可指定优先级和返回的请求序列号。nReqID会在事件回调中传回
-		ULONG nReqID = 0;
-		spiMarket->GetBreedQuotes(nConnID,MARKETTYPE_CFFEXO,CComBSTR(L"IH09;IF09"),&nReqID);
-#endif
 	}
 	else
 	{
@@ -1013,6 +1002,20 @@ LRESULT CMarketExDlg::OnBnClickedQuote(WORD /*wNotifyCode*/, WORD /*wID*/, HWND 
 	USHORT nConnID = 0;
 	ULONG nReqID = 0;
 	m_spiMarket[0]->get_CurConnID(&nConnID);
-	m_spiMarket[0]->GetBreedQuotes(nConnID,MARKETTYPE_CFFEXO,bstrStockCode,&nReqID);
+	ITradeRecordPtr spiRecord = NULL;
+	m_spiMarket[0]->GetBreedQuote(nConnID,MARKETTYPE_CFFEXO,bstrStockCode,&spiRecord);
+	if(NULL == spiRecord)
+	{
+		CComBSTR bstrErr;
+		m_spiMarket[0]->get_LastErrDesc(&bstrErr);
+		this->MessageBox(bstrErr.m_str);
+		bstrErr.Empty();
+		return 0;
+	}
+	CComBSTR bstrJsonInfo;
+	spiRecord->GetJsonString(&bstrJsonInfo);
+	this->MessageBox(bstrJsonInfo.m_str);
+	bstrJsonInfo.Empty();
+	spiRecord = NULL;
 	return 0;
 }
