@@ -6,6 +6,10 @@
 #include "resource.h"
 #include "MainDlg.h"
 
+#include "MarketDlg.h"
+#include "MarketExDlg.h"
+#include "MarketLevel2Dlg.h"
+
 #ifndef WIN64
 /// 定义是否同步处理数据
 #define	ZM_TDXSERVER_SYNC
@@ -1196,13 +1200,16 @@ LRESULT CMainDlg::OnBnClickedIPO(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWnd
 LRESULT CMainDlg::OnBnClickedMarket(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
 	// TODO: 在此添加控件通知处理程序代码
-
+	CMarketDlg MarketDlag;
+	int nRet = (int)MarketDlag.DoModal();
 	return 0;
 }
 
 LRESULT CMainDlg::OnBnClickedMarketEx(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
 	// TODO: 在此添加控件通知处理程序代码
+	CMarketExDlg MarketDlag;
+	int nRet = (int)MarketDlag.DoModal();
 
 	return 0;
 }
@@ -1210,6 +1217,8 @@ LRESULT CMainDlg::OnBnClickedMarketEx(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /
 LRESULT CMainDlg::OnBnClickedMarketL2(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
 	// TODO: 在此添加控件通知处理程序代码
+	CMarketLevel2Dlg MarketDlag;
+	int nRet = (int)MarketDlag.DoModal();
 
 	return 0;
 }

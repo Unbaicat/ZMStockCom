@@ -12,6 +12,10 @@
 #define _RICHEDIT_VER	0x0500
 
 #include <atlbase.h>
+/// 定义使用ATL的CString
+#define _CSTRING_NS	ATL
+#define _WTL_NEW_PAGE_NOTIFY_HANDLERS
+
 #include "WTL\\atlapp.h"
 
 extern CAppModule _Module;
