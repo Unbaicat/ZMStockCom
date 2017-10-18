@@ -72,6 +72,7 @@ public:
 		COMMAND_HANDLER(IDC_BUTTON_FIVEMARKET, BN_CLICKED, OnBnClickedQuote)
 		COMMAND_HANDLER(IDC_BUTTON_DETAILTASK, BN_CLICKED, OnBnClickedDetailTask)
 		COMMAND_HANDLER(IDC_BUTTON_DUILIE, BN_CLICKED, OnBnClickedDuiLi)
+		COMMAND_HANDLER(IDC_BUTTON_CODES, BN_CLICKED, OnBnClickedCodes)
 	END_MSG_MAP()
 
 // Handler prototypes (uncomment arguments if needed):
@@ -115,4 +116,5 @@ public:
 	LRESULT OnBnClickedQuote(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 	LRESULT OnBnClickedDetailTask(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 	LRESULT OnBnClickedDuiLi(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
+	LRESULT OnBnClickedCodes(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 };

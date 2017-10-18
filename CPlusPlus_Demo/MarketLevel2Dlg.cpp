@@ -1652,3 +1652,113 @@ LRESULT CMarketLevel2Dlg::OnBnClickedDuiLi(WORD /*wNotifyCode*/, WORD /*wID*/, H
 	}
 	return 0;
 }
+
+LRESULT CMarketLevel2Dlg::OnBnClickedCodes(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if(NULL == m_spiMarket)
+	{
+		this->MessageBox(L"还没有初始化连接！");
+		return 0;
+	}
+	VARIANT_BOOL bConnFlag = VARIANT_FALSE;
+	m_spiMarket->get_IsConnected(&bConnFlag);
+	if(VARIANT_FALSE == bConnFlag)
+	{
+		this->MessageBox(L"还没有连接成功！");
+		return 0;
+	}
+	ULONG nFieldCount = 0,nRecordCount = 0;
+	ITradeRecordPtr spiRecordIndex = NULL;
+
+	USHORT nStockCount = 0;
+	/// 获得上海市场代码和名称
+	m_spiMarket->GetTotalCount(EXCHANGETYPE_SH,&nStockCount);
+	if(!nStockCount)
+	{
+		CComBSTR bstrErrInfo;
+		m_spiMarket->get_LastErrDesc(&bstrErrInfo);
+		if(bstrErrInfo.Length())
+			this->MessageBox(bstrErrInfo.m_str);
+		bstrErrInfo.Empty();
+	}
+	CComBSTR bstrCode,bstrName;
+	USHORT nStart = 0;
+	while(nStockCount)
+	{
+		USHORT nRetCount = 0;
+		/// 获得上海市场代码和名称等
+		m_spiMarket->GetList(EXCHANGETYPE_SH,nStart,&nRetCount,&spiRecordIndex);
+		nStart += nRetCount;
+		if(NULL != spiRecordIndex)
+		{
+			FLOAT ftPrice = 0.0;
+			LONG nSingleCount = 0;
+			VARIANT_BOOL bExistFlag = VARIANT_FALSE;
+			HRESULT hRet = spiRecordIndex->get_FieldCount(&nFieldCount);
+			hRet = spiRecordIndex->get_RecordCount(&nRecordCount);
+			for(ULONG nIndex = 0;nIndex < nRecordCount ;nIndex++)
+			{
+				spiRecordIndex->GetValueString(nIndex,0,&bstrCode);
+				spiRecordIndex->GetValueString(nIndex,2,&bstrName);
+				spiRecordIndex->GetValueInt(nIndex,1,&nSingleCount);
+				spiRecordIndex->GetValueFloat(nIndex,5,&ftPrice);
+
+				ftPrice = 0.0;
+				bstrName.Empty();
+				bstrCode.Empty();
+			}
+			spiRecordIndex = NULL;
+		}
+		if(!nRetCount || nStart >= nStockCount)
+			break;/// 获取完成
+		::Sleep(100);
+	}
+	nStart = 0;
+	nStockCount = 0;
+	/// 获得深圳市场代码和名称等
+	m_spiMarket->GetTotalCount(EXCHANGETYPE_SZ,&nStockCount);
+	if(!nStockCount)
+	{
+		CComBSTR bstrErrInfo;
+		m_spiMarket->get_LastErrDesc(&bstrErrInfo);
+		if(bstrErrInfo.Length())
+			this->MessageBox(bstrErrInfo.m_str);
+		bstrErrInfo.Empty();
+	}
+	while(nStockCount)
+	{
+		USHORT nRetCount = 0;
+		m_spiMarket->GetList(EXCHANGETYPE_SZ,nStart,&nRetCount,&spiRecordIndex);
+		nStart += nRetCount;
+		if(NULL != spiRecordIndex)
+		{
+			CComBSTR bstrJsonText;
+			HRESULT hRet = spiRecordIndex->get_FieldCount(&nFieldCount);
+			hRet = spiRecordIndex->get_RecordCount(&nRecordCount);
+
+			FLOAT ftPrice = 0.0;
+			LONG nSingleCount = 0;
+			VARIANT_BOOL bExistFlag = VARIANT_FALSE;
+			hRet = spiRecordIndex->get_FieldCount(&nFieldCount);
+			hRet = spiRecordIndex->get_RecordCount(&nRecordCount);
+			for(ULONG nIndex = 0;nIndex < nRecordCount ;nIndex++)
+			{
+				spiRecordIndex->GetValueString(nIndex,0,&bstrCode);
+				spiRecordIndex->GetValueString(nIndex,2,&bstrName);
+				spiRecordIndex->GetValueInt(nIndex,1,&nSingleCount);
+				spiRecordIndex->GetValueFloat(nIndex,5,&ftPrice);
+
+				ftPrice = 0.0;
+				bstrName.Empty();
+				bstrCode.Empty();
+			}
+			spiRecordIndex = NULL;
+		}
+		if(!nRetCount || nStart >= nStockCount)
+			break;/// 获取完成
+		::Sleep(100);
+	}
+
+	return 0;
+}
