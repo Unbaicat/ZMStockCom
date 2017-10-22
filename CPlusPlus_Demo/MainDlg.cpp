@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "MainDlg.h"
+#include <atlcomtime.h>
 
 #include "MarketDlg.h"
 #include "MarketExDlg.h"
@@ -631,6 +632,8 @@ LRESULT CMainDlg::OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 	m_spiTrade[0]->put_BrokerType(eBrokerType);
 	m_spiTrade[0]->put_AccountType(eAccountType);
 	//m_spiTrade[0]->put_CreditAccount(VARIANT_TRUE);/// 设置是否信用账号
+	/// 设置成交自动回报定时器1000毫秒，设为0表示不启用
+	m_spiTrade[0]->put_ReportSuccessTimer(1000);
 
 	/// 设置交易服务器地址
 	m_spiTrade[0]->put_CurServerHost(bstrServerAddr);
@@ -827,8 +830,12 @@ ITradeRecordPtr CMainDlg::GetHisData(EZMHisOrderType eCategoryType)
 	if(FAILED(hRet))
 		return spiRecord;/// 通信不正常
 	/// 指定时间范围
-	CComBSTR bstrStartDay(L"20170508"),bstrEndDay(L"20170519");
-	hRet = m_spiTrade[0]->QueryHisTradeData(nTradeID,eCategoryType,bstrStartDay,bstrEndDay,&spiRecord);
+	COleDateTime curTime = COleDateTime::GetCurrentTime();
+	CString strBeginTime,strEndTime;
+	strEndTime.Format(L"%d%02d%02d",curTime.GetYear(),curTime.GetMonth(),curTime.GetDay());
+	curTime -= COleDateTimeSpan(15,0,0,0);
+	strBeginTime.Format(L"%d%02d%02d",curTime.GetYear(),curTime.GetMonth(),curTime.GetDay());
+	hRet = m_spiTrade[0]->QueryHisTradeData(nTradeID,eCategoryType,CComBSTR(strBeginTime),CComBSTR(strEndTime),&spiRecord);
 	if(NULL == spiRecord)
 	{
 		/// 获取错误信息

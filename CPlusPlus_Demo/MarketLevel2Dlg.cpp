@@ -1342,7 +1342,7 @@ LRESULT CMarketLevel2Dlg::OnBnClickedHmd(WORD /*wNotifyCode*/, WORD /*wID*/, HWN
 	SHORT nGetDay = 30;
 	ULONG nFieldCount = 0,nRecordCount = 0;
 	ITradeRecordPtr spiRecordIndex = NULL;
-
+	/// 指定一个日期
 	HRESULT hRet = m_spiMarket->GetHisMinuteTimeData(bstrStockCode,20170930,&spiRecordIndex);
 	if(NULL == spiRecordIndex)
 	{
@@ -1467,6 +1467,7 @@ LRESULT CMarketLevel2Dlg::OnBnClickedHfst(WORD /*wNotifyCode*/, WORD /*wID*/, HW
 	LONG nStart = 0;
 	while(TRUE)
 	{
+		/// 指定一个日期
 		HRESULT hRet = m_spiMarket->GetHisTransData(bstrStockCode,20170930,nStart,nMaxGet,&spiRecordIndex);
 		if(NULL == spiRecordIndex)
 		{

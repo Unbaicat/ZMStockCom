@@ -10,6 +10,9 @@ class CMarketExDlg : public CAxDialogImpl<CMarketExDlg>
 {
 protected:
 
+	/// 市场类型
+	CComboBox		m_wndMarketType;
+
 	/// 扩展行情服务接口
 	IMarketExPtr					m_spiMarket[ZM_ACCOUNT_CONNMAXCOUNT];
 	/// 扩展行情接口事件COOKIE数组

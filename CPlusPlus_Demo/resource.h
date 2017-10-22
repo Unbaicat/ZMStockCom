@@ -45,6 +45,7 @@
 #define IDC_BUTTON_GETF                 1043
 #define IDC_BUTTON_XDATA                1044
 #define IDC_BUTTON_F10                  1045
+#define IDC_COMBO_MARKETTYPE            1045
 #define IDC_EDIT_CODE                   1046
 #define IDC_BUTTON_MK                   1047
 #define IDC_BUTTON_HMD                  1048

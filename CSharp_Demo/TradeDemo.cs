@@ -326,13 +326,16 @@ namespace CSharp_Demo
         {
              /// 自动保持连接
             m_StockTrade.AutoKeepConn = true;
-            /// 设置为普通账号
+            /// 设置为普通账号,true为信用账号
             m_StockTrade.CreditAccount = false;
+            /// 设置成交自动回报定时器1000毫秒，设为0表示不启用
+            m_StockTrade.ReportSuccessTimer = 1000;
 
-            /// 设置券商类型和账号类型
+            /// 设置券商
             int CurSel = this.BROKERTYPE.SelectedIndex;
             m_StockTrade.BrokerType = BrokerMap[CurSel];
 
+            /// 设置登录账号类型
             EZMLoginAccountType eAccountType = EZMLoginAccountType.LOGINIACCOUNTTYPE_MNCS;
             CurSel = this.ACCOUNTTYPE.SelectedIndex;
             if (1 == CurSel)
@@ -345,7 +348,7 @@ namespace CSharp_Demo
             m_StockTrade.CurServerHost = this.SERVERADDR.Text;
             m_StockTrade.CurServerPort = ushort.Parse(this.SERVERPORT.Text);
 
-            /// 设置模拟服务器交易账户和密码
+            /// 设置服务器交易账户和密码
             m_StockTrade.LoginID = this.LOGINID.Text;
             m_StockTrade.TradePassword = this.LOGINPW.Text;
             if (0 == this.LOGINPW.Text.Length)
@@ -355,7 +358,7 @@ namespace CSharp_Demo
             }
             /// 设置其他参数
             m_StockTrade.TradeAccount = this.TRADEACCOUNT.Text;/// 交易账号，一般为资金账号
-            m_StockTrade.DepartmentID = ushort.Parse(this.DEPID.Text);
+            m_StockTrade.DepartmentID = ushort.Parse(this.DEPID.Text);/// 营业部ID
 
 #if SYNC_OPT
             /// 指定同步连接，直到返回结果

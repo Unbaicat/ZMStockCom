@@ -65,13 +65,26 @@ LRESULT CMarketExDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lP
 	m_nMarketEventCookie[1] = 0;
 	m_spiMarketEvent[1] = NULL;
 
-	this->GetDlgItem(IDC_EDIT_CODE).SetWindowText(L"IH1710");
+	this->GetDlgItem(IDC_EDIT_CODE).SetWindowText(L"IH12");
 
 	/// 北京联通主站Z1
 	this->GetDlgItem(IDC_EDIT_MARKETSERVERADDR).SetWindowText(L"202.108.253.154");
 	/// 上海电信主站Z1
 //	this->GetDlgItem(IDC_EDIT_MARKETSERVERADDR).SetWindowText(L"180.153.18.176");
 	this->GetDlgItem(IDC_EDIT_MARKETSERVERPORT).SetWindowText(L"7721");
+
+	m_wndMarketType.Attach(GetDlgItem(IDC_COMBO_MARKETTYPE).m_hWnd);
+	int nItemIndex = m_wndMarketType.AddString(L"中金所股指期货");
+	m_wndMarketType.SetItemData(nItemIndex,MARKETTYPE_CFFE);
+	nItemIndex = m_wndMarketType.AddString(L"郑州商品");
+	m_wndMarketType.SetItemData(nItemIndex,MARKETTYPE_ZZF);
+	nItemIndex = m_wndMarketType.AddString(L"大连商品");
+	m_wndMarketType.SetItemData(nItemIndex,MARKETTYPE_DLF);
+	nItemIndex = m_wndMarketType.AddString(L"主力期货合约");
+	m_wndMarketType.SetItemData(nItemIndex,MARKETTYPE_MAINFC);
+	nItemIndex = m_wndMarketType.AddString(L"上海期货");
+	m_wndMarketType.SetItemData(nItemIndex,MARKETTYPE_SHF);
+	m_wndMarketType.SetCurSel(0);
 
 	return TRUE;
 }
@@ -555,6 +568,8 @@ LRESULT CMarketExDlg::OnBnClickedKdata(WORD /*wNotifyCode*/, WORD /*wID*/, HWND 
 		this->MessageBox(L"代码不合法！");
 		return 0;
 	}
+	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
+
 	USHORT nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
@@ -566,7 +581,7 @@ LRESULT CMarketExDlg::OnBnClickedKdata(WORD /*wNotifyCode*/, WORD /*wID*/, HWND 
 	/// 获取中金所IF 17年9月合约日K线数据
 	USHORT nCount = 800;///单次最多获取800条记录
 	HRESULT hRet(E_FAIL);
-	hRet = m_spiMarket[0]->GetBreedBars(nCurConnID,ZMBARTYPE_1DAY,MARKETTYPE_CFFE,CComBSTR(bstrGetCode),0,nCount,&spiRecord);
+	hRet = m_spiMarket[0]->GetBreedBars(nCurConnID,ZMBARTYPE_1DAY,(EZMMarketType )dwType,CComBSTR(bstrGetCode),0,nCount,&spiRecord);
 	if(FAILED(hRet) || NULL == spiRecord)
 	{
 		this->MessageBox(L"获取所有品种代码错误！");
@@ -583,7 +598,7 @@ LRESULT CMarketExDlg::OnBnClickedKdata(WORD /*wNotifyCode*/, WORD /*wID*/, HWND 
 	spiRecord->Clear();
 	spiRecord = NULL;
 	/// 获得行情报价
-	m_spiMarket[0]->GetBreedQuote(nCurConnID,MARKETTYPE_CFFE,CComBSTR(bstrGetCode),&spiRecord);
+	m_spiMarket[0]->GetBreedQuote(nCurConnID,(EZMMarketType )dwType,CComBSTR(bstrGetCode),&spiRecord);
 	if(FAILED(hRet) || NULL == spiRecord)
 	{
 		this->MessageBox(L"获取所有品种代码错误！");
@@ -619,11 +634,12 @@ LRESULT CMarketExDlg::OnBnClickedWk(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*h
 		this->MessageBox(L"还未成功连接！");
 		return 0;
 	}
+	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
 	ITradeRecordPtr spiRecord = NULL;
 	/// 获取郑州交易所棉花17年9月合约周K线数据
 	USHORT nCount = 800;///单次最多获取800条记录
 	HRESULT hRet(E_FAIL);
-	hRet = m_spiMarket[0]->GetBreedBars(nCurConnID,ZMBARTYPE_1WEEK,MARKETTYPE_ZZF,CComBSTR(L"CF1801"),0,nCount,&spiRecord);
+	hRet = m_spiMarket[0]->GetBreedBars(nCurConnID,ZMBARTYPE_1WEEK,(EZMMarketType )dwType,CComBSTR(L"CF1801"),0,nCount,&spiRecord);
 	if(FAILED(hRet) || NULL == spiRecord)
 	{
 		this->MessageBox(L"获取所有品种代码错误！");
@@ -661,11 +677,13 @@ LRESULT CMarketExDlg::OnBnClickedMkx(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*
 		this->MessageBox(L"还未成功连接！");
 		return 0;
 	}
+	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
+
 	ITradeRecordPtr spiRecord = NULL;
 	/// 获取中金所IF 17年9月合约日K线数据
 	USHORT nCount = 800;///单次最多获取800条记录
 	HRESULT hRet(E_FAIL);
-	hRet = m_spiMarket[0]->GetBreedBars(nCurConnID,ZMBARTYPE_1MONTH,MARKETTYPE_CFFE,CComBSTR(bstrGetCode),0,nCount,&spiRecord);
+	hRet = m_spiMarket[0]->GetBreedBars(nCurConnID,ZMBARTYPE_1MONTH,(EZMMarketType )dwType,CComBSTR(bstrGetCode),0,nCount,&spiRecord);
 	if(FAILED(hRet) || NULL == spiRecord)
 	{
 		this->MessageBox(L"获取所有品种代码错误！");
@@ -704,11 +722,13 @@ LRESULT CMarketExDlg::OnBnClickedHkd(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*
 		this->MessageBox(L"还未成功连接！");
 		return 0;
 	}
+	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
+
 	ITradeRecordPtr spiRecord = NULL;
 	/// 获取中金所IF 17年9月合约小时K线数据
 	USHORT nCount = 800;///单次最多获取800条记录
 	HRESULT hRet(E_FAIL);
-	hRet = m_spiMarket[0]->GetBreedBars(nCurConnID,ZMBARTYPE_1HOUR,MARKETTYPE_CFFE,CComBSTR(bstrGetCode),0,nCount,&spiRecord);
+	hRet = m_spiMarket[0]->GetBreedBars(nCurConnID,ZMBARTYPE_1HOUR,(EZMMarketType )dwType,CComBSTR(bstrGetCode),0,nCount,&spiRecord);
 	if(FAILED(hRet) || NULL == spiRecord)
 	{
 		this->MessageBox(L"获取所有品种代码错误！");
@@ -747,11 +767,13 @@ LRESULT CMarketExDlg::OnBnClickedFivemk(WORD /*wNotifyCode*/, WORD /*wID*/, HWND
 		this->MessageBox(L"还未成功连接！");
 		return 0;
 	}
+	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
+
 	ITradeRecordPtr spiRecord = NULL;
 	/// 获取中金所IF 17年9月合约小时K线数据
 	USHORT nCount = 800;///单次最多获取800条记录
 	HRESULT hRet(E_FAIL);
-	hRet = m_spiMarket[0]->GetBreedBars(nCurConnID,ZMBARTYPE_5MINUTE,MARKETTYPE_CFFE,CComBSTR(bstrGetCode),0,nCount,&spiRecord);
+	hRet = m_spiMarket[0]->GetBreedBars(nCurConnID,ZMBARTYPE_5MINUTE,(EZMMarketType )dwType,CComBSTR(bstrGetCode),0,nCount,&spiRecord);
 	if(FAILED(hRet) || NULL == spiRecord)
 	{
 		this->MessageBox(L"获取所有品种代码错误！");
@@ -790,11 +812,13 @@ LRESULT CMarketExDlg::OnBnClickedMk(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*h
 		this->MessageBox(L"还未成功连接！");
 		return 0;
 	}
+	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
+
 	ITradeRecordPtr spiRecord = NULL;
 	/// 获取中金所IF 17年9月合约小时K线数据
 	USHORT nCount = 800;///单次最多获取800条记录
 	HRESULT hRet(E_FAIL);
-	hRet = m_spiMarket[0]->GetBreedBars(nCurConnID,ZMBARTYPE_1MINUTE,MARKETTYPE_CFFE,CComBSTR(bstrGetCode),0,nCount,&spiRecord);
+	hRet = m_spiMarket[0]->GetBreedBars(nCurConnID,ZMBARTYPE_1MINUTE,(EZMMarketType )dwType,CComBSTR(bstrGetCode),0,nCount,&spiRecord);
 	if(FAILED(hRet) || NULL == spiRecord)
 	{
 		this->MessageBox(L"获取所有品种代码错误！");
@@ -833,11 +857,13 @@ LRESULT CMarketExDlg::OnBnClickedFst(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*
 		this->MessageBox(L"还未成功连接！");
 		return 0;
 	}
+	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
+
 	ITradeRecordPtr spiRecord = NULL;
 	/// 获取中金所IF 17年9月合约分时图数据
 	USHORT nCount = 800;///单次最多获取800条记录
 	HRESULT hRet(E_FAIL);
-	hRet = m_spiMarket[0]->GetMinuteTimeData(nCurConnID,MARKETTYPE_CFFE,CComBSTR(bstrGetCode),&spiRecord);
+	hRet = m_spiMarket[0]->GetMinuteTimeData(nCurConnID,(EZMMarketType )dwType,CComBSTR(bstrGetCode),&spiRecord);
 	if(FAILED(hRet) || NULL == spiRecord)
 	{
 		this->MessageBox(L"获取所有品种代码错误！");
@@ -877,12 +903,13 @@ LRESULT CMarketExDlg::OnBnClickedHmd(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*
 		return 0;
 	}
 	COleDateTime BeginTime = COleDateTime::GetCurrentTime();
-
+	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
 	ITradeRecordPtr spiRecord = NULL;
 	USHORT nCount = 800;///单次最多获取800条记录
 	HRESULT hRet(E_FAIL);
 	/// 获取中金所IF合约分时图数据
-	hRet = m_spiMarket[0]->GetHisMinuteTimeData(nCurConnID,MARKETTYPE_CFFE,CComBSTR(bstrGetCode),20170930,&spiRecord);
+	/// 指定一个日期
+	hRet = m_spiMarket[0]->GetHisMinuteTimeData(nCurConnID,(EZMMarketType )dwType,CComBSTR(bstrGetCode),20170930,&spiRecord);
 	if(FAILED(hRet) || NULL == spiRecord)
 	{
 		this->MessageBox(L"获取所有品种代码错误！");
@@ -921,11 +948,12 @@ LRESULT CMarketExDlg::OnBnClickedFscj(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /
 		this->MessageBox(L"还未成功连接！");
 		return 0;
 	}
+	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
 	ITradeRecordPtr spiRecord = NULL;
 	USHORT nCount = 800;///单次最多获取800条记录
 	HRESULT hRet(E_FAIL);
 	/// 获取中金所IF合约分时成交数据
-	hRet = m_spiMarket[0]->GetTransData(nCurConnID,MARKETTYPE_CFFE,CComBSTR(bstrGetCode),0,nCount,&spiRecord);
+	hRet = m_spiMarket[0]->GetTransData(nCurConnID,(EZMMarketType )dwType,CComBSTR(bstrGetCode),0,nCount,&spiRecord);
 	if(FAILED(hRet) || NULL == spiRecord)
 	{
 		this->MessageBox(L"获取所有品种代码错误！");
@@ -964,12 +992,13 @@ LRESULT CMarketExDlg::OnBnClickedHfst(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /
 		this->MessageBox(L"还未成功连接！");
 		return 0;
 	}
-
+	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
 	ITradeRecordPtr spiRecord = NULL;
 	USHORT nCount = 800;///单次最多获取800条记录
 	HRESULT hRet(E_FAIL);
 	/// 获取中金所合约分时成交数据
-	hRet = m_spiMarket[0]->GetHisTransData(nCurConnID,MARKETTYPE_CFFE,CComBSTR(bstrGetCode),20170930,0,nCount,&spiRecord);
+	/// 指定一个日期
+	hRet = m_spiMarket[0]->GetHisTransData(nCurConnID,(EZMMarketType )dwType,CComBSTR(bstrGetCode),20170930,0,nCount,&spiRecord);
 	if(FAILED(hRet) || NULL == spiRecord)
 	{
 		this->MessageBox(L"获取所有品种代码错误！");
@@ -998,12 +1027,13 @@ LRESULT CMarketExDlg::OnBnClickedQuote(WORD /*wNotifyCode*/, WORD /*wID*/, HWND 
 	this->GetDlgItem(IDC_EDIT_CODE).GetWindowText(&bstrStockCode);
 	if(!bstrStockCode.Length())
 		return 0;
+	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
 	CString strStockCode(bstrStockCode.m_str);
 	USHORT nConnID = 0;
 	ULONG nReqID = 0;
 	m_spiMarket[0]->get_CurConnID(&nConnID);
 	ITradeRecordPtr spiRecord = NULL;
-	m_spiMarket[0]->GetBreedQuote(nConnID,MARKETTYPE_CFFEXO,bstrStockCode,&spiRecord);
+	m_spiMarket[0]->GetBreedQuote(nConnID,(EZMMarketType )dwType,bstrStockCode,&spiRecord);
 	if(NULL == spiRecord)
 	{
 		CComBSTR bstrErr;
