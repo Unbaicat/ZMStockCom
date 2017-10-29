@@ -65,7 +65,7 @@ LRESULT CMarketExDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lP
 	m_nMarketEventCookie[1] = 0;
 	m_spiMarketEvent[1] = NULL;
 
-	this->GetDlgItem(IDC_EDIT_CODE).SetWindowText(L"IH12");
+	this->GetDlgItem(IDC_EDIT_CODE).SetWindowText(L"IH1712");
 
 	/// 北京联通主站Z1
 	this->GetDlgItem(IDC_EDIT_MARKETSERVERADDR).SetWindowText(L"202.108.253.154");
