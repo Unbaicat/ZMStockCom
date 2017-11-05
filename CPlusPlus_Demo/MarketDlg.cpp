@@ -437,22 +437,9 @@ LRESULT CMarketDlg::OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, B
 void CMarketDlg::ReleaseCom()
 {
 	/// 释放COM组件对象
-	if(NULL != m_spiMarket[0])
-	{
-		/// 释放所有连接
-		m_spiMarket[0]->Disconnect(0);
-		m_spiMarket[0] = NULL;
-	}
+	this->UnAdviseMarketCom(0);
 #ifdef ZM_MUTI_ACCOUNT
-	if(NULL != m_spiMarket[1])
-	{
-		USHORT nConnID = 0;
-		m_spiMarket[1]->get_CurConnID(&nConnID);
-		m_spiMarket[1]->Disconnect(nConnID);
-		/// 断开事件连接
-		this->UnAdviseMarketCom(1);
-		m_spiMarket[1] = NULL;
-	}
+	this->UnAdviseMarketCom(1);
 #endif
 }
 
@@ -482,6 +469,7 @@ LRESULT CMarketDlg::OnBnClickedConnect(WORD /*wNotifyCode*/, WORD /*wID*/, HWND 
 		m_spiMarket[0]->get_CurConnID(&nConnID);
 		if(nConnID)
 			return 0;/// 正常连接
+		/// 释放连接
 		this->UnAdviseMarketCom(0);
 	}
 	/// 获取初始化参数
