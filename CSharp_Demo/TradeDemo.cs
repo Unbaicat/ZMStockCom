@@ -278,6 +278,7 @@ namespace CSharp_Demo
 
             nAddItem = this.HISDATA.Items.Add("历史委托");
             nAddItem = this.HISDATA.Items.Add("历史成交");
+            nAddItem = this.HISDATA.Items.Add("资金流水");
             nAddItem = this.HISDATA.Items.Add("交割单");
             this.HISDATA.SelectedIndex = 0;
 
@@ -515,7 +516,7 @@ namespace CSharp_Demo
             int CurSel = this.HISDATA.SelectedIndex;
             /// 获取17年5月8号到119号的历史数据
             ITradeRecord StockRecord = m_StockTrade.QueryHisTradeData(m_StockTrade.CurTradeID, 
-                (EZMHisOrderType)(CurSel + 1), "20170920", "20170930");
+                (EZMHisOrderType)(CurSel + 1), "20171113", "20171117");
             if (null != StockRecord)
             {
                 /// 遍历获取的数据

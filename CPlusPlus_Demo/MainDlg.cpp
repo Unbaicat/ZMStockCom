@@ -86,6 +86,8 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 	m_wndHistoryList.SetItemData(nItemIndex,HISORDERTYPE_TRUST);
 	nItemIndex = m_wndHistoryList.AddString(L"历史成交");
 	m_wndHistoryList.SetItemData(nItemIndex,HISORDERTYPE_TRADE);
+	nItemIndex = m_wndHistoryList.AddString(L"资金流水");
+	m_wndHistoryList.SetItemData(nItemIndex,HISORDERTYPE_CAPITALLIST);
 	nItemIndex = m_wndHistoryList.AddString(L"交割单");
 	m_wndHistoryList.SetItemData(nItemIndex,HISORDERTYPE_DELIVERYORDER);
 	m_wndHistoryList.SetCurSel(0);
