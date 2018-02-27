@@ -12,6 +12,8 @@ using System.Text;
 using System.Windows.Forms;
 
 using ZMStockCom;
+/// 如果用DLL版本的，用下面的代码，在添加引用COM组件中选择ZMTradeCom
+// using ZMTradeCom;
 
 namespace CSharp_Demo
 {
@@ -787,9 +789,9 @@ namespace CSharp_Demo
             /// <summary>
             /// 委托交易成交通知，当日提交的委托，实际成交后发送的结果通知
             /// </summary>
-            /// <param name="nExchangeID" Desc="服务器上委托的订单ID标识"></param>
+            /// <param name="strOrderID" Desc="券商服务器上的委托ID标识"></param>
             /// <param name="strSuccessJson" Desc="成功的JSON数据包"></param>
-            public void OrderSuccessEvent(uint nExchangeID, string strSuccessJson)
+            public void OrderSuccessEvent(string strOrderID, string strSuccessJson)
             {
                 MessageBox.Show(strSuccessJson);
             }
