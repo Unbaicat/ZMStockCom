@@ -105,7 +105,7 @@ public:
 	/// 查询指定股票实时5档行情回报
 	STDMETHOD(StockQuoteEvent)(ULONG nReqID,BSTR bstrCode,IDispatch* piRecordInfo);
 	/// 交易委托成交回报
-	STDMETHOD(OrderSuccessEvent)(ULONG nOrderID,BSTR bstrJson);
+	STDMETHOD(OrderSuccessEvent)(BSTR bstrOrderID,BSTR bstrJson);
 
 	/// 服务器错误通知
 	STDMETHOD(ServerErrEvent)(USHORT nTradeID,ULONG nReqID);

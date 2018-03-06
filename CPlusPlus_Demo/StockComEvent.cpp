@@ -150,13 +150,13 @@ STDMETHODIMP CStockComEvent::Invoke( DISPID dispIdMember,REFIID riid,LCID lcid,W
 			CComVariant varOrderID,varJson;
 			VariantInit(&varJson);
 			VariantInit(&varOrderID);
-			hRet = VariantChangeTypeEx( &varOrderID,&(pDispParams->rgvarg[1]),lcid,0,VT_UI4);
+			hRet = VariantChangeTypeEx( &varOrderID,&(pDispParams->rgvarg[1]),lcid,0,VT_BSTR);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
 			hRet = VariantChangeTypeEx( &varJson,&(pDispParams->rgvarg[0]),lcid,0,VT_BSTR);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
-			hRet = OrderSuccessEvent(varOrderID.ulVal,varJson.bstrVal);
+			hRet = OrderSuccessEvent(varOrderID.bstrVal,varJson.bstrVal);
 			VariantClear(&varOrderID);
 			VariantClear(&varOrderID);
 			break;
@@ -379,17 +379,17 @@ STDMETHODIMP CStockComEvent::OrderErrEvent(ULONG nReqID,BSTR bstrErrInfo)
 	return hRet;
 }
 
-STDMETHODIMP CStockComEvent::OrderSuccessEvent(ULONG nOrderID,BSTR bstrJson)
+STDMETHODIMP CStockComEvent::OrderSuccessEvent(BSTR bstrOrderID,BSTR bstrJson)
 {
 	HRESULT hRet(E_FAIL);
-	ATLASSERT(nOrderID);
+	ATLASSERT(bstrOrderID);
 	ATLASSERT(bstrJson);
-	if(0 == nOrderID)
+	if(NULL == bstrOrderID)
 		return hRet;
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
 		/// 直接传递bstrJson，需要SendMessage
-		::SendMessage(m_hParentWnd,WM_TRADEEVENT_ORDERSUCCESS,nOrderID,(LPARAM)bstrJson);
+		::SendMessage(m_hParentWnd,WM_TRADEEVENT_ORDERSUCCESS,(WPARAM)bstrOrderID,(LPARAM)bstrJson);
 	}
 	return hRet;
 }

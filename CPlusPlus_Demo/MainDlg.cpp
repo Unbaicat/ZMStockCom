@@ -453,7 +453,7 @@ LRESULT CMainDlg::OnOrderOK(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& /
 
 LRESULT CMainDlg::OnOrderSuccess(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& /*bHandled*/)
 {
-	ULONG nOrderID = (ULONG)wParam;
+	CString strOrderID((BSTR)wParam);
 	this->MessageBox((BSTR)lParam);
 	return 0;
 }
