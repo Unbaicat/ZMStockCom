@@ -93,7 +93,7 @@ namespace CSharp_Demo
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_DGZQ);
             nAddItem = BROKERTYPE.Items.Add("国信证券");
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_GXZQ);
-            nAddItem = BROKERTYPE.Items.Add("华泰联合证券");
+            nAddItem = BROKERTYPE.Items.Add("联合证券");
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_LHZQ);
             nAddItem = BROKERTYPE.Items.Add("平安证券");
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_PAZQ);
@@ -183,6 +183,8 @@ namespace CSharp_Demo
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SYWG);
             nAddItem = BROKERTYPE.Items.Add("华鑫证券");
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SHXZQ);
+            nAddItem = BROKERTYPE.Items.Add("华泰证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_HUATZQ);
             nAddItem = BROKERTYPE.Items.Add("东北证券");
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_JLDB);
             nAddItem = BROKERTYPE.Items.Add("民生证券");
