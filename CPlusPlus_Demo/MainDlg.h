@@ -9,8 +9,7 @@ class CMainDlg : public CAxDialogImpl<CMainDlg>
 {
 protected:
 
-	/// StockTrade服务接口数组，需要几个就声明几个，也可以用列表来管理
-	IStockTradePtr		m_spiTrade[2];
+	IStockTradePtr		m_spiTrade;
 
 	/// 交易查询类型
 	CComboBox		m_wndTradeList;
@@ -22,14 +21,14 @@ protected:
 	CComboBox		m_wndAccountType;
 
 	/// 交易接口事件COOKIE数组
-	DWORD							m_nTradeEventCookie[2];
+	DWORD							m_nTradeEventCookie;
 	/// 交易接口事件对象数组
-	CComObject<CStockComEvent>*		m_spiTradeClientEvent[2];
+	CComObject<CStockComEvent>*		m_spiTradeClientEvent;
 
 	/// 建立事件通知
-	void AdviseTradeClient(int nIndex);
+	void AdviseTradeClient();
 	/// 断开事件通知
-	void UnAdviseTradeClient(int nIndex);
+	void UnAdviseTradeClient();
 
 	/// 释放组件
 	void ReleaseCom();
@@ -53,7 +52,7 @@ public:
 		MESSAGE_HANDLER(WM_TRADEEVENT_SENDORDER, OnOrderOK)
 		MESSAGE_HANDLER(WM_TRADEEVENT_ORDERERROR, OnOrderError)
 		MESSAGE_HANDLER(WM_TRADEEVENT_STOCKQUOTE, OnStockQuote)
-		MESSAGE_HANDLER(WM_TRADEEVENT_CHANGESERVER, OnChangeServer)
+		MESSAGE_HANDLER(WM_TRADEEVENT_SERVERERRVER, OnServerError)
 		MESSAGE_HANDLER(WM_TRADEEVENT_ORDERSUCCESS, OnOrderSuccess)
 
 		COMMAND_ID_HANDLER(IDOK, OnOK)
@@ -87,7 +86,7 @@ public:
 	LRESULT OnOrderOK(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 	LRESULT OnOrderError(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 	LRESULT OnStockQuote(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
-	LRESULT OnChangeServer(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
+	LRESULT OnServerError(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 	LRESULT OnOrderSuccess(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 
 	LRESULT OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);

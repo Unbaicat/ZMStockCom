@@ -158,9 +158,10 @@ LRESULT CMarketLevel2Dlg::OnLoginReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lPa
 
 LRESULT CMarketLevel2Dlg::OnServerError(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& /*bHandled*/)
 {
-	if(NULL == m_spiMarketEvent)
-		return 0;/// 对象已经释放
-	this->UnAdviseMarketCom();
+	if(NULL == m_spiMarket)
+		return 0;
+	/// 服务器产生错误，需要重新登录使用，先断开连接
+	m_spiMarket->Disconnect();
 	return 0;
 }
 

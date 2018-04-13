@@ -210,9 +210,11 @@ LRESULT CMarketExDlg::OnServerError(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam,
 	USHORT nConnIndex = (USHORT)lParam;
 	if(nConnIndex >= ZM_ACCOUNT_CONNMAXCOUNT)
 		return 0;/// 无效索引
-	if(NULL == m_spiMarketEvent[nConnIndex])
-		return 0;/// 对象已经释放
-	this->UnAdviseMarketCom(nConnIndex);
+	if(NULL == m_spiMarket[nConnIndex])
+		return 0;
+	/// 服务器产生错误，需要重新登录使用
+	m_spiMarket[nConnIndex]->Disconnect(0);
+	/// 请重新登录
 	return 0;
 }
 
