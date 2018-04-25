@@ -1,1 +1,1 @@
-ZMStockCom.exe /RegServerPerUser
+ZMStockCom.exe /RegServer
