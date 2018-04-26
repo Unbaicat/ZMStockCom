@@ -1,1 +1,1 @@
-ZMStockCom.exe /UnregServerPerUser
+ZMStockCom.exe /UnregServer

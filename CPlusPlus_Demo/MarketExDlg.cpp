@@ -190,8 +190,8 @@ LRESULT CMarketExDlg::OnConnReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, 
 		ATLASSERT(nConnID);
 		ULONG nSpeed = 0;
 		spiMarket->get_ConnSpeed(&nSpeed);/// 返回连接服务器时间
-
-		this->MessageBox(L"异步连接服务器成功！");
+		if(nConnID)
+			this->MessageBox(L"异步连接服务器成功！");
 	}
 	else
 	{

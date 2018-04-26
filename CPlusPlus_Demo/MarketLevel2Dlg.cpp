@@ -143,7 +143,8 @@ LRESULT CMarketLevel2Dlg::OnLoginReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lPa
 	{
 		VARIANT_BOOL bConnectValid = VARIANT_FALSE;
 		HRESULT hRet = m_spiMarket->get_IsConnected(&bConnectValid);
-		this->MessageBox(L"异步登录L2行情服务器成功！");
+		if(VARIANT_TRUE == bConnectValid)
+			this->MessageBox(L"异步登录L2行情服务器成功！");
 	}
 	else
 	{

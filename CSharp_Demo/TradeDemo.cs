@@ -690,7 +690,7 @@ namespace CSharp_Demo
             /// </summary>
             IStockTrade m_spiTrade = null;
             /// <summary>
-            /// 记录交易对象的序号，多账号下用
+            /// 记录交易对象的序号，高级版多账号下用
             /// </summary>
             ushort m_nTradeIndex = 0;
 
@@ -698,14 +698,15 @@ namespace CSharp_Demo
             /// 初始化接口通知
             /// </summary>
             /// <param name="vTrade" Desc="交易接口对象"></param>
-            /// <param name="bLoginOK" Desc="是否登录成功标记"></param>
-            public void InitEvent(object vTrade, bool bLoginOK)
+            /// <param name="bInitOK" Desc="是否初始化成功标记"></param>
+            public void InitEvent(object vTrade, bool bInitOK)
             {
+                if (bInitOK)
+                    MessageBox.Show("初始化成功！");
                 /// 获得接口对象
                 if (null == m_spiTrade)
                 {
                     m_spiTrade = (IStockTrade)vTrade;
-                    MessageBox.Show("初始化成功！");
                 }
             }
 

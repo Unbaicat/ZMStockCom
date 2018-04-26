@@ -180,8 +180,8 @@ LRESULT CMarketDlg::OnConnReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BO
 		ATLASSERT(nConnID);
 		ULONG nSpeed = 0;
 		spiMarket->get_ConnSpeed(&nSpeed);/// 返回连接服务器时间
-
-		this->MessageBox(L"异步连接服务器成功！");
+		if(nConnID)
+			this->MessageBox(L"异步连接服务器成功！");
 #ifdef ZM_TDXSERVER_SYNC
 		/// 同步请求某只股票的实时5档行情
 		ITradeRecordPtr spiRecord = NULL;

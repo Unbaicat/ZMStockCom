@@ -369,7 +369,8 @@ LRESULT CMainDlg::OnLoginReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOO
 		USHORT nTradeID = 0;
 		hRet = spiTrade->get_CurTradeID(&nTradeID);
 		/// 事件通知中尽量避免弹窗MessageBox等阻塞操作，弹窗等仅限于调试程序方便
-		this->MessageBox(L"异步登录服务器成功！下面开始获取股东代码信息！");
+		if(VARIANT_TRUE == bConnectValid)
+			this->MessageBox(L"异步登录服务器成功！下面开始获取股东代码信息！");
 		ITradeRecordPtr spiRecord = NULL;
 		/// 获得股东账号信息
 		spiTrade->get_ShareHolderCode(&spiRecord);
