@@ -215,9 +215,7 @@ STDMETHODIMP CStockComEvent::InitEvent(IDispatch* piTrade,VARIANT_BOOL bOK)
 	{
 		BOOL bInitFlag = FALSE;
 		if(VARIANT_TRUE == bOK)
-		{
 			bInitFlag = TRUE;
-		}
 		/// 采用阻塞方式通知，确保拿到交易接口前没有被释放
 		::SendMessage(m_hParentWnd,WM_TRADEEVENT_INITRETURN,(WPARAM)bInitFlag,(LPARAM)piTrade);
 	}
@@ -232,7 +230,8 @@ STDMETHODIMP CStockComEvent::LoginEvent(IDispatch* piTrade,USHORT nTradeID,BSTR 
 		BOOL bConnected = FALSE;
 		IStockTradePtr spiTrade(piTrade);
 		USHORT nCurTradeID = 0;
-		spiTrade->get_CurTradeID(&nCurTradeID);
+		if(NULL != spiTrade)
+			spiTrade->get_CurTradeID(&nCurTradeID);
 		if(VARIANT_TRUE == bOK)
 		{
 			bConnected = TRUE;
@@ -251,6 +250,7 @@ STDMETHODIMP CStockComEvent::LoginEvent(IDispatch* piTrade,USHORT nTradeID,BSTR 
 		}
 		else
 		{
+#ifdef _DEBUG
 			/// 其它服务器登录的交易ID，可以用来获取行情等，买卖操作用主主服务器
 			/// 如果需要，你可以在这记录都有哪些成功的交易ID以备后用，释放连接时指定交易ID，或者指定0释放所有连接
 			ITradeRecordPtr spiRecord = NULL;
@@ -306,6 +306,7 @@ STDMETHODIMP CStockComEvent::LoginEvent(IDispatch* piTrade,USHORT nTradeID,BSTR 
 				}
 				spiRecord = NULL;
 			}
+#endif
 		}
 		spiTrade = NULL;
 	}
@@ -317,7 +318,7 @@ STDMETHODIMP CStockComEvent::ServerErrEvent(USHORT nTradeID,ULONG nReqID)
 	HRESULT hRet(E_FAIL);
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
-		::PostMessage(m_hParentWnd,WM_TRADEEVENT_SERVERERRVER,(WPARAM)nTradeID,(LPARAM)m_nTradeIndex);
+		::PostMessage(m_hParentWnd,WM_TRADEEVENT_SERVERERRVER,(WPARAM)nReqID,(LPARAM)nTradeID);
 	}
 	return hRet;
 }
@@ -327,7 +328,7 @@ STDMETHODIMP CStockComEvent::ServerChangedEvent(USHORT nPreTradeID,USHORT nCurTr
 	HRESULT hRet(E_FAIL);
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
-		::PostMessage(m_hParentWnd,WM_TRADEEVENT_CHANGESERVER,(WPARAM)nCurTradeID,(LPARAM)m_nTradeIndex);
+		::PostMessage(m_hParentWnd,WM_TRADEEVENT_CHANGESERVER,(WPARAM)nCurTradeID,(LPARAM)nPreTradeID);
 	}
 	return hRet;
 }
@@ -335,26 +336,15 @@ STDMETHODIMP CStockComEvent::ServerChangedEvent(USHORT nPreTradeID,USHORT nCurTr
 STDMETHODIMP CStockComEvent::OrderOKEvent(ULONG nRequestID,EZMExchangeType eExchangeType,IDispatch* piRecordInfo)
 {
 	HRESULT hRet(E_FAIL);
-	m_spiTradeRecord = NULL;
 	if(NULL == piRecordInfo)
 		return hRet;
-	hRet = piRecordInfo->QueryInterface(IID_ITradeRecord,(LPVOID *)&m_spiTradeRecord);
-	if(NULL == m_spiTradeRecord)
-		return hRet;
+	//hRet = piRecordInfo->QueryInterface(IID_ITradeRecord,(LPVOID *)&m_spiTradeRecord);
+	//if(NULL == m_spiTradeRecord)
+	//	return hRet;
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
-		/// 提前缓存了记录对象，所以用PostMessage
-		::PostMessage(m_hParentWnd,WM_TRADEEVENT_SENDORDER,eExchangeType,(LPARAM)m_nTradeIndex);
-	}
-	else
-	{
-#ifdef _DEBUG
-		/// 解析消息
-		CComBSTR bstrText;
-		m_spiTradeRecord->GetJsonString(&bstrText);
-//		::MessageBox(NULL,CString(_T("收到回复内容："))+(CString)bstrText.m_str,ZM_APPLICATION_NAME,MB_OK);
-		bstrText.Empty();
-#endif
+		/// SendMessage确保记录对象没有释放
+		::SendMessage(m_hParentWnd,WM_TRADEEVENT_SENDORDER,nRequestID,(LPARAM)piRecordInfo);
 	}
 	return hRet;
 }
@@ -364,17 +354,10 @@ STDMETHODIMP CStockComEvent::OrderErrEvent(ULONG nReqID,BSTR bstrErrInfo)
 	HRESULT hRet(E_FAIL);
 	if(0 == nReqID)
 		return hRet;
-	m_strErrInfo = bstrErrInfo;
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
-		/// 确保字符串没有被释放
-		::SendMessage(m_hParentWnd,WM_TRADEEVENT_ORDERERROR,nReqID,(LPARAM)m_nTradeIndex);
-	}
-	else
-	{
-#ifdef _DEBUG
-		::MessageBox(NULL,bstrErrInfo,L"佐罗金股票交易COM组件演示",MB_OK);
-#endif
+		/// SendMessage确保字符串没有被释放
+		::SendMessage(m_hParentWnd,WM_TRADEEVENT_ORDERERROR,nReqID,(LPARAM)bstrErrInfo);
 	}
 	return hRet;
 }
@@ -397,26 +380,12 @@ STDMETHODIMP CStockComEvent::OrderSuccessEvent(BSTR bstrOrderID,BSTR bstrJson)
 STDMETHODIMP CStockComEvent::StockQuoteEvent(ULONG nReqID,BSTR bstrCode,IDispatch* piRecordInfo)
 {
 	HRESULT hRet(E_FAIL);
-	m_spiTradeRecord = NULL;
 	if(NULL == piRecordInfo)
-		return hRet;
-	hRet = piRecordInfo->QueryInterface(IID_ITradeRecord,(LPVOID *)&m_spiTradeRecord);
-	if(NULL == m_spiTradeRecord)
 		return hRet;
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
-		/// 提前缓存了记录对象，所以用PostMessage
-		::PostMessage(m_hParentWnd,WM_TRADEEVENT_STOCKQUOTE,nReqID,(LPARAM)m_nTradeIndex);
-	}
-	else
-	{
-#ifdef _DEBUG
-		/// 解析消息
-		CComBSTR bstrText;
-		m_spiTradeRecord->GetJsonString(&bstrText);
-//		::MessageBox(NULL,CString(_T("收到实时行情内容："))+(CString)bstrCode.m_str,ZM_APPLICATION_NAME,MB_OK);
-		bstrText.Empty();
-#endif
+		/// SendMessage确保记录对象没有释放
+		::SendMessage(m_hParentWnd,WM_TRADEEVENT_STOCKQUOTE,nReqID,(LPARAM)piRecordInfo);
 	}
 	return hRet;
 }

@@ -27,45 +27,30 @@ class CStockComEvent :
 {
 protected:
 
-	/// 回调对象序号
-	USHORT			m_nTradeIndex;
-
 	/// 父窗口
 	HWND			m_hParentWnd;
 
 	/// 返回数据缓存
-	ITradeRecordPtr	m_spiTradeRecord;
-
-	/// 错误描述
-	CString			m_strErrInfo;
+//	ITradeRecordPtr	m_spiTradeRecord;
 
 public:
 	CStockComEvent()
 		:m_hParentWnd(NULL)
-		,m_spiTradeRecord(NULL)
-		,m_nTradeIndex(0)
 	{
 	}
 
 	~CStockComEvent()
 	{
-		m_spiTradeRecord = NULL;
 	}
 
-	void SetCallPara(HWND hParentWnd,USHORT nIndex)
+	void SetCallPara(HWND hParentWnd)
 	{
 		if(NULL != hParentWnd)
 		{
 			if(!::IsWindow(hParentWnd))
 				return;
 		}
-		m_nTradeIndex = nIndex;
 		m_hParentWnd = hParentWnd;
-	}
-
-	ITradeRecordPtr GetReqData()
-	{
-		return m_spiTradeRecord;
 	}
 
 BEGIN_COM_MAP(CStockComEvent)
