@@ -34,6 +34,8 @@
 #define IDC_COMBO_ACCOUNTTYPE           1022
 #define IDC_EDIT_LOGINPW                1022
 #define IDC_EDIT_MARKETSERVERADDR       1023
+#define IDC_EDIT1                       1023
+#define IDC_EDIT_VERSION                1023
 #define IDC_EDIT_MARKETSERVERPORT       1024
 #define IDC_EDIT_LEVEL2SERVER           1025
 #define IDC_EDIT_LEVEL2SERVERPORT       1026
@@ -70,7 +72,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        201
 #define _APS_NEXT_COMMAND_VALUE         32775
-#define _APS_NEXT_CONTROL_VALUE         1023
+#define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

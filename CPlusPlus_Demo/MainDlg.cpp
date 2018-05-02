@@ -290,6 +290,13 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZJZQ);
 	nItemIndex = m_wndBrokerType.AddString(L"中邮证券");
 	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_SXZY);
+	nItemIndex = m_wndBrokerType.AddString(L"华金证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HJZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"九州证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_JZZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"川财证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_CCAIZQ);
+
 	m_wndBrokerType.SetCurSel(0);
 
 	m_nTradeEventCookie= 0;
@@ -307,9 +314,6 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 
 		/// 启用调试日志输出
 		hRet = m_spiTrade->put_EnableLog(VARIANT_TRUE);
-		/// 初始化使用环境，单个实例只需要调用一次，根据客户端版本号，最大连接数(默认为1)，最好和设置的服务器数量匹配
-		/// 为提高执行效率，实现为异步操作，需要接收事件通知得到初始化结果
-		m_spiTrade->Init(CComBSTR(L"8.05"),1);
 	}
 	/// 默认设置为通达信模拟服务器IP，实际使用时请设置为您券商的交易服务器IP
 	this->GetDlgItem(IDC_EDIT_TRADESERVERADDR).SetWindowText(L"mock.tdx.com.cn");
@@ -322,6 +326,7 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 
 	this->GetDlgItem(IDC_EDIT_TRADEPASSWORD).SetWindowText(L"");
 	this->GetDlgItem(IDC_EDIT_COMMPASSWORD).SetWindowText(L"");
+	this->GetDlgItem(IDC_EDIT_VERSION).SetWindowText(L"8.09");
 
 	this->GetDlgItem(IDC_EDIT_STOCKCODE).SetWindowText(L"000001");
 	return TRUE;
@@ -602,6 +607,12 @@ LRESULT CMainDlg::OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 		this->MessageBox(L"交易COM组件对象还没有创建成功！");
 		return 0;
 	}
+	/// 初始化使用环境，单个实例只需要调用一次，根据客户端版本号，最大连接数(默认为1)，最好和设置的服务器数量匹配
+	/// 为提高执行效率，实现为异步操作，需要接收事件通知得到初始化结果
+	CComBSTR bstrVersion;
+	this->GetDlgItem(IDC_EDIT_VERSION).GetWindowText(&bstrVersion);
+	m_spiTrade->Init(bstrVersion,1);
+
 	/// 获取初始化参数
 	CComBSTR bstrServerAddr,bstrServerPort,bstrYybID;
 	this->GetDlgItem(IDC_EDIT_TRADESERVERADDR).GetWindowText(&bstrServerAddr);

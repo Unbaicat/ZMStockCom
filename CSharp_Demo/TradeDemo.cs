@@ -20,7 +20,7 @@ namespace CSharp_Demo
     public partial class TradeDemo : Form
     {
         /// <summary>
-        ///  接口对象定义，每账号支持多个服务器的多连接。高级版支持多账号，通过定义多个对象，具体每个对象设置不同的账号和连接服务器地址即可。
+        ///  接口对象定义，高级版每账号支持多个服务器的多连接；也支持多账号，通过定义多个对象，具体每个对象设置不同的账号和连接服务器地址即可。
         /// </summary>
         StockTradeClass m_StockTrade = null;
         /// <summary>
@@ -78,6 +78,7 @@ namespace CSharp_Demo
             this.LOGINID.Text = "";         ///你的登录账号
             this.LOGINPW.Text = "";
             this.DEPID.Text = "9000";
+            this.CLIENTVERSION.Text = "8.09";
 
             int nAddItem = this.ACCOUNTTYPE.Items.Add("模拟");
             nAddItem = this.ACCOUNTTYPE.Items.Add("资金账号");
@@ -263,6 +264,13 @@ namespace CSharp_Demo
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_BJGD);
             nAddItem = BROKERTYPE.Items.Add("中邮证券");
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_SXZY);
+            nAddItem = BROKERTYPE.Items.Add("华金证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_HJZQ);
+            nAddItem = BROKERTYPE.Items.Add("九州证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_JZZQ);
+            nAddItem = BROKERTYPE.Items.Add("川财证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_CCAIZQ);
+
             this.BROKERTYPE.SelectedIndex = 0;
 
             nAddItem = this.TRADEDATA.Items.Add("资金");
@@ -310,9 +318,6 @@ namespace CSharp_Demo
                 /// 测试指定授权文件路径，否则使用默认和COM组件同目录的TradeAuth.zmd
                 //m_StockTrade.AuthFile = "D:\\TradeAuth.zmd";
 
-                /// 设置通讯版本(请查看自己券商的TDX版本)，初始化结果异步通过事件通知
-                /// 设置最大连接数，默认传1(最好跟调用登录前设置的服务器主机数量一致)
-                m_StockTrade.Init("8.05", 1);
             }
             else
             {
@@ -329,6 +334,10 @@ namespace CSharp_Demo
 
         private void CONNECT_BTN_Click(object sender, EventArgs e)
         {
+            /// 设置通讯版本(请查看自己券商的TDX版本)，初始化结果异步通过事件通知
+            /// 设置最大连接数，默认传1(最好跟调用登录前设置的服务器主机数量一致)
+            m_StockTrade.Init(this.CLIENTVERSION.Text, 1);
+
              /// 自动保持连接
             m_StockTrade.AutoKeepConn = true;
             /// 设置为普通账号,true为信用账号
@@ -362,7 +371,7 @@ namespace CSharp_Demo
                 return;
             }
             /// 设置其他参数
-            m_StockTrade.TradeAccount = this.TRADEACCOUNT.Text;/// 交易账号，一般为资金账号
+            m_StockTrade.TradeAccount = this.TRADEACCOUNT.Text;/// 交易账号，当用客户号登录时填你的资金账号ID
             m_StockTrade.DepartmentID = ushort.Parse(this.DEPID.Text);/// 营业部ID
 
 #if SYNC_OPT
@@ -850,7 +859,7 @@ namespace CSharp_Demo
             }
 
             /// <summary>
-            ///  服务器切换通知，只有高级版多服务器主机配置才有本事件，暂未实现
+            ///  服务器切换通知，只有高级版多服务器主机配置才有此事件，暂未实现
             /// </summary>
             /// <param name="nPreTradeID" Desc="上一个交易ID标识"></param>
             /// <param name="nCurTradeID" Desc="当前交易ID标识"></param>

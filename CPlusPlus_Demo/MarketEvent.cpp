@@ -244,6 +244,8 @@ STDMETHODIMP CMarketEvent::ConnectEvent(IDispatch* piMarket,USHORT nConnID,BSTR 
 			/// 只处理主服务器登录，采用阻塞方式通知，确保拿到接口前没有被释放
 			::PostMessage(m_hParentWnd,WM_TRADEEVENT_LOGINRETURN,(WPARAM)bConnected,(LPARAM)m_nConnIndex);
 		}
+#ifdef _DEBUG
+		/// 测试代码
 		else
 		{
 			/// 其它服务器登录的交易ID，可以用来获取行情等，买卖操作用主主服务器
@@ -275,6 +277,7 @@ STDMETHODIMP CMarketEvent::ConnectEvent(IDispatch* piMarket,USHORT nConnID,BSTR 
 			ULONG nReqID = 0;
 			m_spiMarket->GetQuotes(nConnID,CComBSTR(strGetCode),&nReqID);
 		}
+#endif
 	}
 	return hRet;
 }
@@ -298,6 +301,7 @@ STDMETHODIMP CMarketEvent::StockQuoteEvent(ULONG nReqID,IDispatch* piRecordInfo)
 	hRet = piRecordInfo->QueryInterface(IID_ITradeRecord,(LPVOID *)&m_spiRecord);
 	if(NULL == m_spiRecord)
 		return hRet;
+	m_nRequestID = nReqID;
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
 		/// 提前缓存了记录对象，所以用PostMessage
@@ -325,6 +329,7 @@ STDMETHODIMP CMarketEvent::StockTransEvent(ULONG nReqID,BSTR bstrCode,IDispatch*
 	hRet = piRecordInfo->QueryInterface(IID_ITradeRecord,(LPVOID *)&m_spiRecord);
 	if(NULL == m_spiRecord)
 		return hRet;
+	m_nRequestID = nReqID;
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
 		/// 提前缓存了记录对象，所以用PostMessage
@@ -352,6 +357,7 @@ STDMETHODIMP CMarketEvent::StockMinuteEvent(ULONG nReqID,BSTR bstrCode,IDispatch
 	hRet = piRecordInfo->QueryInterface(IID_ITradeRecord,(LPVOID *)&m_spiRecord);
 	if(NULL == m_spiRecord)
 		return hRet;
+	m_nRequestID = nReqID;
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
 		/// 提前缓存了记录对象，所以用PostMessage
@@ -379,6 +385,7 @@ STDMETHODIMP CMarketEvent::StockBarsEvent(ULONG nReqID,BSTR bstrCode,IDispatch* 
 	hRet = piRecordInfo->QueryInterface(IID_ITradeRecord,(LPVOID *)&m_spiRecord);
 	if(NULL == m_spiRecord)
 		return hRet;
+	m_nRequestID = nReqID;
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
 		/// 提前缓存了记录对象，所以用PostMessage
