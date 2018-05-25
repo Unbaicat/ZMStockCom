@@ -1,12 +1,12 @@
     Dim StockTrade
-
+    ' 创建佐罗金COM组件
     Set StockTrade = CreateObject("ZMStockCom.StockTrade")
     
     StockTrade.EnableLog = 1
     StockTrade.AutoKeepConn = 1
-    
+    ' 指定您的券商客户端版本号进行初始化
     Call StockTrade.Init("8.05", 1)
-
+     ' 设置您的券商ID及登录账号类型
     StockTrade.BrokerType = 117
     StockTrade.AccountType = 50
 
@@ -17,18 +17,27 @@
     StockTrade.CommPassword = "实际密码"           
     StockTrade.LoginID = "登录账号"
     StockTrade.DepartmentID = 9000
-
+    ' 执行登录交易到券商服务器
     boolLogin = StockTrade.LogIn(False)
     
     If boolLogin Then
-                       
+
+	' 请求指定股票5档行情                       
 	Set StockRecord = StockTrade.GetStockQuote(StockTrade.CurTradeID, "000001")
 
+        ' 取指定索引号指定列的数据
 	application.MsgOut (StockRecord.GetValueString(0,1))                    
 	application.MsgOut (StockRecord.GetJsonString())
-	        
+
+	' 释放得到的数据对象        
 	Set StockRecord = Nothing
         
+	
+	' 执行打新股
+	StockTrade.BuyIPO()
+        ' 同步方式提交委托单，自动检查连接、限价委托
+        StockTrade.SyncCommitOrder(true,1,"000001",11.0,0)
+
     Else
             
 	application.MsgOut (StockTrade.LastErrDesc)
@@ -36,5 +45,5 @@
     End If
 
         
-
+    ' 释放COM组件对象
     Set StockTrade = Nothing
