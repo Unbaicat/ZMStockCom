@@ -228,20 +228,26 @@ STDMETHODIMP CStockComEvent::LoginEvent(IDispatch* piTrade,USHORT nTradeID,BSTR 
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
 		BOOL bConnected = FALSE;
-		IStockTradePtr spiTrade(piTrade);
 		USHORT nCurTradeID = 0;
-		if(NULL != spiTrade)
-			spiTrade->get_CurTradeID(&nCurTradeID);
+		ATLASSERT(piTrade);
+		IStockTradePtr spiTrade = NULL;
+		if(NULL != piTrade)
+			piTrade->QueryInterface(IID_IStockTrade,(LPVOID *)&spiTrade);
+		ATLASSERT(spiTrade);
 		if(VARIANT_TRUE == bOK)
 		{
 			bConnected = TRUE;
+			spiTrade->get_CurTradeID(&nCurTradeID);
 		}
 		else
 		{
-			ATLASSERT(spiTrade);
-			CComBSTR bstrErrInfo;
-			spiTrade->get_LastErrDesc(&bstrErrInfo);
-			bstrErrInfo.Empty();
+			/// 登录失败，取错误原因
+			if(NULL != spiTrade)
+			{
+				CComBSTR bstrErrInfo;
+				spiTrade->get_LastErrDesc(&bstrErrInfo);
+				bstrErrInfo.Empty();
+			}
 		}
 		if(nCurTradeID == nTradeID)
 		{
@@ -276,6 +282,7 @@ STDMETHODIMP CStockComEvent::LoginEvent(IDispatch* piTrade,USHORT nTradeID,BSTR 
 			default:
 				strGetCode = L"600000";
 			}
+			/// 同步请求5档行情，现在支持批量了，多个代码分号间隔
 			spiTrade->GetStockQuote(nTradeID,CComBSTR(strGetCode),&spiRecord);
 			if(NULL != spiRecord)
 			{

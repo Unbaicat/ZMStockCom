@@ -299,22 +299,10 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 
 	m_wndBrokerType.SetCurSel(0);
 
+	m_spiTrade = NULL;
 	m_nTradeEventCookie= 0;
 	m_spiTradeClientEvent = NULL;
 
-	/// 创建COM对象前请先注册，管理员权限执行ZMStockCom.exe /RegServer(为当前账号注册，如果需要，请注册为每一个用户，参数是RegServerPerUser)
-	/// 卸载执行ZMStockCom.exe /UnregServer(为当前账号注册，如果注册成了每一个用户，参数是UnregServerPerUser)
-	/// 如果创建失败，请先检查是否注册成功，检查运行所需要的依赖DLL是否都和本程序在一个目录
-	HRESULT hRet = m_spiTrade.CreateInstance(__uuidof(StockTrade));
-	ATLASSERT(m_spiTrade);
-	if(NULL != m_spiTrade)
-	{
-		/// 建立事件连接
-		AdviseTradeClient();
-
-		/// 启用调试日志输出
-		hRet = m_spiTrade->put_EnableLog(VARIANT_TRUE);
-	}
 	/// 默认设置为通达信模拟服务器IP，实际使用时请设置为您券商的交易服务器IP
 	this->GetDlgItem(IDC_EDIT_TRADESERVERADDR).SetWindowText(L"mock.tdx.com.cn");
 	this->GetDlgItem(IDC_EDIT_TRADESERVERPORT).SetWindowText(L"7708");
@@ -335,7 +323,10 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 LRESULT CMainDlg::OnInitReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& /*bHandled*/)
 {
 	IDispatch* piTrade = (IDispatch* )lParam;
-	IStockTradePtr spiTrade(piTrade);
+	IStockTradePtr spiTrade = NULL;
+	if(NULL != piTrade)
+		piTrade->QueryInterface(IID_IStockTrade,(LPVOID *)&spiTrade);
+	ATLASSERT(spiTrade);
 	if(NULL == spiTrade)
 		return 0;/// 错误交易接口
 	if(wParam)
@@ -364,7 +355,11 @@ LRESULT CMainDlg::OnInitReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL
 LRESULT CMainDlg::OnLoginReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& /*bHandled*/)
 {
 	IDispatch* piTrade = (IDispatch* )lParam;
-	IStockTradePtr spiTrade(piTrade);
+	ATLASSERT(piTrade);
+	IStockTradePtr spiTrade = NULL;
+	if(NULL != piTrade)
+		piTrade->QueryInterface(IID_IStockTrade,(LPVOID *)&spiTrade);
+	ATLASSERT(spiTrade);
 	if(NULL == spiTrade)
 		return 0;/// 错误交易接口
 	if(wParam)
@@ -604,6 +599,24 @@ LRESULT CMainDlg::OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 	// TODO: Add your control notification handler code here
 	if(NULL == m_spiTrade)
 	{
+		/// 创建COM对象前请先注册，管理员权限执行ZMStockCom.exe /RegServer
+		/// 卸载执行ZMStockCom.exe /UnregServer
+		/// 如果创建失败，请先检查是否注册成功，检查运行所需要的依赖DLL是否都和本程序在一个目录
+		HRESULT hRet = m_spiTrade.CreateInstance(__uuidof(StockTrade));
+		ATLASSERT(m_spiTrade);
+		if(NULL != m_spiTrade)
+		{
+			/// 建立事件连接
+			AdviseTradeClient();
+
+			/// 启用调试日志输出
+			hRet = m_spiTrade->put_EnableLog(VARIANT_TRUE);
+		}
+		/// 设置实际的授权文件全路径
+//		m_spiTrade->put_AuthFile(L"TradeAuth.zmd");
+	}
+	if(NULL == m_spiTrade)
+	{
 		this->MessageBox(L"交易COM组件对象还没有创建成功！");
 		return 0;
 	}
@@ -611,6 +624,7 @@ LRESULT CMainDlg::OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 	/// 为提高执行效率，实现为异步操作，需要接收事件通知得到初始化结果
 	CComBSTR bstrVersion;
 	this->GetDlgItem(IDC_EDIT_VERSION).GetWindowText(&bstrVersion);
+	ATLASSERT(bstrVersion.Length());
 	m_spiTrade->Init(bstrVersion,1);
 
 	/// 获取初始化参数
@@ -642,6 +656,7 @@ LRESULT CMainDlg::OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 		eBrokerType = (EZMBrokerType)m_wndBrokerType.GetItemData(m_wndBrokerType.GetCurSel());
 	m_spiTrade->put_BrokerType(eBrokerType);
 	m_spiTrade->put_AccountType(eAccountType);
+
 	//m_spiTrade->put_CreditAccount(VARIANT_TRUE);/// 设置是否信用账号
 	/// 设置成交自动回报定时器1000毫秒，设为0表示不启用
 	m_spiTrade->put_ReportSuccessTimer(1000);
@@ -677,7 +692,8 @@ LRESULT CMainDlg::OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 		CComBSTR bstrErrDesc;
 		m_spiTrade->get_LastErrType(&nErrCode);
 		m_spiTrade->get_LastErrDesc(&bstrErrDesc);
-		this->MessageBox(bstrErrDesc.m_str);
+		if(bstrErrDesc.Length())
+			this->MessageBox(bstrErrDesc.m_str);
 		bstrErrDesc.Empty();
 		return 0;
 	}
@@ -742,6 +758,8 @@ LRESULT CMainDlg::OnBnClickedGetTradeData(WORD /*wNotifyCode*/, WORD /*wID*/, HW
 		hRet = spiRecord->get_RecordCount(&nRecordCount);
 		CComBSTR bstrJsonVal;
 		spiRecord->GetJsonString(&bstrJsonVal);
+		if(!bstrJsonVal.Length())
+			spiRecord->GetTitleJson(&bstrJsonVal);
 		this->MessageBox(bstrJsonVal.m_str);
 		bstrJsonVal.Empty();
 
@@ -861,8 +879,16 @@ ITradeRecordPtr CMainDlg::GetHisData(EZMHisOrderType eCategoryType)
 	ULONG nFieldCount = 0,nRecordCount = 0,nIndex = 0;
 	hRet = spiRecord->get_FieldCount(&nFieldCount);
 	hRet = spiRecord->get_RecordCount(&nRecordCount);
+
 	CComBSTR bstrJsonVal;
 	spiRecord->GetJsonString(&bstrJsonVal);
+	if(!bstrJsonVal.Length())
+	{
+		spiRecord->GetTitleJson(&bstrJsonVal);
+		this->MessageBox(bstrJsonVal.m_str);
+		bstrJsonVal.Empty();
+		return spiRecord;
+	}
 	this->MessageBox(bstrJsonVal.m_str);
 	bstrJsonVal.Empty();
 
@@ -887,8 +913,6 @@ ITradeRecordPtr CMainDlg::GetHisData(EZMHisOrderType eCategoryType)
 			varVal.Clear();
 		}
 	}
-	spiRecord->Clear();
-	spiRecord = NULL;
 	return spiRecord;
 }
 
@@ -904,10 +928,6 @@ LRESULT CMainDlg::OnBnClickedGetHisData(WORD /*wNotifyCode*/, WORD /*wID*/, HWND
 	ULONG nFieldCount = 0,nRecordCount = 0,nIndex = 0;
 	HRESULT hRet = spiRecord->get_FieldCount(&nFieldCount);
 	hRet = spiRecord->get_RecordCount(&nRecordCount);
-	CComBSTR bstrJsonVal;
-	spiRecord->GetJsonString(&bstrJsonVal);
-	this->MessageBox(bstrJsonVal.m_str);
-	bstrJsonVal.Empty();
 
 	CComBSTR bstrName;
 	for(nIndex = 0;nIndex < nFieldCount;nIndex++)
@@ -1153,14 +1173,14 @@ LRESULT CMainDlg::OnBnClickedSell(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 		float fSell = varVal.fltVal;
 		varVal.Clear();
 		/// 限价卖出所有可用股票
+		EZMExchangeType eExchangeType = EXCHANGETYPE_UNKNOWN;
 #ifndef ZM_TDXSERVER_SYNC
 		/// 异步提交，在这儿要记录返回的请求ID，便于和事件通知里的委托回报相对应，从而本次知道实际委托结果
 		ULONG nReqID = 0;
 		m_spiTrade->AddOrder(STOCKORDERTYPE_SALE,ORDERPRICETYPE_LIMIT,\
-			CComBSTR(strStockCode),fSell,nSellCount,&nReqID);
+			CComBSTR(strStockCode),fSell,nSellCount,eExchangeType,&nReqID);
 #else
 		/// 同步提交
-		EZMExchangeType eExchangeType = EXCHANGETYPE_UNKNOWN;
 		ITradeRecordPtr spiSell = NULL;
 		m_spiTrade->SyncCommitOrder(VARIANT_TRUE,STOCKORDERTYPE_SALE,ORDERPRICETYPE_LIMIT,\
 			CComBSTR(strStockCode),fSell,nSellCount,eExchangeType,&spiSell);

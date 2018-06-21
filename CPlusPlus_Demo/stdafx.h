@@ -39,9 +39,12 @@ extern CAppModule _Module;
   #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #endif
 
+/// 使用EXE版COM组件，支持64位程序调用
 #import "..\\Bin\\ZMStockCom.exe" no_namespace, raw_interfaces_only, raw_native_types, named_guids
+/// 使用DLL版COM组件，必须把COM组件BIN目录所有文件和您的执行程序放一起
+//#import "..\\Bin\\ZMTradeCom.dll" no_namespace, raw_interfaces_only, raw_native_types, named_guids
 
 /// 标准版只支持单连接
-#define	ZM_ACCOUNT_CONNMAXCOUNT	1
+#define		ZM_ACCOUNT_CONNMAXCOUNT	1
 /// 高级版可支持最大连接数量
-//#define	ZM_ACCOUNT_CONNMAXCOUNT	128
+//#define	ZM_ACCOUNT_CONNMAXCOUNT	32
