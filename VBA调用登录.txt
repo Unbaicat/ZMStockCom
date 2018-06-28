@@ -35,8 +35,8 @@
 	
 	' 执行打新股
 	StockTrade.BuyIPO()
-        ' 同步方式提交委托单，自动检查连接、限价委托
-        StockTrade.SyncCommitOrder(true,1,"000001",11.0,0)
+        ' 同步方式提交委托单，自动检查连接、限价委托11块买入100股000001
+        StockTrade.SyncCommitOrder(true,1,1,"000001",11.0,100,0)
 
     Else
             
