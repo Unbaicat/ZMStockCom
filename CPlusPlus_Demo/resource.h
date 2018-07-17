@@ -26,7 +26,6 @@
 #define IDC_COMBO_HISLIST               1015
 #define IDC_BUTTON_MARKET               1016
 #define IDC_BUTTON_MARKETEX             1017
-#define IDC_BUTTON3                     1018
 #define IDC_BUTTON_MARKETL2             1018
 #define IDC_BUTTON_CONNECT              1019
 #define IDC_DISCONNECT                  1020
@@ -34,12 +33,12 @@
 #define IDC_COMBO_ACCOUNTTYPE           1022
 #define IDC_EDIT_LOGINPW                1022
 #define IDC_EDIT_MARKETSERVERADDR       1023
-#define IDC_EDIT1                       1023
 #define IDC_EDIT_VERSION                1023
 #define IDC_EDIT_MARKETSERVERPORT       1024
 #define IDC_EDIT_LEVEL2SERVER           1025
 #define IDC_EDIT_LEVEL2SERVERPORT       1026
 #define IDC_BUTTON_SELL                 1027
+#define IDC_CHECK_RZRQ                  1028
 #define IDC_COMBO_BROKETYPE             1035
 #define IDC_BUTTON_NEWSTOCK             1037
 #define IDC_BUTTON_CODES                1041
@@ -72,7 +71,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        201
 #define _APS_NEXT_COMMAND_VALUE         32775
-#define _APS_NEXT_CONTROL_VALUE         1024
+#define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

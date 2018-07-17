@@ -3,13 +3,17 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "WTL/atlddx.h"
 #include "StockComEvent.h"
 
-class CMainDlg : public CAxDialogImpl<CMainDlg>
+class CMainDlg : public CAxDialogImpl<CMainDlg>, public CWinDataExchange<CMainDlg>
 {
 protected:
 
+	///  交易组件COM对象
 	IStockTradePtr		m_spiTrade;
+	/// 是否融资融券账号
+	BOOL				m_bRZRQ;
 
 	/// 交易查询类型
 	CComboBox		m_wndTradeList;
@@ -43,6 +47,10 @@ protected:
 
 public:
 	enum { IDD = IDD_MAINDLG };
+
+	BEGIN_DDX_MAP(CMainDlg)
+		DDX_CHECK(IDC_CHECK_RZRQ,m_bRZRQ);
+   END_DDX_MAP()
 
 	BEGIN_MSG_MAP(CMainDlg)
 		MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)

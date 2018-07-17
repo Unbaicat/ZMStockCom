@@ -79,6 +79,7 @@ namespace CSharp_Demo
             this.LOGINPW.Text = "";
             this.DEPID.Text = "9000";
             this.CLIENTVERSION.Text = "8.09";
+            this.checkBox_RZRQ.Checked = false;
 
             int nAddItem = this.ACCOUNTTYPE.Items.Add("模拟");
             nAddItem = this.ACCOUNTTYPE.Items.Add("资金账号");
@@ -214,8 +215,6 @@ namespace CSharp_Demo
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_WKZQ);
             nAddItem = BROKERTYPE.Items.Add("江海证券");
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_JHZQ);
-            nAddItem = BROKERTYPE.Items.Add("华创证券");
-            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_HCZQ);
             nAddItem = BROKERTYPE.Items.Add("太平洋证券");
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_TPYZQ);
             nAddItem = BROKERTYPE.Items.Add("国海证券");
@@ -341,7 +340,10 @@ namespace CSharp_Demo
              /// 自动保持连接
             m_StockTrade.AutoKeepConn = true;
             /// 设置为普通账号,true为信用账号
-            m_StockTrade.CreditAccount = false;
+            if (this.checkBox_RZRQ.Checked == true)
+                m_StockTrade.CreditAccount = true;
+            else
+                m_StockTrade.CreditAccount = false;
             /// 设置成交自动回报定时器1000毫秒，设为0表示不启用
             m_StockTrade.ReportSuccessTimer = 1000;
 

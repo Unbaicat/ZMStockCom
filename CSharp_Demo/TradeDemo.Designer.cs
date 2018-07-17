@@ -60,11 +60,12 @@
             this.NewIPO = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.CLIENTVERSION = new System.Windows.Forms.TextBox();
+            this.checkBox_RZRQ = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // GETHISDATA
             // 
-            this.GETHISDATA.Location = new System.Drawing.Point(257, 278);
+            this.GETHISDATA.Location = new System.Drawing.Point(257, 285);
             this.GETHISDATA.Name = "GETHISDATA";
             this.GETHISDATA.Size = new System.Drawing.Size(75, 24);
             this.GETHISDATA.TabIndex = 45;
@@ -76,7 +77,7 @@
             // 
             this.HISDATA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.HISDATA.FormattingEnabled = true;
-            this.HISDATA.Location = new System.Drawing.Point(131, 278);
+            this.HISDATA.Location = new System.Drawing.Point(131, 285);
             this.HISDATA.Name = "HISDATA";
             this.HISDATA.Size = new System.Drawing.Size(110, 20);
             this.HISDATA.TabIndex = 44;
@@ -84,26 +85,26 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 278);
+            this.label9.Location = new System.Drawing.Point(15, 288);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(89, 12);
+            this.label9.Size = new System.Drawing.Size(113, 12);
             this.label9.TabIndex = 43;
-            this.label9.Text = "历史数据类型：";
+            this.label9.Text = "历史交易数据类型：";
             // 
             // GETTRADEDATA
             // 
-            this.GETTRADEDATA.Location = new System.Drawing.Point(257, 228);
+            this.GETTRADEDATA.Location = new System.Drawing.Point(257, 246);
             this.GETTRADEDATA.Name = "GETTRADEDATA";
             this.GETTRADEDATA.Size = new System.Drawing.Size(75, 24);
             this.GETTRADEDATA.TabIndex = 42;
-            this.GETTRADEDATA.Text = "查询数据";
+            this.GETTRADEDATA.Text = "获取数据";
             this.GETTRADEDATA.UseVisualStyleBackColor = true;
             this.GETTRADEDATA.Click += new System.EventHandler(this.GETTRADEDATA_Click);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 234);
+            this.label8.Location = new System.Drawing.Point(18, 252);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(89, 12);
             this.label8.TabIndex = 41;
@@ -113,14 +114,14 @@
             // 
             this.TRADEDATA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TRADEDATA.FormattingEnabled = true;
-            this.TRADEDATA.Location = new System.Drawing.Point(131, 231);
+            this.TRADEDATA.Location = new System.Drawing.Point(131, 249);
             this.TRADEDATA.Name = "TRADEDATA";
             this.TRADEDATA.Size = new System.Drawing.Size(110, 20);
             this.TRADEDATA.TabIndex = 40;
             // 
             // STOCKCODE
             // 
-            this.STOCKCODE.Location = new System.Drawing.Point(406, 209);
+            this.STOCKCODE.Location = new System.Drawing.Point(406, 213);
             this.STOCKCODE.Name = "STOCKCODE";
             this.STOCKCODE.Size = new System.Drawing.Size(161, 21);
             this.STOCKCODE.TabIndex = 39;
@@ -128,7 +129,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(429, 184);
+            this.label7.Location = new System.Drawing.Point(336, 219);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 12);
             this.label7.TabIndex = 38;
@@ -146,7 +147,7 @@
             // 
             // LOGINPW
             // 
-            this.LOGINPW.Location = new System.Drawing.Point(431, 100);
+            this.LOGINPW.Location = new System.Drawing.Point(420, 100);
             this.LOGINPW.Name = "LOGINPW";
             this.LOGINPW.PasswordChar = '*';
             this.LOGINPW.Size = new System.Drawing.Size(136, 21);
@@ -154,7 +155,7 @@
             // 
             // DEPID
             // 
-            this.DEPID.Location = new System.Drawing.Point(431, 57);
+            this.DEPID.Location = new System.Drawing.Point(420, 57);
             this.DEPID.Name = "DEPID";
             this.DEPID.Size = new System.Drawing.Size(68, 21);
             this.DEPID.TabIndex = 35;
@@ -211,7 +212,7 @@
             // 
             // RELASE_BTN
             // 
-            this.RELASE_BTN.Location = new System.Drawing.Point(317, 178);
+            this.RELASE_BTN.Location = new System.Drawing.Point(418, 175);
             this.RELASE_BTN.Name = "RELASE_BTN";
             this.RELASE_BTN.Size = new System.Drawing.Size(75, 24);
             this.RELASE_BTN.TabIndex = 28;
@@ -221,7 +222,7 @@
             // 
             // CONNECT_BTN
             // 
-            this.CONNECT_BTN.Location = new System.Drawing.Point(205, 178);
+            this.CONNECT_BTN.Location = new System.Drawing.Point(321, 176);
             this.CONNECT_BTN.Name = "CONNECT_BTN";
             this.CONNECT_BTN.Size = new System.Drawing.Size(75, 24);
             this.CONNECT_BTN.TabIndex = 27;
@@ -231,7 +232,7 @@
             // 
             // SERVERPORT
             // 
-            this.SERVERPORT.Location = new System.Drawing.Point(431, 12);
+            this.SERVERPORT.Location = new System.Drawing.Point(420, 12);
             this.SERVERPORT.Name = "SERVERPORT";
             this.SERVERPORT.Size = new System.Drawing.Size(68, 21);
             this.SERVERPORT.TabIndex = 26;
@@ -302,7 +303,7 @@
             // 
             this.ACCOUNTTYPE.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ACCOUNTTYPE.FormattingEnabled = true;
-            this.ACCOUNTTYPE.Location = new System.Drawing.Point(431, 139);
+            this.ACCOUNTTYPE.Location = new System.Drawing.Point(420, 139);
             this.ACCOUNTTYPE.Name = "ACCOUNTTYPE";
             this.ACCOUNTTYPE.Size = new System.Drawing.Size(136, 20);
             this.ACCOUNTTYPE.TabIndex = 50;
@@ -343,11 +344,22 @@
             this.CLIENTVERSION.Size = new System.Drawing.Size(57, 21);
             this.CLIENTVERSION.TabIndex = 54;
             // 
+            // checkBox_RZRQ
+            // 
+            this.checkBox_RZRQ.AutoSize = true;
+            this.checkBox_RZRQ.Location = new System.Drawing.Point(204, 181);
+            this.checkBox_RZRQ.Name = "checkBox_RZRQ";
+            this.checkBox_RZRQ.Size = new System.Drawing.Size(96, 16);
+            this.checkBox_RZRQ.TabIndex = 55;
+            this.checkBox_RZRQ.Text = "融资融券账号";
+            this.checkBox_RZRQ.UseVisualStyleBackColor = true;
+            // 
             // TradeDemo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(579, 321);
+            this.Controls.Add(this.checkBox_RZRQ);
             this.Controls.Add(this.CLIENTVERSION);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.NewIPO);
@@ -381,7 +393,7 @@
             this.Controls.Add(this.SERVERADDR);
             this.Controls.Add(this.label1);
             this.Name = "TradeDemo";
-            this.Text = "佐罗金股票交易COM组件C#调用功能演示";
+            this.Text = "佐罗金COM组件C#例程";
             this.Closed += new System.EventHandler(this.TradeDemo_Closed);
             this.Load += new System.EventHandler(this.TradeDemo_Load);
             this.ResumeLayout(false);
@@ -423,6 +435,7 @@
         private System.Windows.Forms.Button NewIPO;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox CLIENTVERSION;
+        private System.Windows.Forms.CheckBox checkBox_RZRQ;
     }
 }
 

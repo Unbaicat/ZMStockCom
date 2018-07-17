@@ -234,8 +234,6 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_WKZQ);
 	nItemIndex = m_wndBrokerType.AddString(L"江海证券");
 	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_JHZQ);
-	nItemIndex = m_wndBrokerType.AddString(L"华创证券");
-	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HCZQ);
 	nItemIndex = m_wndBrokerType.AddString(L"太平洋证券");
 	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_TPYZQ);
 	nItemIndex = m_wndBrokerType.AddString(L"国海证券");
@@ -246,8 +244,6 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_XBZQ);
 	nItemIndex = m_wndBrokerType.AddString(L"山西证券(汇通启富)");
 	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_SXZQ);
-	nItemIndex = m_wndBrokerType.AddString(L"开源证券");
-	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_KYZQ);
 	nItemIndex = m_wndBrokerType.AddString(L"华安证券");
 	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_HAHX);
 	nItemIndex = m_wndBrokerType.AddString(L"国盛证券");
@@ -299,9 +295,12 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 
 	m_wndBrokerType.SetCurSel(0);
 
+	m_bRZRQ = FALSE;
 	m_spiTrade = NULL;
 	m_nTradeEventCookie= 0;
 	m_spiTradeClientEvent = NULL;
+
+	DoDataExchange(false,IDC_CHECK_RZRQ);
 
 	/// 默认设置为通达信模拟服务器IP，实际使用时请设置为您券商的交易服务器IP
 	this->GetDlgItem(IDC_EDIT_TRADESERVERADDR).SetWindowText(L"mock.tdx.com.cn");
@@ -626,6 +625,12 @@ LRESULT CMainDlg::OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 	this->GetDlgItem(IDC_EDIT_VERSION).GetWindowText(&bstrVersion);
 	ATLASSERT(bstrVersion.Length());
 	m_spiTrade->Init(bstrVersion,1);
+	/// 设置是否融资融券登录
+	DoDataExchange(true,IDC_CHECK_RZRQ);
+	if(m_bRZRQ)
+		m_spiTrade->put_CreditAccount(VARIANT_TRUE);
+	else
+		m_spiTrade->put_CreditAccount(VARIANT_FALSE);
 
 	/// 获取初始化参数
 	CComBSTR bstrServerAddr,bstrServerPort,bstrYybID;
