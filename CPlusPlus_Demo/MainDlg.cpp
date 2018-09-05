@@ -282,8 +282,8 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZYZQ);
 	nItemIndex = m_wndBrokerType.AddString(L"国都证券");
 	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_BJGD);
-	//nItemIndex = m_wndBrokerType.AddString(L"中金证券");
-	//m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZJZQ);
+	nItemIndex = m_wndBrokerType.AddString(L"中金证券");
+	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_ZJZQ);
 	nItemIndex = m_wndBrokerType.AddString(L"中邮证券");
 	m_wndBrokerType.SetItemData(nItemIndex,BROKERTYPE_SXZY);
 	nItemIndex = m_wndBrokerType.AddString(L"华金证券");
