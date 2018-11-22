@@ -2,6 +2,7 @@
     ' 创建佐罗金COM组件
     Set StockTrade = CreateObject("ZMStockCom.StockTrade")
     
+    StockTrade.TradeType = 0
     StockTrade.EnableLog = 1
     StockTrade.AutoKeepConn = 1
     ' 指定您的券商客户端版本号进行初始化

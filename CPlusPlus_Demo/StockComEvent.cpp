@@ -51,13 +51,13 @@ STDMETHODIMP CStockComEvent::Invoke( DISPID dispIdMember,REFIID riid,LCID lcid,W
 			VariantInit(&varHost);
 			VariantInit(&varTradeConn);
 			hRet = VariantChangeTypeEx( &varTradeConn,&(pDispParams->rgvarg[4]),lcid,0,VT_DISPATCH);
-			hRet = VariantChangeTypeEx( &varTrade,&(pDispParams->rgvarg[3]),lcid,0,VT_UI2);
+			hRet = VariantChangeTypeEx( &varTrade,&(pDispParams->rgvarg[3]),lcid,0,VT_UI4);
 			hRet = VariantChangeTypeEx( &varHost,&(pDispParams->rgvarg[2]),lcid,0,VT_BSTR);
 			hRet = VariantChangeTypeEx( &varPort,&(pDispParams->rgvarg[1]),lcid,0,VT_UI2);
 			hRet = VariantChangeTypeEx( &varConnRet,&(pDispParams->rgvarg[0]),lcid,0,VT_BOOL);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
-			hRet = LoginEvent(varTradeConn.pdispVal,varTrade.uiVal,varHost.bstrVal,varPort.uiVal,varConnRet.boolVal);
+			hRet = LoginEvent(varTradeConn.pdispVal,varTrade.ulVal,varHost.bstrVal,varPort.uiVal,varConnRet.boolVal);
 			VariantClear(&varConnRet);
 			VariantClear(&varTrade);
 			VariantClear(&varHost);
@@ -172,13 +172,13 @@ STDMETHODIMP CStockComEvent::Invoke( DISPID dispIdMember,REFIID riid,LCID lcid,W
 			CComVariant varTradeID,varReqID;
 			VariantInit(&varTradeID);
 			VariantInit(&varReqID);
-			hRet = VariantChangeTypeEx( &varTradeID,&(pDispParams->rgvarg[1]),lcid,0,VT_UI2);
+			hRet = VariantChangeTypeEx( &varTradeID,&(pDispParams->rgvarg[1]),lcid,0,VT_UI4);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
 			hRet = VariantChangeTypeEx( &varReqID,&(pDispParams->rgvarg[0]),lcid,0,VT_UI4);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
-			hRet = ServerErrEvent(varTradeID.uiVal,varReqID.ulVal);
+			hRet = ServerErrEvent(varTradeID.ulVal,varReqID.ulVal);
 			VariantClear(&varTradeID);
 			VariantClear(&varReqID);
 			break;
@@ -193,11 +193,11 @@ STDMETHODIMP CStockComEvent::Invoke( DISPID dispIdMember,REFIID riid,LCID lcid,W
 			CComVariant varPreTradeID,varCurTradeID;
 			VariantInit(&varPreTradeID);
 			VariantInit(&varCurTradeID);
-			hRet = VariantChangeTypeEx( &varPreTradeID,&(pDispParams->rgvarg[1]),lcid,0,VT_UI2);
-			hRet = VariantChangeTypeEx( &varCurTradeID,&(pDispParams->rgvarg[0]),lcid,0,VT_UI2);
+			hRet = VariantChangeTypeEx( &varPreTradeID,&(pDispParams->rgvarg[1]),lcid,0,VT_UI4);
+			hRet = VariantChangeTypeEx( &varCurTradeID,&(pDispParams->rgvarg[0]),lcid,0,VT_UI4);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
-			hRet = ServerChangedEvent(varPreTradeID.uiVal,varCurTradeID.uiVal);
+			hRet = ServerChangedEvent(varPreTradeID.ulVal,varCurTradeID.ulVal);
 			VariantClear(&varPreTradeID);
 			VariantClear(&varCurTradeID);
 			break;
@@ -222,13 +222,13 @@ STDMETHODIMP CStockComEvent::InitEvent(IDispatch* piTrade,VARIANT_BOOL bOK)
 	return hRet;
 }
 
-STDMETHODIMP CStockComEvent::LoginEvent(IDispatch* piTrade,USHORT nTradeID,BSTR bstrHost,USHORT nPort,VARIANT_BOOL bOK)
+STDMETHODIMP CStockComEvent::LoginEvent(IDispatch* piTrade, ULONG nTradeID,BSTR bstrHost,USHORT nPort,VARIANT_BOOL bOK)
 {
 	HRESULT hRet(E_FAIL);
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
 		BOOL bConnected = FALSE;
-		USHORT nCurTradeID = 0;
+		ULONG nCurTradeID = 0;
 		ATLASSERT(piTrade);
 		IStockTradePtr spiTrade = NULL;
 		if(NULL != piTrade)
@@ -320,7 +320,7 @@ STDMETHODIMP CStockComEvent::LoginEvent(IDispatch* piTrade,USHORT nTradeID,BSTR 
 	return hRet;
 }
 
-STDMETHODIMP CStockComEvent::ServerErrEvent(USHORT nTradeID,ULONG nReqID)
+STDMETHODIMP CStockComEvent::ServerErrEvent(ULONG nTradeID,ULONG nReqID)
 {
 	HRESULT hRet(E_FAIL);
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
@@ -330,7 +330,7 @@ STDMETHODIMP CStockComEvent::ServerErrEvent(USHORT nTradeID,ULONG nReqID)
 	return hRet;
 }
 
-STDMETHODIMP CStockComEvent::ServerChangedEvent(USHORT nPreTradeID,USHORT nCurTradeID)
+STDMETHODIMP CStockComEvent::ServerChangedEvent(ULONG nPreTradeID, ULONG nCurTradeID)
 {
 	HRESULT hRet(E_FAIL);
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))

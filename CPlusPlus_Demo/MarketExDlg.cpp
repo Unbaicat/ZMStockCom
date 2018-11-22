@@ -38,7 +38,7 @@ void CMarketExDlg::UnAdviseMarketCom(int nIndex)
 		m_spiMarketEvent[nIndex] = NULL;
 	if(NULL != m_spiMarket[nIndex])
 	{
-		USHORT nCurConnID = 0;
+		ULONG nCurConnID = 0;
 		m_spiMarket[nIndex]->get_CurConnID(&nCurConnID);
 		if(nCurConnID)
 			m_spiMarket[nIndex]->Disconnect(nCurConnID);
@@ -185,7 +185,7 @@ LRESULT CMarketExDlg::OnConnReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, 
 		return 0;/// 错误交易接口
 	if(wParam)
 	{
-		USHORT nConnID = 0;
+		ULONG nConnID = 0;
 		HRESULT hRet = spiMarket->get_CurConnID(&nConnID);
 		ATLASSERT(nConnID);
 		ULONG nSpeed = 0;
@@ -448,7 +448,7 @@ LRESULT CMarketExDlg::OnBnClickedDisConnect(WORD /*wNotifyCode*/, WORD /*wID*/, 
 	// TODO: Add your control notification handler code here
 	if(NULL == m_spiMarket[0])
 		return 0;
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	this->UnAdviseMarketCom(0);
 	if(!nCurConnID)
@@ -463,7 +463,7 @@ LRESULT CMarketExDlg::OnBnClickedConnect(WORD /*wNotifyCode*/, WORD /*wID*/, HWN
 	// TODO: Add your control notification handler code here
 	if(NULL != m_spiMarket[0])
 	{
-		USHORT nConnID = 0;
+		ULONG nConnID = 0;
 		m_spiMarket[0]->get_CurConnID(&nConnID);
 		if(nConnID)
 			return 0;/// 正常连接
@@ -502,7 +502,7 @@ LRESULT CMarketExDlg::OnBnClickedCodes(WORD /*wNotifyCode*/, WORD /*wID*/, HWND 
 	// TODO: 在此添加控件通知处理程序代码
 	if(NULL == m_spiMarket[0])
 		return 0;
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -572,7 +572,7 @@ LRESULT CMarketExDlg::OnBnClickedKdata(WORD /*wNotifyCode*/, WORD /*wID*/, HWND 
 	}
 	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
 
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -629,7 +629,7 @@ LRESULT CMarketExDlg::OnBnClickedWk(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*h
 		this->MessageBox(L"代码不合法！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -672,7 +672,7 @@ LRESULT CMarketExDlg::OnBnClickedMkx(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*
 		this->MessageBox(L"代码不合法！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -717,7 +717,7 @@ LRESULT CMarketExDlg::OnBnClickedHkd(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*
 		this->MessageBox(L"代码不合法！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -762,7 +762,7 @@ LRESULT CMarketExDlg::OnBnClickedFivemk(WORD /*wNotifyCode*/, WORD /*wID*/, HWND
 		this->MessageBox(L"代码不合法！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -807,7 +807,7 @@ LRESULT CMarketExDlg::OnBnClickedMk(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*h
 		this->MessageBox(L"代码不合法！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -852,7 +852,7 @@ LRESULT CMarketExDlg::OnBnClickedFst(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*
 		this->MessageBox(L"代码不合法！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -897,7 +897,7 @@ LRESULT CMarketExDlg::OnBnClickedHmd(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*
 		this->MessageBox(L"代码不合法！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -943,7 +943,7 @@ LRESULT CMarketExDlg::OnBnClickedFscj(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /
 		this->MessageBox(L"代码不合法！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -987,7 +987,7 @@ LRESULT CMarketExDlg::OnBnClickedHfst(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /
 		this->MessageBox(L"代码不合法！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -1031,7 +1031,7 @@ LRESULT CMarketExDlg::OnBnClickedQuote(WORD /*wNotifyCode*/, WORD /*wID*/, HWND 
 		return 0;
 	DWORD dwType = (DWORD )m_wndMarketType.GetItemData(m_wndMarketType.GetCurSel());
 	CString strStockCode(bstrStockCode.m_str);
-	USHORT nConnID = 0;
+	ULONG nConnID = 0;
 	ULONG nReqID = 0;
 	m_spiMarket[0]->get_CurConnID(&nConnID);
 	ITradeRecordPtr spiRecord = NULL;

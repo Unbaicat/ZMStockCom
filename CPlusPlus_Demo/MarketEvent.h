@@ -95,7 +95,7 @@ public:
 	/// 初始化接口结果通知
 	STDMETHOD(InitEvent)(IDispatch* piMarket,VARIANT_BOOL bOK);
 	/// 连接服务器结果通知
-	STDMETHOD(ConnectEvent)(IDispatch* piMarket,USHORT nConnID,BSTR bstrHost,USHORT nPort,VARIANT_BOOL bOK);
+	STDMETHOD(ConnectEvent)(IDispatch* piMarket, ULONG nConnID,BSTR bstrHost,USHORT nPort,VARIANT_BOOL bOK);
 	/// 查询指定股票实时5档行情回报
 	STDMETHOD(StockQuoteEvent)(ULONG nReqID,IDispatch* piRecordInfo);
 	/// 查询指定股票分时行情回报
@@ -106,5 +106,5 @@ public:
 	STDMETHOD(StockBarsEvent)(ULONG nReqID,BSTR bstrCode,IDispatch* piRecordInfo);
 
 	/// 服务器错误通知
-	STDMETHOD(ServerErrEvent)(USHORT nConnID,ULONG nReqID);
+	STDMETHOD(ServerErrEvent)(ULONG nConnID,ULONG nReqID);
 };

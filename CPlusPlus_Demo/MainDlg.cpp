@@ -316,6 +316,7 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 	this->GetDlgItem(IDC_EDIT_VERSION).SetWindowText(L"8.09");
 
 	this->GetDlgItem(IDC_EDIT_STOCKCODE).SetWindowText(L"000001");
+	GetDlgItem(IDC_EDIT_COREVER).SetWindowText(L"0");
 	return TRUE;
 }
 
@@ -365,7 +366,7 @@ LRESULT CMainDlg::OnLoginReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOO
 	{
 		VARIANT_BOOL bConnectValid = VARIANT_FALSE;
 		HRESULT hRet = spiTrade->get_ConnectValid(&bConnectValid);
-		USHORT nTradeID = 0;
+		ULONG nTradeID = 0;
 		hRet = spiTrade->get_CurTradeID(&nTradeID);
 		/// 事件通知中尽量避免弹窗MessageBox等阻塞操作，弹窗等仅限于调试程序方便
 		if(VARIANT_TRUE == bConnectValid)
@@ -607,7 +608,11 @@ LRESULT CMainDlg::OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 		{
 			/// 建立事件连接
 			AdviseTradeClient();
-
+			/// 设置内核版本，默认0，可设置为新内核1
+			CComBSTR bstrCoreType;
+			this->GetDlgItem(IDC_EDIT_COREVER).GetWindowText(&bstrCoreType);
+			m_spiTrade->put_CurServerPort((USHORT)StrToNum(bstrCoreType.m_str));
+			bstrCoreType.Empty();
 			/// 启用调试日志输出
 			hRet = m_spiTrade->put_EnableLog(VARIANT_TRUE);
 		}
@@ -710,7 +715,7 @@ LRESULT CMainDlg::OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 ITradeRecordPtr CMainDlg::GetCategoryData(EZMStockQueryType eCategoryType)
 {
 	ITradeRecordPtr spiRecord = NULL;
-	USHORT nTradeID = 0;
+	ULONG nTradeID = 0;
 	HRESULT hRet = m_spiTrade->get_CurTradeID(&nTradeID);
 	if(!nTradeID)
 	{
@@ -841,7 +846,7 @@ LRESULT CMainDlg::OnBnClickedGetFiveMarket(WORD /*wNotifyCode*/, WORD /*wID*/, H
 ITradeRecordPtr CMainDlg::GetHisData(EZMHisOrderType eCategoryType)
 {
 	ITradeRecordPtr spiRecord = NULL;
-	USHORT nTradeID = 0;
+	ULONG nTradeID = 0;
 	HRESULT hRet = m_spiTrade->get_CurTradeID(&nTradeID);
 	if(!nTradeID)
 	{
@@ -968,7 +973,7 @@ ITradeRecordPtr CMainDlg::GetStockMarket(const CString& strStockCode)
 		this->MessageBox(L"组件还未创建成功！");
 		return spiRecord;
 	}
-	USHORT nTradeID = 0;
+	ULONG nTradeID = 0;
 	HRESULT hRet = m_spiTrade->get_CurTradeID(&nTradeID);
 	if(!nTradeID)
 	{
@@ -1056,7 +1061,7 @@ LRESULT CMainDlg::OnBnClickedBuy(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWnd
 	/// 提交委托，第一个参数如果为VARIANT_TRUE,底层会自动检查当前通信状态，不正常的时候会自动登录一次再提交委托
 	VARIANT_BOOL bCommitRet = VARIANT_FALSE;
 	/// 可设置提交的优先级
-	USHORT nTradeID = 0;
+	ULONG nTradeID = 0;
 	m_spiTrade->get_CurTradeID(&nTradeID);
 	hRet = m_spiTrade->CommitOrder(nTradeID,VARIANT_FALSE,RUNPRITYPE_NORMAL,&bCommitRet);
 	spiRecord->Clear();
@@ -1085,7 +1090,7 @@ LRESULT CMainDlg::OnBnClickedSell(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 {
 	// TODO: Add your control notification handler code here
 	ITradeRecordPtr spiRecord = NULL;
-	USHORT nTradeID = 0;
+	ULONG nTradeID = 0;
 	HRESULT hRet = m_spiTrade->get_CurTradeID(&nTradeID);
 	if(!nTradeID)
 	{

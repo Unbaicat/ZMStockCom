@@ -38,7 +38,7 @@ void CMarketDlg::UnAdviseMarketCom(int nIndex)
 		m_spiMarketEvent[nIndex] = NULL;
 	if(NULL != m_spiMarket[nIndex])
 	{
-		USHORT nCurConnID = 0;
+		ULONG nCurConnID = 0;
 		m_spiMarket[nIndex]->get_CurConnID(&nCurConnID);
 		if(nCurConnID)
 			m_spiMarket[nIndex]->Disconnect(nCurConnID);
@@ -175,7 +175,7 @@ LRESULT CMarketDlg::OnConnReturn(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BO
 		return 0;/// 错误交易接口
 	if(wParam)
 	{
-		USHORT nConnID = 0;
+		ULONG nConnID = 0;
 		HRESULT hRet = spiMarket->get_CurConnID(&nConnID);
 		ATLASSERT(nConnID);
 		ULONG nSpeed = 0;
@@ -450,7 +450,7 @@ LRESULT CMarketDlg::OnBnClickedDisConnect(WORD /*wNotifyCode*/, WORD /*wID*/, HW
 	// TODO: Add your control notification handler code here
 	if(NULL == m_spiMarket[0])
 		return 0;
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	this->UnAdviseMarketCom(0);
 	if(!nCurConnID)
@@ -467,7 +467,7 @@ LRESULT CMarketDlg::OnBnClickedConnect(WORD /*wNotifyCode*/, WORD /*wID*/, HWND 
 	// TODO: Add your control notification handler code here
 	if(NULL != m_spiMarket[0])
 	{
-		USHORT nConnID = 0;
+		ULONG nConnID = 0;
 		m_spiMarket[0]->get_CurConnID(&nConnID);
 		if(nConnID)
 			return 0;/// 正常连接
@@ -514,7 +514,7 @@ LRESULT CMarketDlg::OnBnClickedGetf(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*h
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -562,7 +562,7 @@ LRESULT CMarketDlg::OnBnClickedKdata(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	HRESULT hRet =m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -645,7 +645,7 @@ LRESULT CMarketDlg::OnBnClickedCodes(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -754,7 +754,7 @@ LRESULT CMarketDlg::OnBnClickedXdata(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -801,7 +801,7 @@ LRESULT CMarketDlg::OnBnClickedF10(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hW
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -892,7 +892,7 @@ LRESULT CMarketDlg::OnBnClickedMk(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -973,7 +973,7 @@ LRESULT CMarketDlg::OnBnClickedHmk(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hW
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -1002,7 +1002,7 @@ LRESULT CMarketDlg::OnBnClickedWk(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	HRESULT hRet =m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -1084,7 +1084,7 @@ LRESULT CMarketDlg::OnBnClickedFst(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hW
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	HRESULT hRet =m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -1148,7 +1148,7 @@ LRESULT CMarketDlg::OnBnClickedHmd(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hW
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	HRESULT hRet =m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -1205,7 +1205,7 @@ LRESULT CMarketDlg::OnBnClickedFscj(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*h
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	HRESULT hRet =m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -1264,7 +1264,7 @@ LRESULT CMarketDlg::OnBnClickedHfst(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*h
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	HRESULT hRet =m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -1325,7 +1325,7 @@ LRESULT CMarketDlg::OnBnClickedHkd(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hW
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -1404,7 +1404,7 @@ LRESULT CMarketDlg::OnBnClickedFivemk(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -1483,7 +1483,7 @@ LRESULT CMarketDlg::OnBnClickedMkx(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hW
 		this->MessageBox(L"还没有初始化连接！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	HRESULT hRet =m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -1572,7 +1572,7 @@ LRESULT CMarketDlg::OnBnClickedTotalf(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /
 		this->MessageBox(L"代码不合法！");
 		return 0;
 	}
-	USHORT nCurConnID = 0;
+	ULONG nCurConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nCurConnID);
 	if(!nCurConnID)
 	{
@@ -1779,7 +1779,7 @@ LRESULT CMarketDlg::OnBnClickedQuote(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*
 		return 0;
 	CString strStockCode(bstrStockCode.m_str);
 	ULONG nReqID = 0;
-	USHORT nConnID = 0;
+	ULONG nConnID = 0;
 	m_spiMarket[0]->get_CurConnID(&nConnID);
 	m_spiMarket[0]->GetQuotes(nConnID,bstrStockCode,&nReqID);
 

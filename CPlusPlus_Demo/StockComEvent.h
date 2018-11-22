@@ -82,7 +82,7 @@ public:
 	/// 初始化接口结果通知
 	STDMETHOD(InitEvent)(IDispatch* piTrade,VARIANT_BOOL bOK);
 	/// 登录服务器结果通知
-	STDMETHOD(LoginEvent)(IDispatch* piTrade,USHORT nTradeID,BSTR bstrHost,USHORT nPort,VARIANT_BOOL bOK);
+	STDMETHOD(LoginEvent)(IDispatch* piTrade, ULONG nTradeID,BSTR bstrHost,USHORT nPort,VARIANT_BOOL bOK);
 	/// 交易委托成功回报
 	STDMETHOD(OrderOKEvent)(ULONG OrderOKEvent,EZMExchangeType eExchangeType,IDispatch* piRecordInfo);
 	/// 交易委托失败回报
@@ -93,7 +93,7 @@ public:
 	STDMETHOD(OrderSuccessEvent)(BSTR bstrOrderID,BSTR bstrJson);
 
 	/// 服务器错误通知
-	STDMETHOD(ServerErrEvent)(USHORT nTradeID,ULONG nReqID);
+	STDMETHOD(ServerErrEvent)(ULONG nTradeID,ULONG nReqID);
 	/// 服务器切换通知，多服务器才有
-	STDMETHOD(ServerChangedEvent)(USHORT nPreTradeID,USHORT nCurTradeID);
+	STDMETHOD(ServerChangedEvent)(ULONG nPreTradeID, ULONG nCurTradeID);
 };

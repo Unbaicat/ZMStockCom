@@ -44,22 +44,22 @@ STDMETHODIMP CMarketEvent::Invoke( DISPID dispIdMember,REFIID riid,LCID lcid,WOR
 			if ( pDispParams->cNamedArgs )
 				return DISP_E_NONAMEDARGS;
 
-			CComVariant varConnRet,varTrade,varHost,varPort,varTradeConn;
+			CComVariant varConnRet,varConnID,varHost,varPort,varTradeConn;
 			VariantInit(&varConnRet);
-			VariantInit(&varTrade);
+			VariantInit(&varConnID);
 			VariantInit(&varPort);
 			VariantInit(&varHost);
 			VariantInit(&varTradeConn);
 			hRet = VariantChangeTypeEx( &varTradeConn,&(pDispParams->rgvarg[4]),lcid,0,VT_DISPATCH);
-			hRet = VariantChangeTypeEx( &varTrade,&(pDispParams->rgvarg[3]),lcid,0,VT_UI2);
+			hRet = VariantChangeTypeEx( &varConnID,&(pDispParams->rgvarg[3]),lcid,0,VT_UI4);
 			hRet = VariantChangeTypeEx( &varHost,&(pDispParams->rgvarg[2]),lcid,0,VT_BSTR);
 			hRet = VariantChangeTypeEx( &varPort,&(pDispParams->rgvarg[1]),lcid,0,VT_UI2);
 			hRet = VariantChangeTypeEx( &varConnRet,&(pDispParams->rgvarg[0]),lcid,0,VT_BOOL);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
-			hRet = ConnectEvent(varTradeConn.pdispVal,varTrade.uiVal,varHost.bstrVal,varPort.uiVal,varConnRet.boolVal);
+			hRet = ConnectEvent(varTradeConn.pdispVal, varConnID.ulVal,varHost.bstrVal,varPort.uiVal,varConnRet.boolVal);
 			VariantClear(&varConnRet);
-			VariantClear(&varTrade);
+			VariantClear(&varConnID);
 			VariantClear(&varHost);
 			VariantClear(&varPort);
 			VariantClear(&varTradeConn);
@@ -176,17 +176,17 @@ STDMETHODIMP CMarketEvent::Invoke( DISPID dispIdMember,REFIID riid,LCID lcid,WOR
 			if ( pDispParams->cNamedArgs )
 				return DISP_E_NONAMEDARGS;
 
-			CComVariant varTradeID,varReqID;
-			VariantInit(&varTradeID);
+			CComVariant varConnID,varReqID;
+			VariantInit(&varConnID);
 			VariantInit(&varReqID);
-			hRet = VariantChangeTypeEx( &varTradeID,&(pDispParams->rgvarg[1]),lcid,0,VT_UI2);
+			hRet = VariantChangeTypeEx( &varConnID,&(pDispParams->rgvarg[1]),lcid,0,VT_UI4);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
 			hRet = VariantChangeTypeEx( &varReqID,&(pDispParams->rgvarg[0]),lcid,0,VT_UI4);
 			if FAILED(hRet)
 				return DISP_E_BADVARTYPE;
-			hRet = ServerErrEvent(varTradeID.uiVal,varReqID.ulVal);
-			VariantClear(&varTradeID);
+			hRet = ServerErrEvent(varConnID.uiVal,varReqID.ulVal);
+			VariantClear(&varConnID);
 			VariantClear(&varReqID);
 			break;
 		}
@@ -214,7 +214,7 @@ STDMETHODIMP CMarketEvent::InitEvent(IDispatch* piMarket,VARIANT_BOOL bOK)
 	return hRet;
 }
 
-STDMETHODIMP CMarketEvent::ConnectEvent(IDispatch* piMarket,USHORT nConnID,BSTR bstrHost,USHORT nPort,VARIANT_BOOL bOK)
+STDMETHODIMP CMarketEvent::ConnectEvent(IDispatch* piMarket, ULONG nConnID,BSTR bstrHost,USHORT nPort,VARIANT_BOOL bOK)
 {
 	HRESULT hRet(E_FAIL);
 	m_spiMarket = NULL;
@@ -223,7 +223,7 @@ STDMETHODIMP CMarketEvent::ConnectEvent(IDispatch* piMarket,USHORT nConnID,BSTR 
 	{
 		CString strLogInfo;
 		BOOL bConnected = FALSE;
-		USHORT nCurConnID = 0;
+		ULONG nCurConnID = 0;
 		m_spiMarket->get_CurConnID(&nCurConnID);
 		if(VARIANT_TRUE == bOK)
 		{
@@ -282,7 +282,7 @@ STDMETHODIMP CMarketEvent::ConnectEvent(IDispatch* piMarket,USHORT nConnID,BSTR 
 	return hRet;
 }
 
-STDMETHODIMP CMarketEvent::ServerErrEvent(USHORT nConnID,ULONG nReqID)
+STDMETHODIMP CMarketEvent::ServerErrEvent(ULONG nConnID,ULONG nReqID)
 {
 	HRESULT hRet(E_FAIL);
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))

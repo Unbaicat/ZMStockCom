@@ -61,11 +61,13 @@
             this.label12 = new System.Windows.Forms.Label();
             this.CLIENTVERSION = new System.Windows.Forms.TextBox();
             this.checkBox_RZRQ = new System.Windows.Forms.CheckBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.COREVERSION = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // GETHISDATA
             // 
-            this.GETHISDATA.Location = new System.Drawing.Point(257, 285);
+            this.GETHISDATA.Location = new System.Drawing.Point(166, 327);
             this.GETHISDATA.Name = "GETHISDATA";
             this.GETHISDATA.Size = new System.Drawing.Size(75, 24);
             this.GETHISDATA.TabIndex = 45;
@@ -77,7 +79,7 @@
             // 
             this.HISDATA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.HISDATA.FormattingEnabled = true;
-            this.HISDATA.Location = new System.Drawing.Point(131, 285);
+            this.HISDATA.Location = new System.Drawing.Point(131, 291);
             this.HISDATA.Name = "HISDATA";
             this.HISDATA.Size = new System.Drawing.Size(110, 20);
             this.HISDATA.TabIndex = 44;
@@ -85,7 +87,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 288);
+            this.label9.Location = new System.Drawing.Point(15, 294);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(113, 12);
             this.label9.TabIndex = 43;
@@ -93,7 +95,7 @@
             // 
             // GETTRADEDATA
             // 
-            this.GETTRADEDATA.Location = new System.Drawing.Point(257, 246);
+            this.GETTRADEDATA.Location = new System.Drawing.Point(166, 250);
             this.GETTRADEDATA.Name = "GETTRADEDATA";
             this.GETTRADEDATA.Size = new System.Drawing.Size(75, 24);
             this.GETTRADEDATA.TabIndex = 42;
@@ -104,7 +106,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 252);
+            this.label8.Location = new System.Drawing.Point(18, 223);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(89, 12);
             this.label8.TabIndex = 41;
@@ -114,14 +116,14 @@
             // 
             this.TRADEDATA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TRADEDATA.FormattingEnabled = true;
-            this.TRADEDATA.Location = new System.Drawing.Point(131, 249);
+            this.TRADEDATA.Location = new System.Drawing.Point(131, 220);
             this.TRADEDATA.Name = "TRADEDATA";
             this.TRADEDATA.Size = new System.Drawing.Size(110, 20);
             this.TRADEDATA.TabIndex = 40;
             // 
             // STOCKCODE
             // 
-            this.STOCKCODE.Location = new System.Drawing.Point(406, 213);
+            this.STOCKCODE.Location = new System.Drawing.Point(395, 253);
             this.STOCKCODE.Name = "STOCKCODE";
             this.STOCKCODE.Size = new System.Drawing.Size(161, 21);
             this.STOCKCODE.TabIndex = 39;
@@ -129,7 +131,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(336, 219);
+            this.label7.Location = new System.Drawing.Point(325, 259);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 12);
             this.label7.TabIndex = 38;
@@ -137,7 +139,7 @@
             // 
             // BUYBUT
             // 
-            this.BUYBUT.Location = new System.Drawing.Point(490, 246);
+            this.BUYBUT.Location = new System.Drawing.Point(479, 286);
             this.BUYBUT.Name = "BUYBUT";
             this.BUYBUT.Size = new System.Drawing.Size(75, 24);
             this.BUYBUT.TabIndex = 37;
@@ -212,7 +214,7 @@
             // 
             // RELASE_BTN
             // 
-            this.RELASE_BTN.Location = new System.Drawing.Point(418, 175);
+            this.RELASE_BTN.Location = new System.Drawing.Point(418, 215);
             this.RELASE_BTN.Name = "RELASE_BTN";
             this.RELASE_BTN.Size = new System.Drawing.Size(75, 24);
             this.RELASE_BTN.TabIndex = 28;
@@ -222,7 +224,7 @@
             // 
             // CONNECT_BTN
             // 
-            this.CONNECT_BTN.Location = new System.Drawing.Point(321, 176);
+            this.CONNECT_BTN.Location = new System.Drawing.Point(321, 216);
             this.CONNECT_BTN.Name = "CONNECT_BTN";
             this.CONNECT_BTN.Size = new System.Drawing.Size(75, 24);
             this.CONNECT_BTN.TabIndex = 27;
@@ -264,7 +266,7 @@
             // 
             // SELLALL
             // 
-            this.SELLALL.Location = new System.Drawing.Point(490, 285);
+            this.SELLALL.Location = new System.Drawing.Point(479, 325);
             this.SELLALL.Name = "SELLALL";
             this.SELLALL.Size = new System.Drawing.Size(75, 24);
             this.SELLALL.TabIndex = 46;
@@ -310,7 +312,7 @@
             // 
             // GetQuote
             // 
-            this.GetQuote.Location = new System.Drawing.Point(406, 247);
+            this.GetQuote.Location = new System.Drawing.Point(395, 287);
             this.GetQuote.Name = "GetQuote";
             this.GetQuote.Size = new System.Drawing.Size(75, 23);
             this.GetQuote.TabIndex = 51;
@@ -320,7 +322,7 @@
             // 
             // NewIPO
             // 
-            this.NewIPO.Location = new System.Drawing.Point(406, 287);
+            this.NewIPO.Location = new System.Drawing.Point(395, 327);
             this.NewIPO.Name = "NewIPO";
             this.NewIPO.Size = new System.Drawing.Size(73, 23);
             this.NewIPO.TabIndex = 52;
@@ -331,7 +333,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(22, 178);
+            this.label12.Location = new System.Drawing.Point(22, 182);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(89, 12);
             this.label12.TabIndex = 53;
@@ -349,16 +351,34 @@
             this.checkBox_RZRQ.AutoSize = true;
             this.checkBox_RZRQ.Location = new System.Drawing.Point(204, 181);
             this.checkBox_RZRQ.Name = "checkBox_RZRQ";
-            this.checkBox_RZRQ.Size = new System.Drawing.Size(96, 16);
+            this.checkBox_RZRQ.Size = new System.Drawing.Size(72, 16);
             this.checkBox_RZRQ.TabIndex = 55;
-            this.checkBox_RZRQ.Text = "融资融券账号";
+            this.checkBox_RZRQ.Text = "融资融券";
             this.checkBox_RZRQ.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(321, 183);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(65, 12);
+            this.label13.TabIndex = 56;
+            this.label13.Text = "内核版本：";
+            // 
+            // COREVERSION
+            // 
+            this.COREVERSION.Location = new System.Drawing.Point(420, 178);
+            this.COREVERSION.Name = "COREVERSION";
+            this.COREVERSION.Size = new System.Drawing.Size(31, 21);
+            this.COREVERSION.TabIndex = 57;
             // 
             // TradeDemo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(579, 321);
+            this.ClientSize = new System.Drawing.Size(579, 357);
+            this.Controls.Add(this.COREVERSION);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.checkBox_RZRQ);
             this.Controls.Add(this.CLIENTVERSION);
             this.Controls.Add(this.label12);
@@ -436,6 +456,8 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox CLIENTVERSION;
         private System.Windows.Forms.CheckBox checkBox_RZRQ;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox COREVERSION;
     }
 }
 

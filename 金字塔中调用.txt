@@ -15,6 +15,7 @@ Set StockTrade = CreateObject("ZMTradeCom.StockTrade")
 
         
 
+StockTrade.TradeType = 0
 StockTrade.EnableLog = 1
         
 StockTrade.AutoKeepConn = 1

@@ -79,11 +79,13 @@ namespace CSharp_Demo
             this.LOGINPW.Text = "";
             this.DEPID.Text = "9000";
             this.CLIENTVERSION.Text = "8.09";
+            this.COREVERSION.Text = "0";
             this.checkBox_RZRQ.Checked = false;
 
             int nAddItem = this.ACCOUNTTYPE.Items.Add("模拟");
             nAddItem = this.ACCOUNTTYPE.Items.Add("资金账号");
             nAddItem = this.ACCOUNTTYPE.Items.Add("客户号");
+            this.ACCOUNTTYPE.SelectedIndex = 0;
 
             nAddItem = BROKERTYPE.Items.Add("模拟测试");
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_MNCS);
@@ -365,6 +367,8 @@ namespace CSharp_Demo
             /// 设置登录服务器
             m_StockTrade.CurServerHost = this.SERVERADDR.Text;
             m_StockTrade.CurServerPort = ushort.Parse(this.SERVERPORT.Text);
+            /// 设置内核版本，默认0，新内核授权设置为1
+            m_StockTrade.TradeType = ushort.Parse(this.COREVERSION.Text);
 
             /// 设置服务器交易账户和密码
             m_StockTrade.LoginID = this.LOGINID.Text;
@@ -384,7 +388,7 @@ namespace CSharp_Demo
             if (bRet)
             {
                 /// 无错误，获得登录成功的交易连接标识
-                ushort nTradeID = m_StockTrade.CurTradeID;
+                uint nTradeID = m_StockTrade.CurTradeID;
 
                 MessageBox.Show("登录成功，下面开始获取股东代码信息！");
 
@@ -731,7 +735,7 @@ namespace CSharp_Demo
             /// <param name="strHost" Desc="当前登录的交易服务器主机"></param>
             /// <param name="nPort" Desc="当前登录的交易服务器端口"></param>
             /// <param name="bLoginOK" Desc="是否登录成功标记"></param>
-            public void LoginEvent(object vTrade, ushort nTradeID, string strHost, ushort nPort, bool bLoginOK)
+            public void LoginEvent(object vTrade, uint nTradeID, string strHost, ushort nPort, bool bLoginOK)
             {
                 if (null == m_spiTrade)
                     m_spiTrade = (IStockTrade)vTrade;
@@ -858,7 +862,7 @@ namespace CSharp_Demo
             /// </summary>
             /// <param name="nTradeID" Desc="交易ID标识"></param>
             /// <param name="nReqID" Desc="请求ID标识"></param>
-            public void ServerErrEvent(ushort nTradeID, uint nReqID)
+            public void ServerErrEvent(uint nTradeID, uint nReqID)
             {
             }
 
@@ -867,7 +871,7 @@ namespace CSharp_Demo
             /// </summary>
             /// <param name="nPreTradeID" Desc="上一个交易ID标识"></param>
             /// <param name="nCurTradeID" Desc="当前交易ID标识"></param>
-            public void ServerChangedEvent(ushort nPreTradeID, ushort nCurTradeID)
+            public void ServerChangedEvent(uint nPreTradeID, uint nCurTradeID)
             {
             }
 
