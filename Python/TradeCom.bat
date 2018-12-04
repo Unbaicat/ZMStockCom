@@ -1,0 +1,2 @@
+python TradeCom.py
+pause

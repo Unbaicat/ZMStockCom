@@ -1,0 +1,7 @@
+1、到 http://www.bubuko.com/infodetail-2153091.html 下载并安装好Anaconda3-4.2.0-Windows-x86_64.exe，如果你的系统是32位请下对应32的版本；
+2、把gen_py.rar解压放到Anaconda3的实际安装路径下，相对路径是：Anaconda3\Lib\site-packages\win32com\gen_py 下；
+3、编辑TradeCom.py填好你的交易账号等信息；
+4、把交易组件ZMStockCom.exe按说明注册好；
+5、编辑TradeCom.bat，填写TradeCom.py的实际路径，然后右键选中TradeCom.bat后管理员权限运行即可测试。
+
+说明，以上步骤适用于ZMStockCom.exe这个进程外COM组件，支持64位程序调用，如只需要32位的，建议用进程内的COM组件ZMTradeCom.dll，性能会高一些，需要自己制作生成这个组件的gen_py文件包内容。
