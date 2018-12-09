@@ -16,6 +16,33 @@
 #define	ZM_TDXSERVER_SYNC
 #endif
 
+LONG StrToNum(const ATL::CString& strTemp)
+{
+	LONG nValue = 0;
+	if(strTemp.IsEmpty())
+		return nValue;
+	BOOL bLoss = FALSE;
+	if(strTemp.GetAt(0) == '-')
+		bLoss = TRUE;
+	int j = 0;
+	if(bLoss)
+		j++;
+	for (; j < strTemp.GetLength(); j++)
+	{
+		TCHAR c = strTemp[j];
+		if('.' == c)
+			break;
+		if (c <= '9' && c >= '0')
+		{
+			nValue *= 10;
+			nValue = (nValue + (c - '0')) ; 
+		}
+	}
+	if(bLoss)
+		return -nValue;
+	return nValue;
+}
+
 void CMainDlg::AdviseTradeClient()
 {
 	if(NULL != m_spiTradeClientEvent)
@@ -538,31 +565,6 @@ LRESULT CMainDlg::OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOO
 	return 0;
 }
 
-LONG StrToNum(const ATL::CString& strTemp)
-{
-	LONG nValue = 0;
-	if(strTemp.IsEmpty())
-		return nValue;
-	BOOL bLoss = FALSE;
-	if(strTemp.GetAt(0) == '-')
-		bLoss = TRUE;
-	int j = 0;
-	if(bLoss)
-		j++;
-	for (; j < strTemp.GetLength(); j++)
-	{
-		TCHAR c = strTemp[j];
-		if (c <= '9' && c >= '0')
-		{
-			nValue *= 10;
-			nValue = (nValue + (c - '0')) ; 
-		}
-	}
-	if(bLoss)
-		return -nValue;
-	return nValue;
-}
-
 void CMainDlg::ReleaseCom()
 {
 	/// 释放COM组件对象
@@ -611,6 +613,7 @@ LRESULT CMainDlg::OnBnClickedInit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 			/// 设置内核版本，默认0，可设置为新内核1
 			CComBSTR bstrCoreType;
 			this->GetDlgItem(IDC_EDIT_COREVER).GetWindowText(&bstrCoreType);
+			m_spiTrade->put_TradeType((USHORT)StrToNum(bstrCoreType.m_str));
 			m_spiTrade->put_CurServerPort((USHORT)StrToNum(bstrCoreType.m_str));
 			bstrCoreType.Empty();
 			/// 启用调试日志输出
