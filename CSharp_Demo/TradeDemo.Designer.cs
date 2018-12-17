@@ -149,7 +149,7 @@
             // 
             // LOGINPW
             // 
-            this.LOGINPW.Location = new System.Drawing.Point(420, 100);
+            this.LOGINPW.Location = new System.Drawing.Point(420, 98);
             this.LOGINPW.Name = "LOGINPW";
             this.LOGINPW.PasswordChar = '*';
             this.LOGINPW.Size = new System.Drawing.Size(136, 21);

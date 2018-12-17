@@ -80,6 +80,7 @@ namespace CSharp_Demo
             this.DEPID.Text = "9000";
             this.CLIENTVERSION.Text = "8.09";
             this.COREVERSION.Text = "0";
+            this.DEPID.Text = "1";
             this.checkBox_RZRQ.Checked = false;
 
             int nAddItem = this.ACCOUNTTYPE.Items.Add("模拟");
@@ -337,6 +338,9 @@ namespace CSharp_Demo
 
         private void CONNECT_BTN_Click(object sender, EventArgs e)
         {
+            /// 设置内核版本，默认0，新内核授权设置为1，必须放到Init初始化之前
+            m_StockTrade.TradeType = ushort.Parse(this.COREVERSION.Text);
+
             /// 设置通讯版本(请查看自己券商的TDX版本)，初始化结果异步通过事件通知
             /// 设置最大连接数，默认传1(最好跟调用登录前设置的服务器主机数量一致)
             m_StockTrade.Init(this.CLIENTVERSION.Text, 1);
@@ -367,17 +371,20 @@ namespace CSharp_Demo
             /// 设置登录服务器
             m_StockTrade.CurServerHost = this.SERVERADDR.Text;
             m_StockTrade.CurServerPort = ushort.Parse(this.SERVERPORT.Text);
-            /// 设置内核版本，默认0，新内核授权设置为1
-            m_StockTrade.TradeType = ushort.Parse(this.COREVERSION.Text);
 
             /// 设置服务器交易账户和密码
+            if (0 == this.LOGINID.Text.Length)
+            {
+                MessageBox.Show("请先输入登录ID！");
+                return;
+            }
             m_StockTrade.LoginID = this.LOGINID.Text;
-            m_StockTrade.TradePassword = this.LOGINPW.Text;
             if (0 == this.LOGINPW.Text.Length)
             {
                 MessageBox.Show("请先输入登录密码！");
                 return;
             }
+            m_StockTrade.TradePassword = this.LOGINPW.Text;
             /// 设置其他参数
             m_StockTrade.TradeAccount = this.TRADEACCOUNT.Text;/// 交易账号，当用客户号登录时填你的资金账号ID
             m_StockTrade.DepartmentID = ushort.Parse(this.DEPID.Text);/// 营业部ID
