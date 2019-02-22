@@ -274,6 +274,8 @@ namespace CSharp_Demo
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_JZZQ);
             nAddItem = BROKERTYPE.Items.Add("川财证券");
             BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_CCAIZQ);
+            nAddItem = BROKERTYPE.Items.Add("中山证券");
+            BrokerMap.Add(nAddItem, EZMBrokerType.BROKERTYPE_ZHSZQ);
 
             this.BROKERTYPE.SelectedIndex = 0;
 

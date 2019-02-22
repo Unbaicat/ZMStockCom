@@ -351,7 +351,7 @@ STDMETHODIMP CStockComEvent::OrderOKEvent(ULONG nRequestID,EZMExchangeType eExch
 	if(NULL != m_hParentWnd && ::IsWindow(m_hParentWnd))
 	{
 		/// SendMessage确保记录对象没有释放
-		::SendMessage(m_hParentWnd,WM_TRADEEVENT_SENDORDER,nRequestID,(LPARAM)piRecordInfo);
+		::SendMessage(m_hParentWnd,WM_TRADEEVENT_SENDORDER, eExchangeType,(LPARAM)piRecordInfo);
 	}
 	return hRet;
 }
