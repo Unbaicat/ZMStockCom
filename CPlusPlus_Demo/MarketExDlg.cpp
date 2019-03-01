@@ -65,10 +65,12 @@ LRESULT CMarketExDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lP
 	m_nMarketEventCookie[1] = 0;
 	m_spiMarketEvent[1] = NULL;
 
-	this->GetDlgItem(IDC_EDIT_CODE).SetWindowText(L"IH1712");
+	this->GetDlgItem(IDC_EDIT_CODE).SetWindowText(L"10001665");
 
+	/// 股票期权服务器
+	this->GetDlgItem(IDC_EDIT_MARKETSERVERADDR).SetWindowText(L"114.80.63.20");
 	/// 北京联通主站Z1
-	this->GetDlgItem(IDC_EDIT_MARKETSERVERADDR).SetWindowText(L"202.108.253.154");
+//	this->GetDlgItem(IDC_EDIT_MARKETSERVERADDR).SetWindowText(L"202.108.253.154");
 	/// 上海电信主站Z1
 //	this->GetDlgItem(IDC_EDIT_MARKETSERVERADDR).SetWindowText(L"180.153.18.176");
 	this->GetDlgItem(IDC_EDIT_MARKETSERVERPORT).SetWindowText(L"7721");
@@ -84,7 +86,9 @@ LRESULT CMarketExDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lP
 	m_wndMarketType.SetItemData(nItemIndex,MARKETTYPE_MAINFC);
 	nItemIndex = m_wndMarketType.AddString(L"上海期货");
 	m_wndMarketType.SetItemData(nItemIndex,MARKETTYPE_SHF);
-	m_wndMarketType.SetCurSel(0);
+	nItemIndex = m_wndMarketType.AddString(L"上海股票期权");
+	m_wndMarketType.SetItemData(nItemIndex,MARKETTYPE_SHSO);
+	m_wndMarketType.SetCurSel(5);
 
 	return TRUE;
 }

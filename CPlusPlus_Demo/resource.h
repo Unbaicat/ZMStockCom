@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ 生成的包含文件。
-// 供 CPlusPlus_Demo.rc 使用
+// Microsoft Visual C++ generated include file.
+// Used by CPlusPlus_Demo.rc
 //
 #define IDD_ABOUTBOX                    100
 #define IDR_MAINFRAME                   128
