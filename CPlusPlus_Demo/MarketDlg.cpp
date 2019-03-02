@@ -61,9 +61,12 @@ LRESULT CMarketDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lPar
 	m_nMarketEventCookie[0] = 0;
 	m_spiMarketEvent[0] = NULL;
 
-	m_spiMarket[1] = NULL;
-	m_nMarketEventCookie[1] = 0;
-	m_spiMarketEvent[1] = NULL;
+	if(ZM_ACCOUNT_CONNMAXCOUNT > 1)
+	{
+		m_spiMarket[1] = NULL;
+		m_nMarketEventCookie[1] = 0;
+		m_spiMarketEvent[1] = NULL;
+	}
 
 	/// 北京联通主站Z1
 	this->GetDlgItem(IDC_EDIT_MARKETSERVERADDR).SetWindowText(L"202.108.253.130");
